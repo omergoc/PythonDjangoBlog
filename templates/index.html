@@ -1,0 +1,90 @@
+{% extends "partials/_base.html" %}
+{% load static %}
+{% block body %}
+        <section class="section first-section">
+            <div class="container-fluid">
+                <div class="masonry-blog clearfix">
+                {% for slider in slider_article %}
+                    <div class="first-slot">
+                        <div class="masonry-box post-media">
+                             <img src="{{ slider.image.url }}" alt="slider" style="width:900px;height:443px;" class="img-fluid">
+                             <div class="shadoweffect">
+                                <div class="shadow-desc">
+                                    <div class="blog-meta">
+                                        <span class="bg-orange"><a href="/{{ slider.category.slug }}/" title="">{{ slider.category.name }}</a></span>
+                                        <h4><a href="/{{ slider.category.slug }}/{{ slider.slug }}/" title="">{{ slider.title }}</a></h4>
+                                        <small>{{ slider.created_date }}</small>
+                                        <small><a href="author/{{ slider.author.slug }}/" title="">{{ slider.author.author }}</a></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                {% endfor %}                   
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <div class="container">
+            <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            {% include 'partials/_messages.html' %}
+            </div>
+            </div>
+                <div class="row ">
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-wrapper">
+                            <div class="blog-top clearfix">
+                                <h4 class="pull-left">Popüler Gönderiler <a href="#"><i class="fa fa-rss"></i></a></h4>
+                            </div>
+                            <div class="blog-list clearfix">
+                            {% for article  in articles  %}
+                            
+                                <div class="blog-box row">
+                                    <div class="col-md-4">
+                                        <div class="post-media">
+                                            <a href="tech-single.html" title="">
+                                                <img src="{{ article.image.url }}" alt="" class="img-fluid">
+                                             <div class="hovereffect"></div>
+                                            </a>
+                                        </div><!-- end media -->
+                                    </div><!-- end col -->
+                                    <div class="blog-meta big-meta col-md-8">
+                                        <h4><a href="/{{ article.category.slug }}/{{ article.slug }}/" title="">{{ article.title }}</a></h4>
+                                        <p>{{ article.description  }}</p>
+                                        <small class="firstsmall"><a class="bg-orange" href="/{{ article.category.slug }}/" title="">{{ article.category.name }}</a></small>
+                                        <small>{{ article.created_date }}</small>
+                                        <small><a href="author/{{ article.author.slug }}/" title="">{{ article.author }}</a></small>
+                                        <small><i class="fa fa-eye"></i> {{ article.views }}</small>
+                                    </div><!-- end meta -->
+                                </div><!-- end blog-box -->
+                                <br><br>
+                            {% endfor %}
+                            </div><!-- end blog-list -->
+                        </div><!-- end page-wrapper -->
+
+                        <hr class="invis">
+                            <div class="row">
+                                <div class="col-lg-11">
+                                    <div class="banner-spot clearfix">
+                                        <div class="banner-img">
+                                        <a href="{{ settings.image1Url }}">
+                                            <img src="{{ settings.image1.url }}" alt="Reklam" class="img-fluid">
+                                            </a>
+                                        </div><!-- end banner-img -->
+                                    </div><!-- end banner -->
+                                </div><!-- end col -->
+                            </div><!-- end row -->
+                    </div><!-- end col -->
+                      <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sidebar">
+                        {% include "partials/_sidebarads.html" %}
+                            {% include "partials/_sidebar.html" %}
+                </div><!-- end row -->
+                 </div>
+                    </div>
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section>
+{% endblock body %}
