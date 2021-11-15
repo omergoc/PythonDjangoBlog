@@ -1,0 +1,2 @@
+# PythonDjangoBlog
+ Blog Projesi
