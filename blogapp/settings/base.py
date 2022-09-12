@@ -25,10 +25,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-146l8#o8^cfj=u&n=kv6a$g21nlc^l#g7dcvzz&hi0am*m+480'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',
@@ -107,16 +103,7 @@ WSGI_APPLICATION = 'blogapp.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'siberataydb',
-       'USER': 'postgres',
-       'PASSWORD': 'toor',
-       'HOST': '127.0.0.1',
-       'PORT': '5432',
-   }
-}
+
 
 
 # Password validation
@@ -156,7 +143,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 
 
 
