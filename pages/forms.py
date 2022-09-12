@@ -1,6 +1,6 @@
 from django import forms
-from django.forms.widgets import TextInput
 from . models import Contact
+
 
 class ContactForm(forms.ModelForm):
     name = forms.CharField(widget=forms.TextInput(attrs={
@@ -17,13 +17,14 @@ class ContactForm(forms.ModelForm):
     }))
     subject = forms.CharField(widget=forms.TextInput(attrs={
         'class':'form-control',
-        'placeholder':'Konu'
+        'placeholder': 'Konu'
     }))
     content = forms.CharField(widget=forms.Textarea(attrs={
-        'class':'form-control',
-        'placeholder':'Mesaj'
+        'class': 'form-control',
+        'placeholder': 'Mesaj'
     }))
 
     class Meta:
         model = Contact
         fields = ['name','email','phone','subject','content']
+

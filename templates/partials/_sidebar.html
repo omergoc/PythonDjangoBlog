@@ -1,69 +1,77 @@
 {% load static %}
-                            <div class="widget">
-                                <h2 class="widget-title">Popüler Gönderiler</h2>
-                                <div class="blog-list-widget">
-                                    <div class="list-group">
-                                        {% for sidebar_article in sidebar_articles %}
-                                            
-                                        <a href="/{{ sidebar_article.category.slug }}/{{ sidebar_article.slug }}/" class="list-group-item list-group-item-action flex-column align-items-start">
-                                            <div class="w-100 last-item justify-content-between">
-                                                <img src="{{ sidebar_article.image.url }}" alt="" class="img-fluid float-left">
-                                                <h5 class="mb-1">{{ sidebar_article.title }}</h5>
-                                                <small>{{ sidebar_article.created_date }}</small>
-                                            </div>
-                                        </a>
-                                        {% endfor %}
 
-                                    </div>
-                                </div><!-- end blog-list -->
-                            </div><!-- end widget -->
+<div class="widget">
+    <h4 class="widget-title">Siber Atay Haberler</h4>
+    <div class="blog-list-widget">
+        <div class="list-group">
+            
+            {% for sidebar_article in sidebar_news %}
+            <a href="/{{ sidebar_article.category.slug }}/{{ sidebar_article.slug }}/" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="w-100 last-item justify-content-between">
+                    <img src="{{ sidebar_article.image.url }}" alt="" class="img-fluid float-left">
+                    <h5 class="mb-1">{{ sidebar_article.title }}</h5>
+                    <small>{{ sidebar_article.created_date }}</small>
+                </div>
+            </a>
+            {% endfor %}
 
-                               <div class="widget">
-                                <h2 class="widget-title">Son Yorumlar</h2>
-                                <div class="blog-list-widget">
-                                    <div class="list-group">
-                                        {% for sidebar_comm in sidebar_comms %}
-                                            
-                                        <a href="/{{ sidebar_comm.article.category.slug }}/{{ sidebar_comm.article.slug }}/" class="list-group-item list-group-item-action flex-column align-items-start">
-                                            <div class="w-100 last-item justify-content-between">
-                                                <img src="{{ sidebar_comm.article.image.url }}" alt="" class="img-fluid float-left">
-                                                <h5 class="mb-1">{{ sidebar_comm.article.title }}</h5>
-                                                <small>{{ sidebar_comm.name }}</small>
-                                            </div>
-                                        </a>
-                                        {% endfor %}
+        </div>
+    </div><!-- end blog-list -->
+</div><!-- end widget -->
+<br>
+<div class="widget">
+    <h4 class="widget-title">Bizi takip et</h4>
 
-                                    </div>
-                                </div><!-- end blog-list -->
-                            </div><!-- end widget -->
+    <div class="row text-center">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <a href="{{ settings.facebook }}" class="social-button facebook-button">
+                <i class="fa fa-facebook"></i>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <a href="{{ settings.twitter }}" class="social-button twitter-button">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <a href="{{ settings.instagram }}" class="social-button insta-button">
+            <i class="fa fa-instagram"></i>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+            <a href="{{ settings.youtube }}" class="social-button youtube-button">
+                <i class="fa fa-youtube"></i>
+            </a>
+        </div>
+    </div>
+</div>
+<br>
+<div class="widget">
+    <h4 class="widget-title">Trend Videolar</h4>
+    <div class="trend-videos">
+        {% for sidebar_video in sidebar_videos %}
+        <div class="blog-box">
+            <div class="post-media">
+                <a href="/{{ sidebar_video.category.slug }}/{{ sidebar_video.slug }}/" title="">
+                    <img src="{{ sidebar_video.image.url }}" alt="" class="img-fluid">
+                    <div class="hovereffect">
+                        <span class="videohover"></span>
+                    </div><!-- end hover -->
+                </a>
+            </div><!-- end media -->
+            <div class="blog-meta">
+                <h4><a href="/{{ sidebar_video.category.slug }}/{{ sidebar_video.slug }}/" title="">{{ sidebar_video.title }}</a></h4>
+            </div><!-- end meta -->
+        </div><!-- end blog-box -->
+        {% endfor %}
+    </div><!-- end videos -->
+</div><!-- end widget -->
 
 
-                            <div class="widget">
-                                <h2 class="widget-title">Bizi takip et</h2>
 
-                                <div class="row text-center">
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                                        <a href="{{ settings.facebook }}" class="social-button facebook-button">
-                                            <i class="fa fa-facebook"></i>
-                                        </a>
-                                    </div>
 
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                                        <a href="{{ settings.twitter }}" class="social-button twitter-button">
-                                            <i class="fa fa-twitter"></i>
-                                        </a>
-                                    </div>
 
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                                        <a href="{{ settings.instagram }}" class="social-button insta-button">
-                                        <i class="fa fa-instagram"></i>
-                                        </a>
-                                    </div>
 
-                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6">
-                                        <a href="{{ settings.youtube }}" class="social-button youtube-button">
-                                            <i class="fa fa-youtube"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>

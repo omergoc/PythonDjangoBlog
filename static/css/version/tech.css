@@ -197,8 +197,9 @@ h5 {
 }
 
 .footer {
-    background-color: #000000;
+    background:#cc0000;
     background-image: none;
+    color:white;
 }
 
 .footer .widget-title {
@@ -206,11 +207,11 @@ h5 {
 }
 
 .footer p {
-    color: #999999 !important;
+    color: white !important;
 }
 
 .footer a {
-    color: #999999 !important;
+    color: white !important;
 }
 
 .footer .link-widget li {
@@ -261,7 +262,7 @@ h5 {
 .footer a:hover,
 .footer .fa:hover,
 .footer .fa:focus {
-    color: #0091e5 !important;
+    color: #cc0000 !important;
 }
 
 .authorbox p a,
@@ -278,14 +279,14 @@ a:focus {
 .btn:hover,
 .btn:focus {
     color: #ffffff !important;
-    background: rgba(0, 0, 0, 0) linear-gradient(to right, #0091e5 0px, #00b7e5 100%) repeat scroll 0 0 !important
+    background: rgba(0, 0, 0, 0) linear-gradient(to right, #cc0000 0px, #FF0000 100%) repeat scroll 0 0 !important
 }
 
 .tag-cloud-single span,
 .navbar-inverse {
     color: #ffffff !important;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-    background: rgba(0, 0, 0, 0) linear-gradient(to right, #0091e5 0px, #00b7e5 100%) repeat scroll 0 0 !important
+    background: rgba(0, 0, 0, 0) linear-gradient(to right, #cc0000 0px, #FF0000 100%) repeat scroll 0 0 !important
 }
 
 .gp-button.btn-primary:hover,

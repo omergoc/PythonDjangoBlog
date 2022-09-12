@@ -1,0 +1,90 @@
+{% extends "partials/_base.html" %}
+{% load static %}
+{% block seo %}
+<meta name="description" content=" {{ writer.author }}">
+<meta name="author" content=" {{ writer.description }}">
+{% endblock seo %}
+{% block body %}
+
+        <div class="page-title lb single-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <h2><i class="fa fa-star bg-orange"></i> Yazarlarımız</h2>
+                    </div><!-- end col -->
+                    <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                            <li class="breadcrumb-item"><a href="/yazarlar/">Yazarlar</a></li>
+                        </ol>
+                    </div><!-- end col -->                    
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end page-title -->
+
+        <section class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-wrapper">
+
+                            <hr class="invis1">
+
+                            <div class="blog-list clearfix">
+
+                            {% for author in writers_list  %}
+                                <div class="blog-box row">
+                                    <div class="col-md-4">
+                                        <div class="post-media  rounded-circle">
+                                            <a href="/writer/{{ author.slug }}/" title="">
+                                                <img src="{{ author.image.url }}" alt="yazar" class="img-fluid rounded-circle">
+                                                <div class="hovereffect"></div>
+                                            </a>
+                                        </div><!-- end media -->
+                                    </div><!-- end col -->
+
+                                    <div class="blog-meta big-meta col-md-8">
+                                        <h4><a href="/writer/{{ author.slug }}/" title="">{{ author.first_name }} {{ author.last_name }}</a></h4>
+                                        <p>{{ author.description  }}</p>
+                                        <small>{{ author.created_date }}</small>
+                                        <small><a href="writer/{{ author.slug }}/" title="">{{ author.username }}</a></small>
+                                    </div><!-- end meta -->
+                                </div><!-- end blog-box --> 
+                                <hr class="invis">
+
+                            {% endfor %}
+
+                            </div><!-- end blog-list -->
+                        </div><!-- end page-wrapper -->
+                        <hr class="invis">
+                            <div class="col-md-12">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-start">
+                                        <li class="page-item">
+                                        {% if author_articles.has_previous %}
+                                        <a class="page-link" href="?sayfa={{ author_articles.previous_page_number }}">Geri</a>
+                                        {% endif %}
+                                        </li>
+                                        <li class="page-item">
+                                          <a class="page-link" href="#">{{ author_articles.number }} / {{ author_articles.paginator.num_pages }}</a>
+                                        </li>
+                                        <li class="page-item">
+                                        {% if author_articles.has_next %}
+                                            <a class="page-link" href="?sayfa={{ author_articles.next_page_number }}">İleri</a>
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div><!-- end col -->
+                        </div><!-- end row -->
+
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sidebar">
+                            {% include "partials/_sidebar.html" %}
+                        </div><!-- end sidebar -->
+                    </div><!-- end col -->
+                    
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section>
+        {% endblock body %}

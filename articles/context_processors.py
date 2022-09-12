@@ -1,9 +1,13 @@
-from functools import wraps
-from .models import Categories,Articles,Comments
+from .models import Categories,Comments, Videos, News
 from settings import models
 
+
 def categories_renderer(request):
-    articles = Articles.objects.order_by('-views')[:3]
+    
     settings = models.Setting.objects.last()
     comms = Comments.objects.order_by('-id')[:3]
-    return {'all_categories': Categories.objects.all(),'sidebar_articles':articles,'sidebar_comms':comms,'settings':settings}
+    videos = Videos.objects.order_by('-id')[:3]
+    news = News.objects.order_by('-id')[:3]
+    categories = Categories.objects.all()
+
+    return { 'all_categories': categories, 'sidebar_videos': videos, 'sidebar_news': news, 'sidebar_comms': comms, 'settings': settings}

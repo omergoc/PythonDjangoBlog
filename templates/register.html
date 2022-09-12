@@ -1,0 +1,54 @@
+{% extends "partials/_base.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-title lb single-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <h2><i class="fa fa-font-awesome bg-orange"></i>Kayıt Paneli</h2>
+                    </div><!-- end col -->
+                    <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                            <li class="breadcrumb-item active">Kayıt Ol</li>
+                        </ol>
+                    </div><!-- end col -->                    
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end page-title -->
+
+        <section class="section wb">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                       <form method="post">
+                        {% csrf_token %}
+                        <label for="inputEmail4">Kullanıcı Adı*</label>
+                        {{ form.username }}
+                        <br>
+                        <label for="inputEmail4">Ad*</label>
+                        {{ form.first_name }}
+                        <br>
+                        <label for="inputEmail4">Soyad*</label>
+                        {{ form.last_name }}
+                        <br>
+                        <label for="inputEmail4">E-Posta*</label>
+                        {{ form.email }}
+                        <br>
+                        <label for="inputEmail4">Şifre*</label>
+                        {{ form.password }}
+                        <br>
+                        <label for="inputEmail4">Tekrar Şifre*</label>
+                        {{ form.confirm }}
+                        <br>
+                        <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+                    </form>
+                    <br><br><br>
+                    </div><!-- end col -->
+                    <div class="col-lg-3"></div>
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section>
+{% endblock body %}

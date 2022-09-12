@@ -23,7 +23,7 @@
 
                                 <div class="blog-meta big-meta">
                                     <small><a href="#" title="">{{ article.created_date }}</a></small>
-                                    <small><a href="/author/{{ article.author.slug }}/" title="">{{ article.author }}</a></small>
+                                    <small><a href="/writer/{{ article.writer.slug }}/" title="">{{ article.writer.first_name }} {{ article.writer.last_name }}</a></small>
                                     <small><i class="fa fa-eye"></i> {{ article.views }}</small>
                                 </div><!-- end meta -->
                             </div><!-- end title -->
@@ -35,42 +35,26 @@
                             <div class="blog-content">  
                                 {{ article.content | safe }}
                             </div><!-- end content -->
+                            <div class="panel">  
+                                <button id="like" class="fb-button btn btn-warring"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                    <span class="down-mobile">Beğen</span></button>
+                                    <input id="article_id" type="hidden" value="{{ article.id }}" name="article_id">
+                            </div><!-- end content -->
+
+
                             <hr class="invis1">
                             <div class="custombox authorbox clearfix">
                                 <h4 class="small-title">Yazar Hakkında</h4>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                                        <img src="{{ article.author.image.url}}" alt="" class="img-fluid rounded-circle"> 
+                                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" class="img-fluid rounded-circle"> 
                                     </div><!-- end col -->
 
                                     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                        <h4><a href="/author/{{ article.author.slug }}/">{{ article.author.author }}</a></h4>
-                                        <p>{{ article.author.description }}</p>
-
-                                        <div class="topsocial">
-                                            <a href="{{ article.author.facebook }}" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>
-                                            <a href="{{ article.author.youtube }}" data-toggle="tooltip" data-placement="bottom" title="Youtube"><i class="fa fa-youtube"></i></a>
-                                            <a href="{{ article.author.github }}" data-toggle="tooltip" data-placement="bottom" title="Github"><i class="fa fa-github"></i></a>
-                                            <a href="{{ article.author.twitter }}" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
-                                            <a href="{{ article.author.instagram }}" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram"></i></a>
-                                            <a href="{{ article.author.website }}" data-toggle="tooltip" data-placement="bottom" title="Website"><i class="fa fa-link"></i></a>
-                                        </div><!-- end social -->
-
+                                        <h4><a href="/writer/{{ article.writer.slug }}/">{{ article.writer.first_name }}  {{ article.writer.last_name }}</a></h4>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
                             </div>
-                            <hr class="invis1">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="banner-spot clearfix">
-                                        <div class="banner-img">
-                                        <a href="{{ settings.image2Url }}">
-                                            <img src="{{ settings.image2.url }}" alt="" class="img-fluid">
-                                            </a>
-                                        </div><!-- end banner-img -->
-                                    </div><!-- end banner -->
-                                </div><!-- end col -->
-                            </div><!-- end row -->
 
 
                             <hr class="invis1">
@@ -106,31 +90,87 @@
                             </div><!-- end custom-box -->
 
                             <hr class="invis1">
-
+                            {% if request.user.is_authenticated %}
                             <div class="custombox clearfix">
-                                <h4 class="small-title">Yorum Ekle</h4>
+                                <h4 class="small-title">Yorum Paneli</h4>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <form class="form-wrapper" method="post">
-                                            {% csrf_token %}
-                                            {{ form.name }}
-                                            {{ form.email }}
-                                            {{ form.content }}
-                                            <button type="submit" class="btn btn-primary">Yorumu Gönder</button>
-                                        </form>
+                                        <div id="commentpanel" class="form-wrapper">
+                                            <input type="hidden" id="slug" value="{{ article.slug }}" class="form-control" >
+                                            <input type="hidden" id="type" value="{{ article.table_name }}" class="form-control" >
+                                            <textarea class="form-control" id="content" placeholder="Yorumunuz"></textarea>
+                                            <button id="comment" class="fb-button btn btn-warring"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                                <span class="down-mobile">Yorum Yap</span></button>                                        
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="custombox clearfix">
+                                <h4 class="small-title">Yorum Paneli</h4>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        Yorum Yapmak İçin Lütfen Giriş Yapınız.
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
+
                         </div><!-- end page-wrapper -->
                     </div><!-- end col -->
                       <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                         <div class="sidebar">
-                            {% include "partials/_sidebarads.html" %}
                             {% include "partials/_sidebar.html" %}
                         </div><!-- end row -->
                         </div>
                         </div>
             </div><!-- end container -->
         </section>
+        <script>
+            $(document).ready(function() {
+                $("button[id^='like'").click(function() {
+                    var id = $(this).closest(".panel").find('#article_id').val();
+                    $.ajax({
+                        url: "http://127.0.0.1:8000/like/",
+                        type: 'POST',
+                        data: {
+                            id: id
+                        },
+                        success: function(gelenveri) {
+                            console.log(gelenveri);
+                            //alert("İşlem Başarılı");
+                            toastr.success('İlgili İçeriği Beğendiniz.', 'Success', {timeOut: 2000, progressBar : true});
+                        },
+                        error: function(hata) {
+                            console.log(hata);
+                        }
+                    });
+                });
+
+                $("button[id^='comment'").click(function() {
+                    var slug = $(this).closest("#commentpanel").find('#slug').val();
+                    var type = $(this).closest("#commentpanel").find('#type').val();
+                    var content = $(this).closest("#commentpanel").find('#content').val();
+                    $.ajax({
+                        url: "http://127.0.0.1:8000/comment/",
+                        type: 'POST',
+                        data: {
+                            slug: slug,
+                            type: type,
+                            content: content,
+                        },
+                        success: function(gelenveri) {
+                            console.log(gelenveri);
+                            alert("İşlem Başarılı")
+                            //toastr.success('İlgili İçeriği Beğendiniz.', 'Success', {timeOut: 2000, progressBar : true});
+                        },
+                        error: function(hata) {
+                            console.log(hata);
+                        }
+                    });
+                    
+                });
+            });
+        </script>
 {% endblock body %}
 

@@ -1,0 +1,88 @@
+{% extends "partials/_base.html" %}
+{% load static %}
+{% block seo %}
+<meta name="description" content="En Çok Okunan Beğenilenler">
+<meta name="author" content="{{ settings.author }}">
+{% endblock seo %}
+{% block body %}
+        <div class="page-title lb single-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <h2><i class="fa fa-star bg-orange"></i> En Çok Beğenilenler  <small class="hidden-xs-down hidden-sm-down">En Çok Beğenilen Gönderiler</small></h2>
+                    </div><!-- end col -->
+                    <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                            <li class="breadcrumb-item active">En Çok Beğenilenler </li>
+                        </ol>
+                    </div><!-- end col -->                    
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end page-title -->
+
+        <section class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                        <div class="page-wrapper">
+                            <div class="blog-list clearfix">
+                            {% for article  in articles  %}
+                            
+                                <div class="blog-box row">
+                                    <div class="col-md-6">
+                                        <div class="post-media">
+                                            <a href="/{{ article.category.slug }}/{{ article.slug }}/" title="">
+                                                <img src="{{ article.image.url }}" alt="" class="img-fluid">
+                                             <div class="hovereffect"></div>
+                                            </a>
+                                        </div><!-- end media -->
+                                    </div><!-- end col -->
+                                    <div class="blog-meta big-meta col-md-6">
+                                        <h4><a href="/{{ article.category.slug }}/{{ article.slug }}/" title="">{{ article.title }}</a></h4>
+                                        <p>{{ article.description}}</p>
+                                        <small class="firstsmall"><a class="bg-orange" href="/{{ article.category.slug }}/" title="">{{ article.category.name }}</a></small>
+                                        <small>{{ article.created_date }}</small>
+                                        <small><a href="/writer/{{ article.writer.slug }}/" title="">{{ article.writer.first_name }}</a></small>
+                                        <small><i class="fa fa-eye"></i> {{ article.views }}</small>
+                                    </div><!-- end meta -->
+                                </div><!-- end blog-box -->
+                                <br><br>
+                            {% endfor %}
+
+                            </div><!-- end blog-list -->
+                        </div><!-- end page-wrapper -->
+                        <hr class="invis">
+                            <div class="col-md-12">
+                                <div class="pagination">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-start">
+                                        <li class="page-item">
+                                        {% if articles.has_previous %}
+                                        <a class="page-link" href="?sayfa={{ articles.previous_page_number }}">Geri</a>
+                                        {% endif %}
+                                        </li>
+                                        <li class="page-item">
+                                          <a class="page-link" href="#">{{ articles.number }} / {{ articles.paginator.num_pages }}</a>
+                                        </li>
+                                        <li class="page-item">
+                                        {% if articles.has_next %}
+                                            <a class="page-link" href="?sayfa={{ articles.next_page_number }}">İleri</a>
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </nav>
+                                </div>
+                            </div><!-- end col -->
+                        </div><!-- end row -->
+
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                        <div class="sidebar">
+                            {% include "partials/_sidebar.html" %}
+                        </div><!-- end sidebar -->
+                    </div><!-- end col -->
+                    
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section>
+        {% endblock body %}
