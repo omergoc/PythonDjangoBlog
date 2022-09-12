@@ -1,6 +1,3 @@
-from time import process_time_ns
-from turtle import st
-from winreg import HKEY_LOCAL_MACHINE
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.shortcuts import redirect
