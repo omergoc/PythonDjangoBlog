@@ -137,8 +137,6 @@
                             id: id
                         },
                         success: function(gelenveri) {
-                            console.log(gelenveri);
-                            //alert("İşlem Başarılı");
                             toastr.success('İlgili İçeriği Beğendiniz.', 'Success', {timeOut: 2000, progressBar : true});
                         },
                         error: function(hata) {
@@ -160,9 +158,7 @@
                             content: content,
                         },
                         success: function(gelenveri) {
-                            console.log(gelenveri);
-                            alert("İşlem Başarılı")
-                            //toastr.success('İlgili İçeriği Beğendiniz.', 'Success', {timeOut: 2000, progressBar : true});
+                            toastr.success('Yorumu Başarılı Bir Şekilde Gönderdiniz.', 'Success', {timeOut: 2000, progressBar : true});
                         },
                         error: function(hata) {
                             console.log(hata);
