@@ -2,7 +2,6 @@ from blogapp.settings.base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-
 ALLOWED_HOSTS = ["78.135.107.100"]
 
 DATABASES = {
