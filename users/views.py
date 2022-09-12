@@ -98,6 +98,9 @@ def index(request,writers_slug):
     }
     return render(request, 'author.html',context)
 
+@care_control
+def profile(request):
+    return render(request, 'profile.html')
 
 @care_control
 def writers(request):

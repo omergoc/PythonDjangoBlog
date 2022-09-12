@@ -1,0 +1,79 @@
+{% extends "partials/_base.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-title lb single-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <h2><i class="fa fa-font-awesome bg-orange"></i>Profil Sayfası</h2>
+                    </div><!-- end col -->
+                    <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                            <li class="breadcrumb-item active">Profil Sayfası</li>
+                        </ol>
+                    </div><!-- end col -->                    
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end page-title -->
+
+        <section class="section wb">
+            <div class="container">
+                <div class="row d-flex">
+                    <div class="col-lg-4">
+                       <form method="post">
+                        <label for="inputEmail4">E-Posta</label>
+                        <input type="email" disabled class="form-control" id="inputEmail4" placeholder="E-Posta">
+                        <br>
+                        <label for="inputEmail4">Ad</label>
+                        <input type="text"  class="form-control" id="inputEmail4" placeholder="Adınız">
+                        <br>
+                        <label for="inputEmail4">Soyad</label>
+                        <input type="text"  class="form-control" id="inputEmail4" placeholder="Soyadınız">
+                        <br>
+                        <label for="inputEmail4">Doğum Tarihi</label>
+                        <input type="date"  class="form-control" id="inputEmail4" placeholder="Doğum Tarihi">
+                        <br>
+                        <label for="exampleFormControlTextarea1">Hakkında</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="9"></textarea>
+                        <br>
+                    </form>
+                    </div><!-- end col -->
+                    <div class="col-lg-4">
+                        <form method="post">
+                         <label for="inputEmail4">Facebook</label>
+                         <input type="text"  class="form-control" id="inputEmail4" placeholder="Facebook">
+                         <br>
+                         <label for="inputEmail4">İnstagram</label>
+                         <input type="text"  class="form-control" id="inputEmail4" placeholder="İnstagram">
+                         <br>
+                         <label for="inputEmail4">Twitter</label>
+                         <input type="text"  class="form-control" id="inputEmail4" placeholder="Twitter">
+                         <br>
+                         <label for="inputEmail4">Linkedin</label>
+                         <input type="text"  class="form-control" id="inputEmail4" placeholder="Linkedin">
+                         <br>
+                         <label for="inputEmail4">Github</label>
+                         <input type="text"  class="form-control" id="inputEmail4" placeholder="Github">
+                         <br>
+                         <label for="inputEmail4">Web Site</label>
+                         <input type="text"  class="form-control" id="inputEmail4" placeholder="Web Site">
+                         <br>
+                         <button type="submit" class="btn btn-primary">Kaydet</button>
+                     </form>
+                     </div><!-- end col -->
+                     <div class="col-lg-4">
+                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="yazar" class="img-fluid rounded-circle">
+                        <br><br>
+                        <label for="inputEmail4">Profil Fotoğrafı</label>
+                        <input type="file"  class="form-control" id="inputEmail4">
+                        <br>
+                        <label for="inputEmail4">Cv Yükle</label>
+                        <input type="file"  class="form-control" id="inputEmail4">
+                     </form>
+                     </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section>
+{% endblock body %}
