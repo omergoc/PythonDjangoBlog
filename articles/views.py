@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from .models import Categories, Articles,Comments,LikedArticle, Videos, News
 from users.models import Account
 from settings.models import Setting
+from django.http import Http404
+
 
 
 def care(request,categories_slug):
@@ -105,6 +107,10 @@ def videos(request):
 @care_control
 def category(request,categories_slug):
     category_types = None
+    try:
+        category = Categories.objects.get(slug=categories_slug)
+    except Categories.DoesNotExist:
+        raise Http404("404 Not Found | Aradığınız Sayfa Bulunamadı.")
 
     category = Categories.objects.get(slug=categories_slug)
     category_id = category.id

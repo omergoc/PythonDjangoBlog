@@ -22,16 +22,16 @@
                                 <h3>{{video.title}}</h3>
 
                                 <div class="blog-meta big-meta">
-                                    <small><a href="#" title="">{{ video.created_date }}</a></small>
+                                    <small><a href="#" >{{ video.created_date }}</a></small>
                                     <small><a href="/writer/{{ video.writer.slug }}/" title="">{{ video.writer.first_name }} {{ video.writer.last_name }}</a></small>
                                     <small><i class="fa fa-eye"></i> {{ video.views }}</small>
                                 </div><!-- end meta -->
                             </div><!-- end title -->
 
-                            <div class="single-post-media"> 
-                                <img src="{{ video.image.url }}" alt="" class="img-fluid">
-                            </div><!-- end media -->
-
+                            <div class=" embed-youtube"> 
+                                    <iframe src="https://www.youtube.com/embed/{{ video.video_link }}" width="750" height="563"></iframe>
+                            </div>
+                            <br></br><hr>
                             <div class="blog-content">  
                                 {{ video.content | safe }}
                             </div><!-- end content -->
@@ -40,7 +40,6 @@
                                     <span class="down-mobile">Beğen</span></button>
                                     <input id="video_id" type="hidden" value="{{ video.id }}" name="video_id">
                             </div><!-- end content -->
-
 
                             <hr class="invis1">
                             <div class="custombox authorbox clearfix">
@@ -55,10 +54,7 @@
                                     </div><!-- end col -->
                                 </div><!-- end row -->
                             </div>
-
-
                             <hr class="invis1">
-
                             <div class="custombox clearfix">
                                 <h4 class="small-title">Yorumlar</h4>
                                 <div class="row">

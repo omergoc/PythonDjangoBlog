@@ -174,6 +174,7 @@ class Videos(models.Model):
     title = models.CharField(max_length=100,verbose_name="Başlık",unique=True)
     description = models.CharField(max_length=250,verbose_name="Açıklama", null=True)
     content = RichTextField(verbose_name="İçerik")
+    video_link = models.CharField(max_length=250,verbose_name="Youtube Video Adresi", null=True)
     writer = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
