@@ -35,11 +35,16 @@
                             <div class="blog-content">  
                                 {{ video.content | safe }}
                             </div><!-- end content -->
+
+                            {% if request.user.is_authenticated %}
                             <div class="panel">  
                                 <button id="like" class="fb-button btn btn-warring"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
                                     <span class="down-mobile">Beğen</span></button>
                                     <input id="video_id" type="hidden" value="{{ video.id }}" name="video_id">
                             </div><!-- end content -->
+                            {% endif %}
+
+
 
                             <hr class="invis1">
                             <div class="custombox authorbox clearfix">
@@ -127,7 +132,7 @@
                 $("button[id^='like'").click(function() {
                     var id = $(this).closest(".panel").find('#video_id').val();
                     $.ajax({
-                        url: "http://78.135.107.100/like/",
+                        url: "{% url 'article_like' %}",
                         type: 'POST',
                         data: {
                             id: id
@@ -148,7 +153,7 @@
                     var type = $(this).closest("#commentpanel").find('#type').val();
                     var content = $(this).closest("#commentpanel").find('#content').val();
                     $.ajax({
-                        url: "http://78.135.107.100//comment/",
+                        url: "{% url 'article_comment' %}",
                         type: 'POST',
                         data: {
                             slug: slug,
