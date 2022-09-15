@@ -7,7 +7,8 @@ from django.contrib import messages
 from .models import Slider
 from django.shortcuts import redirect
 from .forms import ContactForm
-
+from django.http import HttpResponse
+from django.views.decorators.http import require_GET
 
 
 def care(request):
@@ -25,6 +26,14 @@ def care_control(function):
 
 def handler404(request, exception=None):
     return render(request, '404.html')
+
+@require_GET
+def robots_txt(request):
+    lines = [
+        "User-Agent: *",
+        "Disallow: /"
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
 
 @care_control
 def index(request):
