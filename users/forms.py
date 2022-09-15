@@ -36,6 +36,8 @@ class RegisterForm(forms.Form):
         'class': 'form-control',
         'placeholder': 'Tekrar Şifre'
     }))
+    kvkk = forms.BooleanField()
+    term_of_use = forms.BooleanField()
 
     def clean(self):
         username = self.cleaned_data.get('username')
@@ -44,8 +46,11 @@ class RegisterForm(forms.Form):
         email = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
         confirm = self.cleaned_data.get('confirm')
-
-        if password and confirm and password != confirm:
+        kvkk = self.cleaned_data.get('kvkk')
+        term_of_use = self.cleaned_data.get('term_of_use')
+        if not kvkk and not term_of_use:
+            raise forms.ValidationError('KVKK VE Kullanım Şartlarını Kabul Etmelisiniz !!!')
+        elif password and confirm and password != confirm:
             raise forms.ValidationError('Şifreler Eşleşmiyor !!!')
         
         values = {
@@ -57,5 +62,3 @@ class RegisterForm(forms.Form):
             "confirm" : confirm,
         }
         return values
-
-

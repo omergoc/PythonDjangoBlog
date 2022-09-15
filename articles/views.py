@@ -6,6 +6,7 @@ from .models import Categories, Articles,Comments,LikedArticle, Videos, News
 from users.models import Account
 from settings.models import Setting
 from django.http import Http404
+from django.db import connection
 
 
 
@@ -104,6 +105,27 @@ def videos(request):
     }
     return render(request, 'category.html',context)
 
+def sql_test_code(id):
+    #raw sql query here
+    query = f"""
+        SELECT * FROM articles_articles INNER JOIN articles_categories ON articles_categories.id = {id} 
+        INNER JOIN
+        articles_videos
+        ON
+        articles_videos.category_id = {id}
+        INNER JOIN
+        articles_news
+        ON
+        articles_news.category_id = {id}"""
+    
+    #a cursor object
+    with connection.cursor() as cursor:
+        #execute the query
+        cursor.execute(query)
+        #get all the rows as a list
+        rows = cursor.fetchall()
+    return rows
+
 @care_control
 def category(request,categories_slug):
     category_types = None
@@ -114,7 +136,10 @@ def category(request,categories_slug):
 
     category = Categories.objects.get(slug=categories_slug)
     category_id = category.id
-    article_list = Articles.objects.filter(category=category_id,available=True)
+    article_list = list(Articles.objects.filter(category=category_id,available=True))
+    video_list = list(Videos.objects.filter(category=category_id,available=True))
+    new_list = list(News.objects.filter(category=category_id,available=True))
+    article_list = article_list + new_list + video_list
     category_types = category
         
     paginator = Paginator(article_list, 4) 

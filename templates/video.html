@@ -127,7 +127,7 @@
                 $("button[id^='like'").click(function() {
                     var id = $(this).closest(".panel").find('#video_id').val();
                     $.ajax({
-                        url: "http://127.0.0.1:8000/like/",
+                        url: "http://78.135.107.100/like/",
                         type: 'POST',
                         data: {
                             id: id
@@ -148,7 +148,7 @@
                     var type = $(this).closest("#commentpanel").find('#type').val();
                     var content = $(this).closest("#commentpanel").find('#content').val();
                     $.ajax({
-                        url: "http://127.0.0.1:8000/comment/",
+                        url: "http://78.135.107.100//comment/",
                         type: 'POST',
                         data: {
                             slug: slug,
@@ -156,9 +156,7 @@
                             content: content,
                         },
                         success: function(gelenveri) {
-                            console.log(gelenveri);
-                            alert("İşlem Başarılı")
-                            //toastr.success('İlgili İçeriği Beğendiniz.', 'Success', {timeOut: 2000, progressBar : true});
+                            toastr.success('İlgili İçeriği Beğendiniz.', 'Success', {timeOut: 2000, progressBar : true});
                         },
                         error: function(hata) {
                             console.log(hata);

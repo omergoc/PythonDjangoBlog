@@ -22,53 +22,58 @@
             <div class="container">
                 <div class="row d-flex">
                     <div class="col-lg-4">
-                       <form method="post">
+                       <form method="post" enctype="multipart/form-data">
                         <label for="inputEmail4">E-Posta</label>
-                        <input type="email" disabled class="form-control" id="inputEmail4" placeholder="E-Posta">
+                        <input type="email" name="email" class="form-control" value="{{ user.email }}" placeholder="E-Posta">
                         <br>
                         <label for="inputEmail4">Ad</label>
-                        <input type="text"  class="form-control" id="inputEmail4" placeholder="Adınız">
+                        <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}" placeholder="Adınız">
                         <br>
                         <label for="inputEmail4">Soyad</label>
-                        <input type="text"  class="form-control" id="inputEmail4" placeholder="Soyadınız">
+                        <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}" id="inputEmail4" placeholder="Soyadınız">
                         <br>
                         <label for="inputEmail4">Doğum Tarihi</label>
-                        <input type="date"  class="form-control" id="inputEmail4" placeholder="Doğum Tarihi">
+                        <input type="date" name="birthday"  class="form-control" value="{{ user.birthday }}" placeholder="Doğum Tarihi">
                         <br>
                         <label for="exampleFormControlTextarea1">Hakkında</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="9"></textarea>
+                        <textarea name="description" class="form-control" date="{{ user.description }}" rows="5"></textarea>
                         <br>
-                    </form>
+                        <label for="vehicle1">Profilimi Göster 
+                            <input type="checkbox" 
+                            {% if user.profile_activate %}
+                            checked
+                            {% endif %}
+                            name="profile_activate" class="form-control" id="vehicle1"></label>
+                        <br>
                     </div><!-- end col -->
                     <div class="col-lg-4">
-                        <form method="post">
                          <label for="inputEmail4">Facebook</label>
-                         <input type="text"  class="form-control" id="inputEmail4" placeholder="Facebook">
+                         <input type="text" name="facebook" class="form-control" value="{{ user.facebook }}" placeholder="Facebook">
                          <br>
                          <label for="inputEmail4">İnstagram</label>
-                         <input type="text"  class="form-control" id="inputEmail4" placeholder="İnstagram">
+                         <input type="text" name="instagram" class="form-control" value="{{ user.instagram }}" placeholder="İnstagram">
                          <br>
                          <label for="inputEmail4">Twitter</label>
-                         <input type="text"  class="form-control" id="inputEmail4" placeholder="Twitter">
+                         <input type="text" name="twitter" class="form-control" value="{{ user.twitter }}" placeholder="Twitter">
                          <br>
                          <label for="inputEmail4">Linkedin</label>
-                         <input type="text"  class="form-control" id="inputEmail4" placeholder="Linkedin">
+                         <input type="text" name="linkedin" class="form-control" value="{{ user.linkedin }}" placeholder="Linkedin">
                          <br>
                          <label for="inputEmail4">Github</label>
-                         <input type="text"  class="form-control" id="inputEmail4" placeholder="Github">
+                         <input type="text" name="github" class="form-control" value="{{ user.github }}" placeholder="Github">
                          <br>
                          <label for="inputEmail4">Web Site</label>
-                         <input type="text"  class="form-control" id="inputEmail4" placeholder="Web Site">
+                         <input type="text" name="website" class="form-control" value="{{ user.website }}" placeholder="Web Site">
                          <br>
                          <button type="submit" class="btn btn-primary">Kaydet</button>
-                     </form>
                      </div><!-- end col -->
                      <div class="col-lg-4">
-                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="yazar" class="img-fluid rounded-circle">
+                        <img src="{{ user.image.url }}" alt="yazar" class="img-fluid rounded-circle">
                         <br><br>
                         <label for="inputEmail4">Profil Fotoğrafı</label>
                         <input type="file"  class="form-control" id="inputEmail4">
                         <br>
+                        <a href="{{ user.cv.url }}"><label for="inputEmail4">Cv Görüntüle</label></a><br>
                         <label for="inputEmail4">Cv Yükle</label>
                         <input type="file"  class="form-control" id="inputEmail4">
                      </form>

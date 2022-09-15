@@ -13,10 +13,9 @@
                              <div class="shadoweffect">
                                 <div class="shadow-desc">
                                     <div class="blog-meta">
-                                        <span class="bg-orange"><a href="/{{ slider.category.slug }}/" title="">{{ slider.category.name }}</a></span>
-                                        <h4><a href="/{{ slider.category.slug }}/{{ slider.slug }}/" title="">{{ slider.title }}</a></h4>
+                                        <h4><a href="/{{ slider.category.slug }}/{{ slider.slug }}/" title="{{ slider.title }}">{{ slider.title }}</a></h4>
                                         <small>{{ slider.created_date }}</small>
-                                        <small><a href="author/{{ slider.author.slug }}/" title="">{{ slider.author.author }}</a></small>
+                                        <small><a href="author/{{ slider.author.slug }}/" title="{{ slider.writer.first_name }} {{ slider.writer.last_name }}">{{ slider.writer.first_name }} {{ slider.writer.last_name }}</a></small>
                                     </div>
                                 </div>
                             </div>

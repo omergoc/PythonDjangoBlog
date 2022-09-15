@@ -10,12 +10,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <h2><i class="fa fa-star bg-orange"></i> Yazar: {{ user.first_name }} {{ user.last_name }}</h2>
+                        <h2><i class="fa fa-star bg-orange"></i> Üye: {{ user.first_name }} {{ user.last_name }}</h2>
                     </div><!-- end col -->
                     <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
-                            <li class="breadcrumb-item"><a href="#">Yazar</a></li>
+                            <li class="breadcrumb-item"><a href="#">Üye</a></li>
                             <li class="breadcrumb-item active">{{ user.username }}</li>
                         </ol>
                     </div><!-- end col -->                    
@@ -29,7 +29,7 @@
                     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
                         <div class="page-wrapper">
                             <div class="custombox authorbox clearfix">
-                                <h4 class="small-title">Yazar Hakkında</h4>
+                                <h4 class="small-title">Hakkında</h4>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
                                         <img src="{{ writer.image.url}}" alt="" class="img-fluid rounded-circle"> 
@@ -61,6 +61,9 @@
                                             <a href="{{ writer.linkedin }}" data-toggle="tooltip" data-placement="bottom" title="linkedin"><i class="fa fa-linkedin"></i></a>
                                             {% endif %}
                                         </div>
+                                        <br></br>
+                                        <h6>Toplam Beğeni: 0</h6>
+                                        <h6>Toplam İçerik: 0</h6>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
                             </div><!-- end author-box -->

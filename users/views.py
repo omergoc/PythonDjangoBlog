@@ -59,25 +59,31 @@ def register(request):
         last_name = form.cleaned_data.get('last_name')
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
-        is_active = False
-        new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active)
-        new_user.set_password(password)
-        new_user.save()
+        control = Account.objects.get(username = username)
 
-        current_site = get_current_site(request)  
-        mail_subject = 'Activation link has been sent to your email id'  
-        message = render_to_string('acc_active_email.html', {  
-            'user': new_user,  
-            'domain': current_site.domain,  
-            'uid':urlsafe_base64_encode(force_bytes(new_user.pk)),  
-            'token':account_activation_token.make_token(new_user),  
-        })  
-        to_email = form.cleaned_data.get('email')  
-        email = EmailMessage(  
-                    mail_subject, message, to=[to_email]  
-        )  
-        email.send()  
-        return render(request, 'Email.html',{'msg':'Kaydı tamamlamak için lütfen e-posta adresinizi onaylayın'})  
+        if username not in control.username:
+            is_active = False
+            new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active)
+            new_user.set_password(password)
+            new_user.save()
+
+            current_site = get_current_site(request)  
+            mail_subject = 'Activation link has been sent to your email id'  
+            message = render_to_string('acc_active_email.html', {  
+                'user': new_user,  
+                'domain': current_site.domain,  
+                'uid':urlsafe_base64_encode(force_bytes(new_user.pk)),  
+                'token':account_activation_token.make_token(new_user),  
+            })  
+            to_email = form.cleaned_data.get('email')  
+            email = EmailMessage(  
+                        mail_subject, message, to=[to_email]  
+            )  
+            email.send()  
+            return render(request, 'Email.html',{'msg':'Kaydı tamamlamak için lütfen e-posta adresinizi onaylayın'})
+        else:
+            messages.warning(request, "Kullanıcı Adı Daha Önce Kullanılmış.")
+            return redirect(loginUser) 
         
 
     form = RegisterForm()
@@ -116,16 +122,14 @@ def index(request,writers_slug):
 
     article_list = Articles.objects.filter(writer=writer_id ).all()
     print(article_list)
-    paginator = Paginator(article_list, 5) # Show 25 contacts per page
+    paginator = Paginator(article_list, 5) 
 
     page = request.GET.get('sayfa')
     try:
         articles = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         articles = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         articles = paginator.page(paginator.num_pages)
 
     context={
@@ -136,13 +140,16 @@ def index(request,writers_slug):
 
 @care_control
 def profile(request):
-    return render(request, 'profile.html')
+    if not request.user.username:
+        return redirect("index")
+
+    return render(request,'profile.html')
 
 @care_control
-def writers(request):
+def users(request):
 
     User = get_user_model()
-    writers_list = User.objects.all().filter(is_staff=True)
+    writers_list = User.objects.all().filter(profile_activate=True)
     paginator = Paginator(writers_list, 5) # Show 25 contacts per page
 
     page = request.GET.get('sayfa')

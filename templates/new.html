@@ -131,7 +131,7 @@
                 $("button[id^='like'").click(function() {
                     var id = $(this).closest(".panel").find('#new_id').val();
                     $.ajax({
-                        url: "http://127.0.0.1:8000/like/",
+                        url: "http://78.135.107.100/like/",
                         type: 'POST',
                         data: {
                             id: id

@@ -4,6 +4,7 @@ from django.shortcuts import render
 from articles.models import Articles
 from settings.models import Setting
 from django.contrib import messages
+from .models import Slider
 from django.shortcuts import redirect
 from .forms import ContactForm
 
@@ -27,7 +28,7 @@ def handler404(request, exception=None):
 
 @care_control
 def index(request):
-    slider_article = Articles.objects.order_by('-id')[:2]
+    slider_article = Slider.objects.order_by('-id')[:2]
     last_articles = Articles.objects.order_by('-id')[:10]
     context = {
         'articles': last_articles,
