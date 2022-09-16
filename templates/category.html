@@ -13,7 +13,7 @@
                     </div><!-- end col -->
                     <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                            <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
                             <li class="breadcrumb-item active">{{ category.name }} </li>
                         </ol>
                     </div><!-- end col -->                    
@@ -80,7 +80,7 @@
                                     <p>{{ article.description  }}</p>
                                     <small class="firstsmall"><a class="bg-orange" href="/{{ article.category.slug }}/" title="">{{ article.category.name }}</a></small>
                                     <small>{{ article.created_date }}</small>
-                                    <small><a href="writer/{{ article.writer.slug }}/" title="">{{ article.writer }}</a></small>
+                                    <small><a href="/writer/{{ article.writer.slug }}/" title="{{ article.writer.first_name }} {{ article.writer.last_name }}">{{ article.writer.first_name }} {{ article.writer.last_name }}</a></small>
                                     <small><i class="fa fa-eye"></i> {{ article.views }}</small>
                                 </div><!-- end meta -->
                             </div><!-- end blog-box -->
