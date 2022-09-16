@@ -30,6 +30,9 @@ def care_control(function):
 
 @care_control
 def loginUser(request):
+    if  request.user.username:
+        return redirect("index")
+        
     form = LoginForm(request.POST or None)
     if form.is_valid():       
         username = form.cleaned_data.get('username')
@@ -51,6 +54,8 @@ def loginUser(request):
 
 @care_control
 def register(request):
+    if  request.user.username:
+        return redirect("index")
 
     form = RegisterForm(request.POST or None)
     if form.is_valid():       
@@ -65,11 +70,19 @@ def register(request):
             control = None
 
         if control is  None:
-            is_active = False
+            is_active = True
             new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active)
             new_user.set_password(password)
             new_user.save()
+            try:
+                login(request,new_user)
+                messages.success(request, "Kayıt Başarılı...")
+                return redirect("index")
+            except:
+                messages.warning(request, "Bilinmedik Bir Hata Oluştu Lütfen Site Yöneticilerine Bildiriniz.")
+                return redirect(loginUser) 
 
+            """
             current_site = get_current_site(request)  
             mail_subject = 'Activation link has been sent to your email id'  
             message = render_to_string('acc_active_email.html', {  
@@ -84,6 +97,7 @@ def register(request):
             )  
             email.send()  
             return render(request, 'Email.html',{'msg':'Kaydı tamamlamak için lütfen e-posta adresinizi onaylayın'})
+            """
         else:
             messages.warning(request, "Kullanıcı Adı Daha Önce Kullanılmış.")
             return redirect(loginUser) 
