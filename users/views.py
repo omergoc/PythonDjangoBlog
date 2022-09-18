@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from users.models import Account
 from settings.models import Setting
 from django.contrib import messages
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm,UpdateUserForm
 from articles.models import Articles
 from django.contrib.auth import login, authenticate,logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -14,7 +14,8 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string  
 from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMessage  
-
+import random
+import os
 
 def care(request):
     return render(request, 'care.html')
@@ -159,24 +160,81 @@ def index(request,writers_slug):
 def profile(request):
     if not request.user.username:
         return redirect("index")
+    
+    if request.method == 'POST':  
+        
+        slug =  request.user.slug    
+        email = request.POST['email']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        birthday = request.POST['birthday']
+        description = request.POST['description']
+        facebook = request.POST['facebook']
+        instagram = request.POST['instagram']
+        twitter = request.POST['twitter']
+        linkedin = request.POST['linkedin']
+        github = request.POST['github']
+        website = request.POST['website']
+        profile_activate = 1 if request.POST['profile_activate'] == 'on' else 0
+        
+        if 'cv' in request.FILES:
+            if str(request.FILES['cv'])[-3:] == 'pdf':
+                cv = cv_upload(request.FILES['cv'], slug)
+            else:
+                messages.warning(request, "CV Bölümüne Sadece PDF Dosya Yükleyiniz...")
+                return redirect("profile")
+        else:
+            cv = request.POST['old_cv']
+
+        if 'image' in request.FILES:
+            if str(request.FILES['image'])[-3:] == 'jpg':
+                image = image_upload(request.FILES['image'], slug)
+
+            else:
+                messages.warning(request, "Profil Fotoğrafı Bölümüne Sadece PNG Dosya Yükleyiniz...")
+                return redirect("profile")
+        else:
+            image = request.POST['old_image']
+
+        try:
+            Account.objects.filter(username=request.user.username).update(profile_activate=profile_activate, email=email, first_name=first_name, last_name=last_name, birthday=birthday,description=description, facebook=facebook, instagram=instagram, twitter=twitter, linkedin=linkedin, github=github, website=website,cv=cv,image=image)
+            messages.success(request, "Güncelleme Başarılı...")
+        except:
+            messages.warning(request, "Hata Oluştu...")
+
+        return redirect("profile")
 
     return render(request,'profile.html')
+
+
+def cv_upload(f,slug): 
+    path = 'static/upload/cv/'+slug+'.pdf'
+    with open('static/upload/cv/'+slug+'.pdf', 'wb+') as destination:  
+        for chunk in f.chunks():  
+            destination.write(chunk)  
+    return path
+
+
+def image_upload(f,slug): 
+    path = 'static/upload/author/'+slug+'.jpg'
+    with open('static/upload/author/'+slug+'.jpg' , 'wb+') as destination:  
+        for chunk in f.chunks():  
+            destination.write(chunk)       
+    return path
 
 @care_control
 def users(request):
 
     User = get_user_model()
     writers_list = User.objects.all().filter(profile_activate=True)
-    paginator = Paginator(writers_list, 5) # Show 25 contacts per page
+    paginator = Paginator(writers_list, 5)
 
     page = request.GET.get('sayfa')
     try:
         writers = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         writers = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         writers = paginator.page(paginator.num_pages)
 
     context={

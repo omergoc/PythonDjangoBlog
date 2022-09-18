@@ -62,3 +62,52 @@ class RegisterForm(forms.Form):
             "confirm" : confirm,
         }
         return values
+
+
+class UpdateUserForm(forms.Form):
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Ad'
+    }))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Soyad'
+    }))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+        'class':'form-control',
+        'placeholder':'E-Posta'
+    }))
+    birthday = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Doğum Tarihi'
+    }))
+    about = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Hakkında'
+    }))
+    linkedin = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Linkedin'
+    }))
+    facebook = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Facebook'
+    }))
+    twitter = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Twitter'
+    }))
+    instagram = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'İnstagram'
+    }))
+    github = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Github'
+    }))
+    website = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'placeholder':'Web Site'
+    }))
+    image  = forms.FileField()
+    cv  = forms.FileField()

@@ -11,6 +11,10 @@
                     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
                         <div class="page-wrapper">
                             <div class="blog-title-area text-center">
+                                <div class=" embed-youtube"> 
+                                    <iframe src="https://www.youtube.com/embed/{{ video.video_link }}" width="750" height="563"></iframe>
+                            </div>
+                            <br></br>
                                 <ol class="breadcrumb hidden-xs-down">
                                     <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
                                     <li class="breadcrumb-item"><a href="#">{{ video.category.name }}</a></li>
@@ -21,17 +25,15 @@
 
                                 <h3>{{video.title}}</h3>
 
+                            <br>
                                 <div class="blog-meta big-meta">
                                     <small><a href="#" >{{ video.created_date }}</a></small>
                                     <small><a href="/writer/{{ video.writer.slug }}/" title="">{{ video.writer.first_name }} {{ video.writer.last_name }}</a></small>
                                     <small><i class="fa fa-eye"></i> {{ video.views }}</small>
                                 </div><!-- end meta -->
                             </div><!-- end title -->
+                            <hr>
 
-                            <div class=" embed-youtube"> 
-                                    <iframe src="https://www.youtube.com/embed/{{ video.video_link }}" width="750" height="563"></iframe>
-                            </div>
-                            <br></br><hr>
                             <div class="blog-content">  
                                 {{ video.content | safe }}
                             </div><!-- end content -->

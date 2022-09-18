@@ -31,7 +31,7 @@ def handler404(request, exception=None):
 @care_control
 def index(request):
     slider_article = Slider.objects.order_by('-id')[:2]
-    last_articles = Articles.objects.order_by('-id')[:10]
+    last_articles = Articles.objects.filter(available=True).order_by('-id')[:10]
     context = {
         'articles': last_articles,
         'slider_article': slider_article
@@ -89,7 +89,7 @@ def favorites(request):
     
 @care_control
 def trend(request):
-    article_list = Articles.objects.order_by('-views')
+    article_list = Articles.objects.filter(available=True).order_by('-views')
 
     paginator = Paginator(article_list, 4) # Show 25 contacts per page
 

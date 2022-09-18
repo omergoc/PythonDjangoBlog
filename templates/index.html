@@ -49,15 +49,15 @@
                                     <div class="col-md-8">
                                         <div class="post-media">
                                             <a title="">
-                                                <img src="{{ article.image.url }}" alt="" class="img-fluid">
+                                                <img src="{{ article.image.url }}" alt="{{ article.image.url }}" class="img-fluid">
                                              <div class="hovereffect"></div>
                                             </a>
                                         </div><!-- end media -->
                                     </div><!-- end col -->
                                     <div class="blog-meta big-meta col-md-4">
-                                        <h4><a href="/{{ article.category.slug }}/{{ article.slug }}/" title="">{{ article.title }}</a></h4>
+                                        <h4><a href="/{{ article.category.slug }}/{{ article.slug }}/" title="{{ article.title }}">{{ article.title }}</a></h4>
                                         <p>{{ article.description  }}</p>
-                                        <small class="firstsmall"><a class="bg-orange" href="/{{ article.category.slug }}/" title="">{{ article.category.name }}</a></small>
+                                        <small class="firstsmall"><a class="bg-orange" href="/{{ article.category.slug }}/" title="{{ article.category.name }}">{{ article.category.name }}</a></small>
                                         <small>{{ article.created_date }}</small>
                                         <small><a href="writer/{{ article.writer.slug }}/" title="">{{ article.writer }}</a></small>
                                         <small><i class="fa fa-eye"></i> {{ article.views }}</small>

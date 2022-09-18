@@ -20,9 +20,10 @@
 
         <section class="section wb">
             <div class="container">
+                {% include 'partials/_messages.html' %}
                 <div class="row d-flex">
                     <div class="col-lg-4">
-                       <form method="post" enctype="multipart/form-data">
+                       <form id="infoForm" method="post" enctype="multipart/form-data">
                         <label for="inputEmail4">E-Posta</label>
                         <input type="email" name="email" class="form-control" value="{{ user.email }}" placeholder="E-Posta">
                         <br>
@@ -36,7 +37,7 @@
                         <input type="date" name="birthday"  class="form-control" value="{{ user.birthday }}" placeholder="Doğum Tarihi">
                         <br>
                         <label for="exampleFormControlTextarea1">Hakkında</label>
-                        <textarea name="description" class="form-control" date="{{ user.description }}" rows="5"></textarea>
+                        <textarea name="description" class="form-control" rows="5">{{ user.description }}</textarea>
                         <br>
                         <label for="vehicle1">Profilimi Göster 
                             <input type="checkbox" 
@@ -71,11 +72,13 @@
                         <img src="{{ user.image.url }}" alt="yazar" class="img-fluid rounded-circle">
                         <br><br>
                         <label for="inputEmail4">Profil Fotoğrafı</label>
-                        <input type="file"  class="form-control" id="inputEmail4">
+                        <input type="file" name="image"  class="form-control" id="inputEmail4">
                         <br>
-                        <a href="{{ user.cv.url }}"><label for="inputEmail4">Cv Görüntüle</label></a><br>
+                        <input type="hidden" name="old_image" class="form-control" id="inputEmail4" value="{{ user.image.url }}">
+                        <input type="hidden" name="old_cv" class="form-control" id="inputEmail4" value="{{ user.cv.url }}">
+                        <a target="_blank" href="{{ user.cv.url }}">Cv Görüntüle</a><br>
                         <label for="inputEmail4">Cv Yükle</label>
-                        <input type="file"  class="form-control" id="inputEmail4">
+                        <input type="file" name="cv"  class="form-control" id="inputEmail4">
                      </form>
                      </div><!-- end col -->
                 </div><!-- end row -->
