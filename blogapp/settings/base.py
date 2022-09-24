@@ -49,6 +49,7 @@ SIMPLE_JWT = {
 # Application definition
 
 INSTALLED_APPS = [
+    'captcha',
     'users.apps.UsersConfig',
     'material',
     'material.admin',
@@ -150,9 +151,14 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST ="smtp.outlook.com"
-EMAIL_HOST_USER ="siberatay_test@outlook.com"
-EMAIL_HOST_PASSWORD = "19981998."
+EMAIL_HOST ="smtp.gmail.com"
+EMAIL_HOST_USER ="info@siberatay.com"
+EMAIL_HOST_PASSWORD = "ivpadmqxmfkvazts"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "siberatay_test@outlook.com"
+DEFAULT_FROM_EMAIL = "info@siberatay.com"
+
+
+RECAPTCHA_PUBLIC_KEY = '6Lcp6SIiAAAAANGaVhoyl_Rq0R389ERx7ino2-BI'
+RECAPTCHA_PRIVATE_KEY = '6Lcp6SIiAAAAAMQXPUbeOv4nJxBeI3_mmLAAAFb8'
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']

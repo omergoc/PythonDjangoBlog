@@ -71,34 +71,34 @@ def register(request):
             control = None
 
         if control is  None:
-            is_active = True
+            is_active = False
             new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active)
             new_user.set_password(password)
             new_user.save()
             try:
+                current_site = get_current_site(request)  
+                mail_subject = 'Activation link has been sent to your email id'  
+                message = render_to_string('acc_active_email.html', {  
+                    'user': new_user,  
+                    'domain': current_site.domain,  
+                    'uid':urlsafe_base64_encode(force_bytes(new_user.pk)),  
+                    'token':account_activation_token.make_token(new_user),  
+                })  
+                to_email = form.cleaned_data.get('email')  
+                email = EmailMessage(  
+                            mail_subject, message, to=[to_email]  
+                )  
+                email.send()  
+                return render(request, 'Email.html',{'msg':'Kaydı tamamlamak için lütfen e-posta adresinizi onaylayın'})
+                """
                 login(request,new_user)
                 messages.success(request, "Kayıt Başarılı...")
                 return redirect("index")
+                """
             except:
                 messages.warning(request, "Bilinmedik Bir Hata Oluştu Lütfen Site Yöneticilerine Bildiriniz.")
                 return redirect(loginUser) 
 
-            """
-            current_site = get_current_site(request)  
-            mail_subject = 'Activation link has been sent to your email id'  
-            message = render_to_string('acc_active_email.html', {  
-                'user': new_user,  
-                'domain': current_site.domain,  
-                'uid':urlsafe_base64_encode(force_bytes(new_user.pk)),  
-                'token':account_activation_token.make_token(new_user),  
-            })  
-            to_email = form.cleaned_data.get('email')  
-            email = EmailMessage(  
-                        mail_subject, message, to=[to_email]  
-            )  
-            email.send()  
-            return render(request, 'Email.html',{'msg':'Kaydı tamamlamak için lütfen e-posta adresinizi onaylayın'})
-            """
         else:
             messages.warning(request, "Kullanıcı Adı Daha Önce Kullanılmış.")
             return redirect(loginUser) 
