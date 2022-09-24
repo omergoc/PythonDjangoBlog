@@ -1,11 +1,11 @@
 from django import forms
 from django import forms
 from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Checkbox,ReCaptchaV2Invisible
+from captcha.widgets import ReCaptchaV3
 
 
 class LoginForm(forms.Form):
-    #captcha = ReCaptchaField()
+    captcha = ReCaptchaField(widget=ReCaptchaV3)
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class':'form-control',
         'placeholder':'Kullanıcı Adı'
@@ -16,7 +16,7 @@ class LoginForm(forms.Form):
     }))
 
 class RegisterForm(forms.Form):
-    #captcha = ReCaptchaField()
+    captcha = ReCaptchaField(widget=ReCaptchaV3)
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class':'form-control',
         'placeholder':'Kullanıcı Adı'
