@@ -46,14 +46,12 @@
                             </div><!-- end content -->
                             {% endif %}
 
-
-
                             <hr class="invis1">
                             <div class="custombox authorbox clearfix">
                                 <h4 class="small-title">Yazar Hakkında</h4>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" class="img-fluid rounded-circle"> 
+                                        <img src="{{ video.writer.image.url }}" alt="" class="img-fluid rounded-circle"> 
                                     </div><!-- end col -->
 
                                     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
@@ -139,13 +137,8 @@
                         data: {
                             id: id
                         },
-                        success: function(gelenveri) {
-                            console.log(gelenveri);
-                            //alert("İşlem Başarılı");
-                            toastr.success('İlgili İçeriği Beğendiniz.', 'Success', {timeOut: 2000, progressBar : true});
-                        },
-                        error: function(hata) {
-                            console.log(hata);
+                        success: function(data) {
+                            toastr.success(data, 'Success', {timeOut: 2000, progressBar : true});
                         }
                     });
                 });
@@ -163,7 +156,7 @@
                             content: content,
                         },
                         success: function(gelenveri) {
-                            toastr.success('İlgili İçeriği Beğendiniz.', 'Success', {timeOut: 2000, progressBar : true});
+                            toastr.success('Yorumu Başarılı Bir Şekilde Gönderdiniz.', 'Success', {timeOut: 2000, progressBar : true});
                         },
                         error: function(hata) {
                             console.log(hata);

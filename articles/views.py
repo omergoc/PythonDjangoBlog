@@ -149,7 +149,7 @@ def category(request,categories_slug):
         articles = paginator.page(page)
     except PageNotAnInteger:
         articles = paginator.page(1)
-    except EmptyPage:
+    except EmptyPage: 
         articles = paginator.page(paginator.num_pages)
     context = {
         'articles':articles,
@@ -197,19 +197,20 @@ def article_like(request):
         id = request.POST['id']
         user = Account.objects.filter(username = request.user).first()
         user_id = user.id
-
+        
         control = LikedArticle.objects.filter(user_id = user_id, post=id).last()
-
         if control:
             status = False if control.status == True else True
+
             like, created = LikedArticle.objects.update_or_create(id=control.id, user=request.user, post = id, defaults={'status':status})
         else:
-            like, created = LikedArticle.objects.get_or_create(user=request.user, post = id,status=True)
+            status = True
+            like, created = LikedArticle.objects.get_or_create(user=request.user, post = id,status=status)
 
-        if created:
-            return HttpResponse("True")
+        if status:
+            return HttpResponse("İlgili İçeriği Beğendiniz")
         else:
-            return HttpResponse("Flase")
+            return HttpResponse("İlgili İçeriği Beğenmekten Vazgeçtiniz")
 
 
 def article_comment(request):
@@ -219,7 +220,7 @@ def article_comment(request):
         slug = request.POST['slug']
         username = request.user
         user = Account.objects.filter(username = username).first()
-
+        created = False
         if 'makale' in type:
             article = Articles.objects.get(slug=slug)
             comment, created = Comments.objects.get_or_create(name=f"{user.first_name} {user.last_name}", email=user.email, content=content, article = article)

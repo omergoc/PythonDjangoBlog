@@ -51,11 +51,11 @@
                                 <h4 class="small-title">Yazar Hakkında</h4>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" class="img-fluid rounded-circle"> 
+                                        <img src="{{ new.writer.image.url }}" alt="{{ new.writer.first_name }}  {{ new.writer.last_name }}" class="img-fluid rounded-circle"> 
                                     </div><!-- end col -->
 
                                     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                        <h4><a href="/writer/{{ new.writer.slug }}/">{{ new.writer.first_name }}  {{ new.writer.last_name }}</a></h4>
+                                        <h4><a href="/writer/{{ new.writer.slug }}/">{{ new.writer.first_name }}  {{ video.writer.last_name }}</a></h4>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
                             </div>

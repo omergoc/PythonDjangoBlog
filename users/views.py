@@ -14,8 +14,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string  
 from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMessage  
-import random
-import os
+
 
 def care(request):
     return render(request, 'care.html')
@@ -175,8 +174,9 @@ def profile(request):
         linkedin = request.POST['linkedin']
         github = request.POST['github']
         website = request.POST['website']
-        profile_activate = 1 if request.POST['profile_activate'] == 'on' else 0
+        profile_activate = 1 if request.POST.get('profile_activate', 0) == 'on' else 0
         
+
         if 'cv' in request.FILES:
             if str(request.FILES['cv'])[-3:] == 'pdf':
                 cv = cv_upload(request.FILES['cv'], slug)
@@ -191,7 +191,7 @@ def profile(request):
                 image = image_upload(request.FILES['image'], slug)
 
             else:
-                messages.warning(request, "Profil Fotoğrafı Bölümüne Sadece PNG Dosya Yükleyiniz...")
+                messages.warning(request, "Profil Fotoğrafı Bölümüne Sadece jPG Dosya Yükleyiniz...")
                 return redirect("profile")
         else:
             image = request.POST['old_image']
