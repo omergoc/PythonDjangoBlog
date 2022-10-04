@@ -40,8 +40,19 @@
 
                             {% if request.user.is_authenticated %}
                             <div class="panel">  
-                                <button id="like" class="fb-button btn btn-warring"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                    <span class="down-mobile">Beğen</span></button>
+                                <button id="like" class="fb-button btn btn-warring">
+                                    {% if control_like == False or control_like == None %}
+                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                    <span class="down-mobile">
+                                        Beğen
+                                    </span>
+                                    {% else %}
+                                    <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                    <span class="down-mobile">
+                                        Beğenmekten Vazgeç
+                                    </span>
+                                    {% endif %}
+                                </button>
                                     <input id="video_id" type="hidden" value="{{ video.id }}" name="video_id">
                             </div><!-- end content -->
                             {% endif %}
@@ -138,8 +149,8 @@
                             id: id
                         },
                         success: function(data) {
-                            toastr.success(data, 'Success', {timeOut: 2000, progressBar : true});
-                        }
+                            //toastr.success(data, 'Success', {timeOut: 1000, progressBar : true});
+                            window.location.reload()                        }
                     });
                 });
 

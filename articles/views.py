@@ -1,13 +1,16 @@
+from http.client import HTTPResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.template import RequestContext
 from django.http import HttpResponse
 from .models import Categories, Articles,Comments,LikedArticle, Videos, News
+from blogapp.settings import base
 from users.models import Account
 from settings.models import Setting
 from django.http import Http404
 from django.db import connection
-
+import datetime
 
 
 def care(request,categories_slug):
@@ -34,6 +37,24 @@ def care_control2(function):
         else:
             return function(request, *args, **kwargs)
     return wrap
+
+def set_cookie(response, key, value, days_expire=1):
+    if days_expire is None:
+        max_age = 365 * 24 * 60 * 60  # one year
+    else:
+        max_age = days_expire * 24 * 60 * 60
+    expires = datetime.datetime.strftime(
+        datetime.datetime.utcnow() + datetime.timedelta(seconds=max_age),
+        "%a, %d-%b-%Y %H:%M:%S GMT",
+    )
+    response.set_cookie(
+        key,
+        value,
+        max_age=max_age,
+        expires=expires,
+        domain=base.SESSION_COOKIE_DOMAIN,
+        secure=base.SESSION_COOKIE_SECURE or None,
+    )
 
 @care_control
 def articles(request):
@@ -159,6 +180,7 @@ def category(request,categories_slug):
 
 @care_control2
 def article(request,categories_slug,articles_slug):
+
     if request.method == "POST":
         return redirect(request.META['HTTP_REFERER'])
     else:
@@ -168,25 +190,33 @@ def article(request,categories_slug,articles_slug):
         article = Articles.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         video = Videos.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         news = News.objects.filter(slug = articles_slug, category=category_id,available=True).first()
+        user = request.user.id if request.user.id else 0
+        
         if video:
             data = video
             comments= Comments.objects.filter(article=article,available=True).all()
             count = comments.count()
-            context = { 'video': data, 'comments':comments,'count':count}
+            control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
+            context = { 'video': data, 'comments':comments,'count':count,'control_like':control_like.status}
             return render(request ,'video.html',context)
 
         elif article:
+            bookname = request.COOKIES if 'bookname' in request.COOKIES else None
             data = article
             comments= Comments.objects.filter(article=article,available=True).all()
             count = comments.count()
-            context = { 'article': data, 'comments':comments,'count':count}
-            return render(request ,'article.html',context)
+            control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
+            context = { 'article': data, 'comments':comments,'count':count,'control_like':control_like.status}
+            response = render(request ,'article.html',context)
+            response.set_cookie('bookname','Sherlock Holmes',max_age=1)
+            return response
 
         elif news:
             data = news
             comments= Comments.objects.filter(article=article,available=True).all()
             count = comments.count()
-            context = { 'new': data, 'comments':comments,'count':count}
+            control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
+            context = { 'new': data, 'comments':comments,'count':count,'control_like':control_like.status}
             return render(request ,'new.html',context)
         else:
             return redirect(request.META['HTTP_REFERER'])

@@ -38,8 +38,19 @@
 
                             {% if request.user.is_authenticated %}
                             <div class="panel">  
-                                <button id="like" class="fb-button btn btn-warring"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                                    <span class="down-mobile">Beğen</span></button>
+                                <button id="like" class="fb-button btn btn-warring">
+                                    {% if control_like == False or control_like == None %}
+                                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                                    <span class="down-mobile">
+                                        Beğen
+                                    </span>
+                                    {% else %}
+                                    <i class="fa fa-thumbs-down" aria-hidden="true"></i>
+                                    <span class="down-mobile">
+                                        Beğenmekten Vazgeç
+                                    </span>
+                                    {% endif %}
+                                </button>
                                     <input id="new_id" type="hidden" value="{{ new.id }}" name="new_id">
                             </div><!-- end content -->
                             {% endif %}
@@ -140,11 +151,9 @@
                         data: {
                             id: id
                         },
-                        success: function(gelenveri) {
-                            toastr.success('İlgili İçeriği Beğendiniz.', 'Success', {timeOut: 2000, progressBar : true});
-                        },
-                        error: function(hata) {
-                            console.log(hata);
+                        success: function(data) {
+                            //toastr.success(data, 'Success', {timeOut: 1000, progressBar : true});
+                            window.location.reload()
                         }
                     });
                 });

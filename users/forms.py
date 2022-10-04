@@ -14,6 +14,7 @@ class LoginForm(forms.Form):
         'class':'form-control',
         'placeholder': 'Şifre'
     }))
+    
 
 class RegisterForm(forms.Form):
     captcha = ReCaptchaField(widget=ReCaptchaV3)
@@ -54,6 +55,7 @@ class RegisterForm(forms.Form):
         confirm = self.cleaned_data.get('confirm')
         kvkk = self.cleaned_data.get('kvkk')
         term_of_use = self.cleaned_data.get('term_of_use')
+
         if not kvkk and not term_of_use:
             raise forms.ValidationError('KVKK VE Kullanım Şartlarını Kabul Etmelisiniz !!!')
         elif password and confirm and password != confirm:
