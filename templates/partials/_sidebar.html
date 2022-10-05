@@ -8,7 +8,7 @@
             {% for sidebar_article in sidebar_news %}
             <a href="/{{ sidebar_article.category.slug }}/{{ sidebar_article.slug }}/" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="w-100 last-item justify-content-between">
-                    <img src="{{ sidebar_article.image.url }}" alt="" class="img-fluid float-left">
+                    <img src="{{ sidebar_article.image.url }}" alt="{{ sidebar_article.image.url }}" class="img-fluid float-left">
                     <h5 class="mb-1">{{ sidebar_article.title }}</h5>
                     <small>{{ sidebar_article.created_date }}</small>
                 </div>
@@ -56,14 +56,14 @@
         <div class="blog-box">
             <div class="post-media">
                 <a href="/{{ sidebar_video.category.slug }}/{{ sidebar_video.slug }}/" title="">
-                    <img src="{{ sidebar_video.image.url }}" alt="" class="img-fluid">
+                    <img src="{{ sidebar_video.image.url }}" alt="{{ sidebar_video.image.url }}" class="img-fluid">
                     <div class="hovereffect">
                         <span class="videohover"></span>
                     </div><!-- end hover -->
                 </a>
             </div><!-- end media -->
             <div class="blog-meta">
-                <h4><a href="/{{ sidebar_video.category.slug }}/{{ sidebar_video.slug }}/" title="">{{ sidebar_video.title }}</a></h4>
+                <h4><a href="/{{ sidebar_video.category.slug }}/{{ sidebar_video.slug }}/" title="{{ sidebar_video.title }}">{{ sidebar_video.title }}</a></h4>
             </div><!-- end meta -->
         </div><!-- end blog-box -->
         {% endfor %}
