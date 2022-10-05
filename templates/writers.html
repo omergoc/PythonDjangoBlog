@@ -36,15 +36,15 @@
                                 <div class="blog-box row">
                                     <div class="col-md-4">
                                         <div class="post-media  rounded-circle">
-                                            <a href="/writer/{{ author.slug }}/" title="">
-                                                <img  src="{{ author.image.url }}" alt="üye fotoğrafı" class="img-fluid rounded-circle">
+                                            <a href="/writer/{{ author.slug }}/" title="{{ author.image.url }}">
+                                                <img  src="{{ author.image.url }}" alt="{{ author.image.url }}" class="img-fluid rounded-circle" style="width:255px !important; height:255px !important;">
                                                 <div class="hovereffect"></div>
                                             </a>
                                         </div><!-- end media -->
                                     </div><!-- end col -->
 
                                     <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="/writer/{{ author.slug }}/" title="">{{ author.first_name }} {{ author.last_name }}</a></h4>
+                                        <h4><a href="/writer/{{ author.slug }}/" title="{{ author.first_name }} {{ author.last_name }}">{{ author.first_name }} {{ author.last_name }}</a></h4>
                                         <p>{{ author.description  }}</p>
                                         <small>{{ author.date_joined }}</small>
                                         <small><a href="writer/{{ author.slug }}/" title="">{{ author.username }}</a></small>

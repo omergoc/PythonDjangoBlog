@@ -70,6 +70,7 @@ def articles(request):
     except EmptyPage:
         articles = paginator.page(paginator.num_pages)
     category_types =  {
+        "type":"makale",
         "name": "Makaleler",
         "description": "Tüm Makaleler"
     }
@@ -94,6 +95,7 @@ def news(request):
     except EmptyPage:
         news = paginator.page(paginator.num_pages)
     category_types =  {
+        "type":"haber",
         "name": "Haberler",
         "description": "Tüm Haberler"
     }
@@ -117,6 +119,7 @@ def videos(request):
     except EmptyPage:
         videos = paginator.page(paginator.num_pages)
     category_types =  {
+        "type":"video",
         "name": "Videolar",
         "description": "Tüm Videolar"
     }

@@ -67,6 +67,7 @@
                          <input type="text" name="website" class="form-control" value="{{ user.website }}" placeholder="Web Site">
                          <br>
                          <button type="submit" class="btn btn-primary">Kaydet</button>
+                         <a href="{% url 'password_change' %}" class="btn btn-primary">Şifre Değiştir</a>
                      </div><!-- end col -->
                      <div class="col-lg-4">
                         <img src="{{ user.image.url }}" alt="yazar" class="img-fluid rounded-circle">

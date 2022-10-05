@@ -48,8 +48,8 @@
                                 <div class="blog-box row">
                                     <div class="col-md-8">
                                         <div class="post-media">
-                                            <a title="">
-                                                <img src="{{ article.image.url }}" alt="{{ article.image.url }}" class="img-fluid">
+                                            <a title="{{ article.title }}">
+                                                <img src="{{ article.image.url }}" alt="{{ article.image.url }}" style="width: 788px !important; height:200px !important" class="img-fluid">
                                              <div class="hovereffect"></div>
                                             </a>
                                         </div><!-- end media -->
@@ -69,14 +69,14 @@
                                 <div class="blog-box row">
                                     <div class="col-md-6">
                                         <div class="post-media">
-                                            <a title="">
-                                                <img src="{{ article.image.url }}" alt="" class="img-fluid">
+                                            <a title="{{ article.title }}">
+                                                <img src="{{ article.image.url }}" alt="{{ article.image.url }}" style="width: 788px !important; height:200px !important" class="img-fluid">
                                              <div class="hovereffect"></div>
                                             </a>
                                         </div><!-- end media -->
                                     </div><!-- end col -->
                                     <div class="blog-meta big-meta col-md-6">
-                                        <h4><a href="/{{ article.category.slug }}/{{ article.slug }}/" title="">{{ article.title }}</a></h4>
+                                        <h4><a href="/{{ article.category.slug }}/{{ article.slug }}/" title="{{ article.title }}">{{ article.title }}</a></h4>
                                         <p>{{ article.description  }}</p>
                                         <small class="firstsmall"><a class="bg-orange" href="/{{ article.category.slug }}/" title="">{{ article.category.name }}</a></small>
                                         <small>{{ article.created_date }}</small>
@@ -90,14 +90,14 @@
                                 <div class="blog-box row">
                                     <div class="col-md-4">
                                         <div class="post-media">
-                                            <a title="">
-                                                <img src="{{ article.image.url }}" alt="" class="img-fluid">
+                                            <a title="{{ article.title }}">
+                                                <img src="{{ article.image.url }}" alt="{{ article.image.url }}" style="width: 788px !important; height:200px !important" class="img-fluid">
                                              <div class="hovereffect"></div>
                                             </a>
                                         </div><!-- end media -->
                                     </div><!-- end col -->
                                     <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="/{{ article.category.slug }}/{{ article.slug }}/" title="">{{ article.title }}</a></h4>
+                                        <h4><a href="/{{ article.category.slug }}/{{ article.slug }}/" title="{{ article.title }}">{{ article.title }}</a></h4>
                                         <p>{{ article.description  }}</p>
                                         <small class="firstsmall"><a class="bg-orange" href="/{{ article.category.slug }}/" title="">{{ article.category.name }}</a></small>
                                         <small>{{ article.created_date }}</small>

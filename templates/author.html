@@ -16,7 +16,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
                             <li class="breadcrumb-item"><a href="#">Üye</a></li>
-                            <li class="breadcrumb-item active">{{ user.username }}</li>
+                            <li class="breadcrumb-item active">{{ writer.username }}</li>
                         </ol>
                     </div><!-- end col -->                    
                 </div><!-- end row -->
@@ -31,39 +31,39 @@
                             <div class="custombox authorbox clearfix">
                                 <h4 class="small-title">Hakkında</h4>
                                 <div class="row">
-                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                                        <img src="{{ writer.image.url}}" alt="" class="img-fluid rounded-circle"> 
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <img src="{{ writer.image.url}}" alt="{{ writer.image.url}}" class="img-fluid rounded-circle" style="width:255px !important; height:255px !important;"> 
                                     </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                                         <h4>{{ writer.first_name }} {{ writer.last_name }}</h4>
                                         <p>{{ writer.description }}</p>
 
                                         <div class="topsocial">
                                             {% if '/' != writer.facebook and writer.facebook %}
-                                            <a href="{{ writer.facebook }}" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>
+                                            <a href="https://www.facebook.com/{{ writer.facebook }}" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook"></i></a>
                                             {% endif %}
                                             {% if '/' != writer.youtube and writer.youtube %}
-                                            <a href="{{ writer.youtube }}" data-toggle="tooltip" data-placement="bottom" title="Youtube"><i class="fa fa-youtube"></i></a>
+                                            <a href="https://www.youtube.com/{{ writer.youtube }}" data-toggle="tooltip" data-placement="bottom" title="Youtube"><i class="fa fa-youtube"></i></a>
                                             {% endif %}
                                             {% if '/' != writer.github and writer.github %}
-                                            <a href="{{ writer.github }}" data-toggle="tooltip" data-placement="bottom" title="Github"><i class="fa fa-github"></i></a>
+                                            <a href="https://github.com/{{ writer.github }}" data-toggle="tooltip" data-placement="bottom" title="Github"><i class="fa fa-github"></i></a>
                                             {% endif %}
                                             {% if '/' != writer.twitter and writer.twitter %}
-                                            <a href="{{ writer.twitter }}" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
+                                            <a href="https://twitter.com/{{ writer.twitter }}" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter"></i></a>
                                             {% endif %}
                                             {% if '/' != writer.instagram and writer.instagram %}
-                                            <a href="{{ writer.instagram }}" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram"></i></a>
+                                            <a href="https://www.instagram.com/{{ writer.instagram }}" data-toggle="tooltip" data-placement="bottom" title="Instagram"><i class="fa fa-instagram"></i></a>
                                             {% endif %}
                                             {% if '/' != writer.website and writer.website %}
                                             <a href="{{ writer.website }}" data-toggle="tooltip" data-placement="bottom" title="Website"><i class="fa fa-link"></i></a>
                                             {% endif %}
                                             {% if '/' != writer.linkedin and writer.linkedin %}
-                                            <a href="{{ writer.linkedin }}" data-toggle="tooltip" data-placement="bottom" title="linkedin"><i class="fa fa-linkedin"></i></a>
+                                            <a href="https://www.linkedin.com/{{ writer.linkedin }}" data-toggle="tooltip" data-placement="bottom" title="linkedin"><i class="fa fa-linkedin"></i></a>
                                             {% endif %}
                                         </div>
                                         <br></br>
-                                        <h6>Toplam Beğeni: 0</h6>
-                                        <h6>Toplam İçerik: 0</h6>
+                                        {% comment %} <h6>Toplam Beğeni: 0</h6>
+                                        <h6>Toplam İçerik: 0</h6> {% endcomment %}
                                     </div><!-- end col -->
                                 </div><!-- end row -->
                             </div><!-- end author-box -->
@@ -76,15 +76,15 @@
                                 <div class="blog-box row">
                                     <div class="col-md-4">
                                         <div class="post-media">
-                                            <a href="/{{ author_article.category.slug }}/{{ author_article.slug }}/" title="">
-                                                <img src="{{ author_article.image.url }}" alt="" class="img-fluid">
+                                            <a href="/{{ author_article.category.slug }}/{{ author_article.slug }}/" title="/{{ author_article.category.slug }}/{{ author_article.slug }}/">
+                                                <img src="{{ author_article.image.url }}" alt="{{ author_article.image.url }}" class="img-fluid">
                                                 <div class="hovereffect"></div>
                                             </a>
                                         </div><!-- end media -->
                                     </div><!-- end col -->
 
                                     <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="/{{ author_article.category.slug }}/{{ author_article.slug }}/" title="">{{ author_article.title }}</a></h4>
+                                        <h4><a href="/{{ author_article.category.slug }}/{{ author_article.slug }}/" title="{{ author_article.title }}">{{ author_article.title }}</a></h4>
                                         <p>{{ author_article.description  }}</p>
                                         <small class="firstsmall"><a class="bg-orange" href="{{ article.category.slug }}" title="">{{ author_article.category.name }}</a></small>
                                         <small>{{ author_article.created_date }}</small>

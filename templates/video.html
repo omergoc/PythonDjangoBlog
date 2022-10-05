@@ -28,7 +28,7 @@
                             <br>
                                 <div class="blog-meta big-meta">
                                     <small><a href="#" >{{ video.created_date }}</a></small>
-                                    <small><a href="/writer/{{ video.writer.slug }}/" title="">{{ video.writer.first_name }} {{ video.writer.last_name }}</a></small>
+                                    <small><a href="/writer/{{ video.writer.slug }}/" title="{{ video.writer.first_name }} {{ video.writer.last_name }}">{{ video.writer.first_name }} {{ video.writer.last_name }}</a></small>
                                     <small><i class="fa fa-eye"></i> {{ video.views }}</small>
                                 </div><!-- end meta -->
                             </div><!-- end title -->

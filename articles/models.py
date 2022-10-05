@@ -39,7 +39,7 @@ class Articles(models.Model):
         on_delete=models.CASCADE,
         verbose_name="Kategori"
     )
-    image = models.ImageField(upload_to = "static/upload/%Y/%m/%d", default="static/upload/default.jpg", verbose_name="Resim(Önerilen:788x443)")
+    image = models.ImageField(upload_to = "static/upload/%Y/%m/%d", default="static/upload/default.jpg",  verbose_name="Resim(Önerilen:788x443)")
     slug = models.SlugField(max_length=50,unique=True,null=True, verbose_name="Seo Adres", editable=False)
     views = models.IntegerField(verbose_name="Görüntülenme Sayısı",default=0, editable=False)
     TYPE1 = "1"

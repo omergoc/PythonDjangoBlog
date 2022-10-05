@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from users.models import Account
 from settings.models import Setting
 from django.contrib import messages
-from .forms import RegisterForm, LoginForm,UpdateUserForm
+from .forms import PasswordChange, RegisterForm, LoginForm,UpdateUserForm
 from articles.models import Articles
 from django.contrib.auth import login, authenticate,logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -123,6 +123,27 @@ def activate(request, uidb64, token):
         return render(request,'Email.html',{'msg':'E-posta onayınız için teşekkür ederiz. Artık hesabınıza giriş yapabilirsiniz.'})  
     else:  
         return render(request, 'Email.html',{'msg':'Aktivasyon bağlantısı geçersiz!'})  
+
+@care_control
+def userPasswordChange(request):
+    if not request.user.username:
+        return redirect("index")
+    if request.method == 'POST':
+        form = PasswordChange(request.POST or None)
+        if form.is_valid():       
+            password = form.cleaned_data.get('password')
+            update_user = Account.objects.get(id=request.user.id)
+            update_user.set_password(password)
+            update_user.save()
+            messages.success(request, "Şifre Başarılı Bir Şekilde Güncellendi...")
+        else:
+            messages.warning(request, "Şifreler Eşleşmedi !!!")
+            
+    form = PasswordChange()
+    context = {
+        'form': form
+    }
+    return render(request, 'password_change.html',context)
 
 
 @care_control

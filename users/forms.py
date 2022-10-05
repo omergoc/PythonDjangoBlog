@@ -119,3 +119,28 @@ class UpdateUserForm(forms.Form):
     }))
     image  = forms.FileField()
     cv  = forms.FileField()
+
+
+class PasswordChange(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class':'form-control',
+        'placeholder': 'Şifre'
+    }))
+    confirm = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Tekrar Şifre'
+    }))
+
+    def clean(self):
+        password = self.cleaned_data.get('password')
+        confirm = self.cleaned_data.get('confirm')
+
+        if password and confirm and password != confirm:
+            print("hatalı sifreler")
+            raise forms.ValidationError('Şifreler Eşleşmiyor !!!')
+        
+        values = {
+            "password" : password,
+            "confirm" : confirm,
+        }
+        return values
