@@ -197,7 +197,8 @@ def article(request,categories_slug,articles_slug):
             comments= Comments.objects.filter(article=article,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
-            context = { 'video': data, 'comments':comments,'count':count,'control_like':control_like.status}
+            control_like = control_like.status if control_like != None else 0
+            context = { 'video': data, 'comments':comments,'count':count,'control_like':control_like}
             return render(request ,'video.html',context)
 
         elif article:
@@ -206,7 +207,8 @@ def article(request,categories_slug,articles_slug):
             comments= Comments.objects.filter(article=article,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
-            context = { 'article': data, 'comments':comments,'count':count,'control_like':control_like.status}
+            control_like = control_like.status if control_like != None else 0
+            context = { 'article': data, 'comments':comments,'count':count,'control_like':control_like}
             response = render(request ,'article.html',context)
             response.set_cookie('bookname','Sherlock Holmes',max_age=1)
             return response
@@ -216,7 +218,8 @@ def article(request,categories_slug,articles_slug):
             comments= Comments.objects.filter(article=article,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
-            context = { 'new': data, 'comments':comments,'count':count,'control_like':control_like.status}
+            control_like = control_like.status if control_like != None else 0
+            context = { 'new': data, 'comments':comments,'count':count,'control_like':control_like}
             return render(request ,'new.html',context)
         else:
             return redirect(request.META['HTTP_REFERER'])
