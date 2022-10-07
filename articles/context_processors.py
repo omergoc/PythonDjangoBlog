@@ -7,7 +7,7 @@ def categories_renderer(request):
     settings = models.Setting.objects.last()
     comms = Comments.objects.order_by('-id')[:3]
     videos = Videos.objects.filter(available=True).order_by('-id')[:3]
-    category = Categories.objects.get(name="Siberatay Haberleri")
+    category = Categories.objects.get(id=4)
     article_list = list(Articles.objects.filter(category=category.id,available=True).order_by('-id')[:1])
     video_list = list(Videos.objects.filter(category=category.id,available=True).order_by('-id')[:1])
     new_list = list(News.objects.filter(category=category.id,available=True).order_by('-id')[:1])
