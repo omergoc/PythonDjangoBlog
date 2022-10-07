@@ -35,12 +35,7 @@ def handler404(request, exception=None):
 @care_control
 def index(request):
     slider_article = Slider.objects.order_by('-id')[:2]
-    last_articles = list(Articles.objects.filter(available=True).order_by('-id')[:5])
-    last_videos = list(Videos.objects.filter(available=True).order_by('-id')[:5])
-    last_news = list(News.objects.filter(available=True).order_by('-id')[:5])
-    article_list = last_articles + last_news + last_videos
     context = {
-        'articles': article_list,
         'slider_article': slider_article
     }
     return render(request, 'index.html', context)
