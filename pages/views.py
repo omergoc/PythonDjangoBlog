@@ -1,7 +1,13 @@
+from asyncore import write
+from re import A
+from traceback import print_tb
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
+from django.views.generic import View, TemplateView
 from django.db.models import Count
 from django.shortcuts import render
-from articles.models import Articles,News,Videos
+from articles.models import Articles,News,Videos,Categories
+from users.models import Account
 from settings.models import Setting
 from django.contrib import messages
 from .models import Slider
@@ -26,8 +32,6 @@ def care_control(function):
 def handler404(request, exception=None):
     return render(request, '404.html')
 
-    
-
 @care_control
 def index(request):
     slider_article = Slider.objects.order_by('-id')[:2]
@@ -41,6 +45,83 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+def get_category(id):
+    category = Categories.objects.get(id=id)
+    category_data ={
+        'name':category.name,
+        'slug':category.slug
+    }
+    return category_data
+
+def get_writer(id):
+    writer = Account.objects.get(id=id)
+    writer_data ={
+        'first_name':writer.first_name,
+        'last_name':writer.last_name,
+        'slug':writer.slug
+        }
+    return writer_data
+
+@care_control
+def PostJsonListView(request, id):
+        data_list = []
+        upper = id
+        lower = upper - 2
+        articles = Articles.objects.filter(available=True).values()
+        for article in articles:
+            category = get_category(article['category_id'])
+            writer = get_writer(article['writer_id'])
+            data = {
+                'id': article['id'],
+                'category_title':category['name'],
+                'category_slug':category['slug'],
+                'writer_name': f"{writer['first_name']} {writer['last_name']}",
+                'writer_slug': writer['slug'],
+                'article_created_date':article['created_date'],
+                'article_image':article['image'],
+                'article_title':article['title'],
+                'article_slug':article['slug'],
+                'article_content':article['description'],
+            }
+            data_list.append(data)
+        videos = Videos.objects.filter(available=True).values()
+        for article in videos:
+            category = get_category(article['category_id'])
+            writer = get_writer(article['writer_id'])
+            data = {
+                'id': article['id'],
+                'category_title':category['name'],
+                'category_slug':category['slug'],
+                'writer_name': f"{writer['first_name']} {writer['last_name']}",
+                'writer_slug': writer['slug'],
+                'article_title':article['title'],
+                'article_created_date':article['created_date'],
+                'article_image':article['image'],
+                'article_slug':article['slug'],
+                'article_content':article['description']
+            }
+            data_list.append(data)
+        news = News.objects.filter(available=True).values()
+        for article in news:
+            category = get_category(article['category_id'])
+            writer = get_writer(article['writer_id'])
+            data = {
+                'id': article['id'],
+                'category_title':category['name'],
+                'category_slug':category['slug'],
+                'writer_name': f"{writer['first_name']} {writer['last_name']}",
+                'writer_slug': writer['slug'],
+                'article_created_date':article['created_date'],
+                'article_title':article['title'],
+                'article_image':article['image'],
+                'article_slug':article['slug'],
+                'article_content':article['description']
+            }
+            data_list.append(data)
+        posts_size = len(data_list)
+        posts = data_list[lower:upper]
+        max_size = True if upper >= posts_size else False
+        return JsonResponse({'data': posts, 'max': max_size}, safe=False)
 
 @care_control
 def contact(request):

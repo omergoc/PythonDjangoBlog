@@ -1,8 +1,6 @@
-from http.client import HTTPResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.template import RequestContext
 from django.http import HttpResponse
 from .models import Categories, Articles,Comments,LikedArticle, Videos, News
 from blogapp.settings import base
