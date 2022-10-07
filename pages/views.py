@@ -113,6 +113,7 @@ def PostJsonListView(request, id):
                 'article_content':article['description']
             }
             data_list.append(data)
+        print(data_list)
         posts_size = len(data_list)
         posts = data_list[lower:upper]
         max_size = True if upper >= posts_size else False
