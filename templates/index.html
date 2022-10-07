@@ -72,7 +72,7 @@
             const spinnerBox = document.getElementById('spinner-box')
             const loadBtn = document.getElementById('load-btn')
             const loadBox = document.getElementById('loading-box')
-            let visible = 2 
+            let visible = 5 
             
             const handleGetData = () => {
                 $.ajax({
@@ -122,7 +122,7 @@
             handleGetData()
             
             loadBtn.addEventListener('click', ()=>{
-                visible += 1
+                visible += 2
                 handleGetData()
             })
             </script>

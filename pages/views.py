@@ -61,7 +61,7 @@ def get_writer(id):
 def PostJsonListView(request, id):
         data_list = []
         upper = id
-        lower = upper - 2
+        lower = upper - 5
         articles = Articles.objects.filter(available=True).values()
         for article in articles:
             category = get_category(article['category_id'])
