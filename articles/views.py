@@ -192,10 +192,9 @@ def article(request,categories_slug,articles_slug):
         video = Videos.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         news = News.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         user = request.user.id if request.user.id else 0
-        print(request.COOKIES)
         if video:
             data = video
-            comments= Comments.objects.filter(article=article,available=True).all()
+            comments= Comments.objects.filter(videos=data,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
             control_like = control_like.status if control_like != None else 0
@@ -205,10 +204,8 @@ def article(request,categories_slug,articles_slug):
             return response
 
         elif article:
-            bookname = request.COOKIES if 'bookname' in request.COOKIES else None
-            print(bookname)
             data = article
-            comments= Comments.objects.filter(article=article,available=True).all()
+            comments= Comments.objects.filter(article=data,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
             control_like = control_like.status if control_like != None else 0
@@ -219,7 +216,7 @@ def article(request,categories_slug,articles_slug):
 
         elif news:
             data = news
-            comments= Comments.objects.filter(article=article,available=True).all()
+            comments= Comments.objects.filter(news=data,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
             control_like = control_like.status if control_like != None else 0
