@@ -151,6 +151,10 @@ def not_found_404(request,exception):
     return render(request, '404.html')
 
 @care_control
+def dashboard(request,exception):
+    return render(request, 'dashboard.html')
+
+@care_control
 def favorites(request):
     article_list = Articles.objects.annotate(num_likes=Count('likedarticle')).filter(num_likes__gte=1)
     paginator = Paginator(article_list, 4) 

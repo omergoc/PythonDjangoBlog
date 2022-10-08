@@ -3,6 +3,30 @@
 {% block seo %}
 <meta name="description" content=" {{ writer.author }}">
 <meta name="author" content=" {{ writer.description }}">
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        margin:0;
+        position: relative;
+    }
+    .card img {
+        border-radius: 50%;
+        height: 67%;
+        width: 67%;
+    }
+    .card img:hover{
+        transform: scale(1.1);
+        z-index: 1;
+        transition: transform .3s, visibility .25s ease;
+        filter: brightness(100%);
+
+    }
+
+    .card:hover {
+    box-shadow: 0 16px 32px 0 rgba(0, 0, 0, 0.582);
+    }
+</style>
 {% endblock seo %}
 {% block body %}
 
@@ -10,7 +34,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                        <h2><i class="fa fa-star bg-orange"></i> Üyeler</h2>
+                        <h2><i class="fa fa-users bg-orange"></i> Üyeler</h2>
                     </div><!-- end col -->
                     <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
                         <ol class="breadcrumb">
@@ -22,69 +46,79 @@
             </div><!-- end container -->
         </div><!-- end page-title -->
 
+
+        <!--section class="section">
+            <div class="container">
+                <div class="row col-md-12">
+                    <div class="col-md-3 card">
+                        <div class="col-md-12">
+                        <img src="/static/upload/author/omer.jpg" alt="Avatar" style="width:100%">
+                        <div class="container">
+                            <h4><b>John Doe</b></h4> 
+                            <p>Architect & Engineer</p> 
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 card">
+                        <div class="col-md-12">
+                        <img src="/static/upload/author/omer.jpg" alt="Avatar" style="width:100%">
+                        <div class="container">
+                            <h4><b>John Doe</b></h4> 
+                            <p>Architect & Engineer</p> 
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 card">
+                        <div class="col-md-12">
+                        <img src="/static/upload/author/omer.jpg" alt="Avatar" style="width:100%">
+                        <div class="container">
+                            <h4><b>John Doe</b></h4> 
+                            <p>Architect & Engineer</p> 
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 card">
+                        <div class="col-md-12">
+                        <img src="/static/upload/author/omer.jpg" alt="Avatar" style="width:100%">
+                        <div class="container">
+                            <h4><b>John Doe</b></h4> 
+                            <p>Architect & Engineer</p> 
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section!-->
+
         <section class="section">
             <div class="container">
+                
                 <div class="row">
                     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
-                        <div class="page-wrapper">
-
-                            <hr class="invis1">
-
-                            <div class="blog-list clearfix">
-
-                            {% for author in writers_list  %}
-                                <div class="blog-box row">
-                                    <div class="col-md-4">
-                                        <div class="post-media  rounded-circle">
-                                            <a href="/writer/{{ author.slug }}/" title="{{ author.image.url }}">
-                                                <img  src="{{ author.image.url }}" alt="{{ author.image.url }}" class="img-fluid rounded-circle" style="width:255px !important; height:255px !important;">
-                                                <div class="hovereffect"></div>
-                                            </a>
-                                        </div><!-- end media -->
-                                    </div><!-- end col -->
-
-                                    <div class="blog-meta big-meta col-md-8">
-                                        <h4><a href="/writer/{{ author.slug }}/" title="{{ author.first_name }} {{ author.last_name }}">{{ author.first_name }} {{ author.last_name }}</a></h4>
-                                        <p>{{ author.description  }}</p>
+                        {% for chunk in writers_list %}
+                            <div class="row col-md-12">
+                                {% for author in chunk %}
+                                <div class="col-md-3 card">
+                                    <img src="{{ author.image.url }}" alt="Avatar" style="width:100%">
+                                    <div class="container">
+                                        <h4><a href="/writer/{{ author.slug }}/" title="{{ author.first_name }} {{ author.last_name }}"><b>{{ author.first_name }} {{ author.last_name }}</b></a></h4>
+                                        <!--p>{{ author.description  }}</p!-->
                                         <small>{{ author.date_joined }}</small>
                                         <small><a href="writer/{{ author.slug }}/" title="">{{ author.username }}</a></small>
-                                    </div><!-- end meta -->
-                                </div><!-- end blog-box --> 
-                                <hr class="invis">
-
-                            {% endfor %}
-
-                            </div><!-- end blog-list -->
-                        </div><!-- end page-wrapper -->
-                        <hr class="invis">
-                            <div class="col-md-12">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-start">
-                                        <li class="page-item">
-                                        {% if writers_list.has_previous %}
-                                        <a class="page-link" href="?sayfa={{ writers_list.previous_page_number }}">Geri</a>
-                                        {% endif %}
-                                        </li> 
-                                        <li class="page-item">
-                                          <a class="page-link" href="#">{{ writers_list.number }} / {{ writers_list.paginator.num_pages }}</a>
-                                        </li>
-                                        <li class="page-item">
-                                        {% if writers_list.has_next %}
-                                            <a class="page-link" href="?sayfa={{ writers_list.next_page_number }}">İleri</a>
-                                            {% endif %}
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div><!-- end col -->
-                        </div><!-- end row -->
-
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
                     <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                         <div class="sidebar">
                             {% include "partials/_sidebar.html" %}
-                        </div><!-- end sidebar -->
-                    </div><!-- end col -->
-                    
-                </div><!-- end row -->
-            </div><!-- end container -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
+
+
         {% endblock body %}

@@ -56,6 +56,25 @@
 }
 
 
+@media screen and (max-width: 420px) {
+  .drop400{
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .drop375{
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 880px) and (min-width: 820px) {
+  .drop375{
+    display: none !important;
+  }
+}
+
+
 
 .dropdown {
   float: left;

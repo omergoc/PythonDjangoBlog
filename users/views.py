@@ -247,7 +247,12 @@ def image_upload(f,slug):
 def users(request):
 
     User = get_user_model()
+
+
     writers_list = User.objects.all().filter(profile_activate=True)
+    writers_list = [writers_list[i:i+4] for i in range(0, len(writers_list), 4)]
+
+
     paginator = Paginator(writers_list, 5)
 
     page = request.GET.get('sayfa')

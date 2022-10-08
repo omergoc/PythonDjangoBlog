@@ -17,7 +17,7 @@
                                     <li class="breadcrumb-item active">{{ new.title }}</li>
                                 </ol>
 
-                                <span class="color-orange"><a href="/{{ new.category.slug }}/">{{ new.category.name }}</a></span>
+                                <span><a style="background-color: #ff8d05; color: white !important;" href="/{{ new.category.slug }}/">Haber | {{ new.category.name }}</a></span>
 
                                 <h3>{{new.title}}</h3>
 
@@ -179,7 +179,8 @@
                     });
                     
                 });
-            });
+                    
+                });
         </script>
 {% endblock body %}
 

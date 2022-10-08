@@ -12,7 +12,25 @@ class CommentsAdmin(admin.ModelAdmin):
         if getattr(obj, 'available', None) is True:
             obj.approver = request.user
             obj.save()
-                    
+    def Comment_Preview(self,obj):
+        if(len(obj.content)>=150):
+            return obj.content[:147]+"..."
+        else:
+            return obj.content
+    
+    list_display = ('get_sub_title','Comment_Preview','name','created_date')
+
+    def get_sub_title(self, obj):
+        if obj.article:
+            return obj.article
+        elif obj.news:
+            return obj.news
+        elif obj.videos:
+            return obj.videos
+        else:
+            return 'Not Available'
+
+    get_sub_title.short_description = 'Subtitle'
 admin.site.register(Images)
 
 

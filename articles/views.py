@@ -192,7 +192,7 @@ def article(request,categories_slug,articles_slug):
         video = Videos.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         news = News.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         user = request.user.id if request.user.id else 0
-        
+        print(request.COOKIES)
         if video:
             data = video
             comments= Comments.objects.filter(article=article,available=True).all()
@@ -200,10 +200,13 @@ def article(request,categories_slug,articles_slug):
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
             control_like = control_like.status if control_like != None else 0
             context = { 'video': data, 'comments':comments,'count':count,'control_like':control_like}
-            return render(request ,'video.html',context)
+            response = render(request ,'video.html',context)
+            response.set_cookie('bookname','Sherlock Holmes',max_age=1)
+            return response
 
         elif article:
             bookname = request.COOKIES if 'bookname' in request.COOKIES else None
+            print(bookname)
             data = article
             comments= Comments.objects.filter(article=article,available=True).all()
             count = comments.count()
@@ -221,7 +224,9 @@ def article(request,categories_slug,articles_slug):
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
             control_like = control_like.status if control_like != None else 0
             context = { 'new': data, 'comments':comments,'count':count,'control_like':control_like}
-            return render(request ,'new.html',context)
+            response = render(request ,'new.html',context)
+            response.set_cookie('bookname','Sherlock Holmes',max_age=1)
+            return response
         else:
             return redirect(request.META['HTTP_REFERER'])
 
@@ -255,17 +260,17 @@ def article_comment(request):
         username = request.user
         user = Account.objects.filter(username = username).first()
         created = False
-        if 'makale' in type:
+        if 'makale' == type:
             article = Articles.objects.get(slug=slug)
             comment, created = Comments.objects.get_or_create(name=f"{user.first_name} {user.last_name}", email=user.email, content=content, article = article)
         
-        if 'video' in type:
+        if 'video' == type:
             article = Videos.objects.get(slug=slug)
-            comment, created = Comments.objects.get_or_create(name=f"{user.first_name} {user.last_name}", email=user.email, content=content, article = article)
+            comment, created = Comments.objects.get_or_create(name=f"{user.first_name} {user.last_name}", email=user.email, content=content, videos = article)
         
-        if 'haber' in type:
+        if 'haber' == type:
             article = News.objects.get(slug=slug)
-            comment, created = Comments.objects.get_or_create(name=f"{user.first_name} {user.last_name}", email=user.email, content=content, article = article)
+            comment, created = Comments.objects.get_or_create(name=f"{user.first_name} {user.last_name}", email=user.email, content=content, news = article)
 
         if created:
             return HttpResponse("True")

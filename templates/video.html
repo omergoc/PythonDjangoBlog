@@ -21,7 +21,7 @@
                                     <li class="breadcrumb-item active">{{ video.title }}</li>
                                 </ol>
 
-                                <span class="color-orange"><a href="/{{ video.category.slug }}/">{{ video.category.name }}</a></span>
+                                <span><a style="background-color: #f23a2f; color: white !important;" href="/{{ video.category.slug }}/">Video | {{ video.category.name }}</a></span>
 
                                 <h3>{{video.title}}</h3>
 
@@ -108,8 +108,8 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div id="commentpanel" class="form-wrapper">
-                                            <input type="hidden" id="slug" value="{{ new.slug }}" class="form-control" >
-                                            <input type="hidden" id="type" value="{{ new.table_name }}" class="form-control" >
+                                            <input type="hidden" id="slug" value="{{ video.slug }}" class="form-control" >
+                                            <input type="hidden" id="type" value="{{ video.table_name }}" class="form-control" >
                                             <textarea class="form-control" id="content" placeholder="Yorumunuz"></textarea>
                                             <button id="comment" class="fb-button btn btn-warring"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
                                                 <span class="down-mobile">Yorum Yap</span></button>                                        

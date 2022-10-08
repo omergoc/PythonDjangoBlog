@@ -87,23 +87,6 @@ class LikedArticle(models.Model):
         null=True,
     )
 
-
-class Comments(models.Model):
-    approver = models.ForeignKey(Account, on_delete=models.CASCADE, null=True,blank=True,editable=False)
-    article = models.ForeignKey(
-        Articles,
-        on_delete=models.CASCADE,
-        verbose_name="Blog Başlık",
-    )
-    name = models.CharField(max_length=200,verbose_name="Ad Soyad")
-    email = models.EmailField(verbose_name="E-Posta Adresi",blank=True)
-    content = models.TextField(verbose_name="İçerik")
-    created_date = models.DateTimeField(auto_now_add=True)
-    available = models.BooleanField(default=False, verbose_name="Onayla")
-    def __str__(self):
-        return self.name
-
-
 class Images(models.Model):
     image_name = models.CharField(max_length=200,verbose_name="Resim Başlık")
     image_description=models.CharField(max_length=300,verbose_name="Resim Açıklama")
@@ -239,3 +222,36 @@ class LikedArticle(models.Model):
     post = models.IntegerField(blank=True, null=True)
 
     status = models.BooleanField(default=False, verbose_name="Durum", editable=False)
+
+
+class Comments(models.Model):
+    approver = models.ForeignKey(Account, on_delete=models.CASCADE, null=True,blank=True,editable=False)
+    article = models.ForeignKey(
+        Articles,
+        on_delete=models.CASCADE,
+        verbose_name="Title",
+        null=True,
+        editable=False
+    )
+    news = models.ForeignKey(
+        News,
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name="Title",
+        editable=False
+    )
+    videos = models.ForeignKey(
+        Videos,
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name="Title",
+        editable=False
+    )
+    name = models.CharField(max_length=200,verbose_name="Ad Soyad")
+    email = models.EmailField(verbose_name="E-Posta Adresi",blank=True)
+    content = models.TextField(verbose_name="İçerik")
+    created_date = models.DateTimeField(auto_now_add=True)
+    available = models.BooleanField(default=False, verbose_name="Onayla")
+    
+    def __str__(self):
+        return self.name
