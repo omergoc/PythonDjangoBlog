@@ -65,7 +65,7 @@ def register(request):
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password')
         try:
-            control = Account.objects.get(username = username)
+            control = Account.objects.get(username = username, email=email)
         except Account.DoesNotExist:
             control = None
 
@@ -89,17 +89,12 @@ def register(request):
                 )  
                 email.send()  
                 return render(request, 'Email.html',{'msg':'Kaydı tamamlamak için lütfen e-posta adresinizi onaylayın'})
-                """
-                login(request,new_user)
-                messages.success(request, "Kayıt Başarılı...")
-                return redirect("index")
-                """
             except:
                 messages.warning(request, "Bilinmedik Bir Hata Oluştu Lütfen Site Yöneticilerine Bildiriniz.")
                 return redirect(loginUser) 
 
         else:
-            messages.warning(request, "Kullanıcı Adı Daha Önce Kullanılmış.")
+            messages.warning(request, "Kullanıcı Adı yada E-Posta Daha Önce Kullanılmış.")
             return redirect(loginUser) 
         
 

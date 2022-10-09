@@ -254,6 +254,9 @@ def article_comment(request):
         type = request.POST['type']
         content = request.POST['content']
         slug = request.POST['slug']
+        if slug.strip() == '' or content.strip() == '' or type.strip() == '':
+            return HttpResponse("None")
+
         username = request.user
         user = Account.objects.filter(username = username).first()
         created = False
@@ -270,7 +273,7 @@ def article_comment(request):
             comment, created = Comments.objects.get_or_create(name=f"{user.first_name} {user.last_name}", email=user.email, content=content, news = article)
 
         if created:
-            return HttpResponse("True")
+            return HttpResponse("Başarılı Bir Şekilde Yorum Yaptınız")
         else:
-            return HttpResponse("Flase")
+            return HttpResponse("Yorumu Gönderirken Hata Oluştu")
 

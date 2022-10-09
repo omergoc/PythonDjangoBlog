@@ -56,13 +56,16 @@ class RegisterForm(forms.Form):
         kvkk = self.cleaned_data.get('kvkk')
         term_of_use = self.cleaned_data.get('term_of_use')
 
+        if  (' ' in username.strip()) == True :
+            raise forms.ValidationError('Kullanıcı Adında Boşluk Olamaz.')
+            
         if not kvkk and not term_of_use:
             raise forms.ValidationError('KVKK VE Kullanım Şartlarını Kabul Etmelisiniz !!!')
         elif password and confirm and password != confirm:
             raise forms.ValidationError('Şifreler Eşleşmiyor !!!')
         
         values = {
-            "username" : username,
+            "username" : username.strip(),
             "first_name" : first_name,
             "last_name" : last_name,
             "email" : email,

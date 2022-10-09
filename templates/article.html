@@ -169,14 +169,14 @@
                             type: type,
                             content: content,
                         },
-                        success: function(gelenveri) {
-                            toastr.success('Yorumu Başarılı Bir Şekilde Gönderdiniz.', 'Success', {timeOut: 2000, progressBar : true});
-                        },
-                        error: function(hata) {
-                            console.log(hata);
+                        success: function(data) {
+                            if (data === "None"){
+                                toastr.error("Boş Yorum Yapamazsınız !!!", 'Durum', {timeOut: 2000, progressBar : true});
+                            }else {
+                                toastr.success(data, 'Durum', {timeOut: 2000, progressBar : true});
+                            }
                         }
                     });
-                    
                 });
             });
         </script>
