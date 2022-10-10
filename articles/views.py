@@ -1,13 +1,12 @@
+from os import read
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from .models import Categories, Articles,Comments,LikedArticle, Videos, News
-from blogapp.settings import base
+from .models import Categories, Articles,Comments,LikedArticle, Videos, News,ReadPost
 from users.models import Account
 from settings.models import Setting
 from django.http import Http404
-from django.db import connection
 import datetime
 
 
@@ -36,29 +35,10 @@ def care_control2(function):
             return function(request, *args, **kwargs)
     return wrap
 
-def set_cookie(response, key, value, days_expire=1):
-    if days_expire is None:
-        max_age = 365 * 24 * 60 * 60  # one year
-    else:
-        max_age = days_expire * 24 * 60 * 60
-    expires = datetime.datetime.strftime(
-        datetime.datetime.utcnow() + datetime.timedelta(seconds=max_age),
-        "%a, %d-%b-%Y %H:%M:%S GMT",
-    )
-    response.set_cookie(
-        key,
-        value,
-        max_age=max_age,
-        expires=expires,
-        domain=base.SESSION_COOKIE_DOMAIN,
-        secure=base.SESSION_COOKIE_SECURE or None,
-    )
-
 @care_control
 def articles(request):
-
     article_list = Articles.objects.all().filter(available=True)
-    paginator = Paginator(article_list, 5) # Show 25 contacts per page
+    paginator = Paginator(article_list, 5) 
 
     page = request.GET.get('sayfa')
     try:
@@ -77,7 +57,6 @@ def articles(request):
         'category':category_types
     }
     return render(request, 'category.html',context)
-
 
 @care_control
 def news(request):
@@ -127,26 +106,7 @@ def videos(request):
     }
     return render(request, 'category.html',context)
 
-def sql_test_code(id):
-    #raw sql query here
-    query = f"""
-        SELECT * FROM articles_articles INNER JOIN articles_categories ON articles_categories.id = {id} 
-        INNER JOIN
-        articles_videos
-        ON
-        articles_videos.category_id = {id}
-        INNER JOIN
-        articles_news
-        ON
-        articles_news.category_id = {id}"""
-    
-    #a cursor object
-    with connection.cursor() as cursor:
-        #execute the query
-        cursor.execute(query)
-        #get all the rows as a list
-        rows = cursor.fetchall()
-    return rows
+
 
 @care_control
 def category(request,categories_slug):
@@ -179,9 +139,15 @@ def category(request,categories_slug):
     }
     return render(request ,'category.html',context)
 
+def read_save(read_id, post_id):
+    control = ReadPost.objects.filter(read_id = read_id, post=post_id).last()
+    if control == None:
+        like, created = ReadPost.objects.get_or_create(read_id = read_id, post=post_id)
+
 @care_control2
 def article(request,categories_slug,articles_slug):
-
+    user = request.user.id if request.user.id else 0
+    read_id = request.session['cached_session_key']
     if request.method == "POST":
         return redirect(request.META['HTTP_REFERER'])
     else:
@@ -191,38 +157,38 @@ def article(request,categories_slug,articles_slug):
         article = Articles.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         video = Videos.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         news = News.objects.filter(slug = articles_slug, category=category_id,available=True).first()
-        user = request.user.id if request.user.id else 0
+
         if video:
             data = video
+            read_save(read_id, post_id=data.id)
             comments= Comments.objects.filter(videos=data,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
             control_like = control_like.status if control_like != None else 0
             context = { 'video': data, 'comments':comments,'count':count,'control_like':control_like}
             response = render(request ,'video.html',context)
-            response.set_cookie('bookname','Sherlock Holmes',max_age=1)
             return response
 
         elif article:
             data = article
+            read_save(read_id, post_id=data.id)
             comments= Comments.objects.filter(article=data,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
             control_like = control_like.status if control_like != None else 0
             context = { 'article': data, 'comments':comments,'count':count,'control_like':control_like}
             response = render(request ,'article.html',context)
-            response.set_cookie('bookname','Sherlock Holmes',max_age=1)
             return response
 
         elif news:
             data = news
+            read_save(read_id, post_id=data.id)
             comments= Comments.objects.filter(news=data,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
             control_like = control_like.status if control_like != None else 0
             context = { 'new': data, 'comments':comments,'count':count,'control_like':control_like}
             response = render(request ,'new.html',context)
-            response.set_cookie('bookname','Sherlock Holmes',max_age=1)
             return response
         else:
             return redirect(request.META['HTTP_REFERER'])

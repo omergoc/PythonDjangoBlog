@@ -25,6 +25,7 @@
                     <div class="col-lg-6">
                        <form method="post"> 
                         {% csrf_token %}
+                        {{ form.non_field_errors }}
                         <label for="inputEmail4">Kullanıcı Adı*</label>
                         {{ form.username }}
                         <br>

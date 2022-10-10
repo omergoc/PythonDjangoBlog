@@ -13,7 +13,7 @@ from django.contrib import messages
 from .models import Slider
 from django.shortcuts import redirect
 from .forms import ContactForm
-
+from django.db import connection
 
 
 def care(request):
@@ -153,9 +153,32 @@ def not_found_404(request,exception):
 def dashboard(request,exception):
     return render(request, 'dashboard.html')
 
+def mostliked_list():
+    data_list = []
+    query = "SELECT * FROM mostlike"
+    
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+    for data in rows:
+        json_data = {
+            "name_slug":data[9],
+            "name":data[8],
+            "created_date":data[7],
+            "category_slug":data[6],
+            "category_name":data[5],
+            "image":data[4],
+            "slug":data[3],
+            "description":data[2],
+            "title":data[1],
+        }
+        data_list.append(json_data)
+    return data_list
+
 @care_control
 def favorites(request):
-    article_list = Articles.objects.annotate(num_likes=Count('likedarticle')).filter(num_likes__gte=1)
+    article_list = mostliked_list()
     paginator = Paginator(article_list, 4) 
 
     page = request.GET.get('sayfa')

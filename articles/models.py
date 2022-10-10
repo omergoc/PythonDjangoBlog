@@ -255,3 +255,8 @@ class Comments(models.Model):
     
     def __str__(self):
         return self.name
+
+class ReadPost(models.Model):
+    read_id = models.CharField(max_length=1000, null=True)
+    post = models.IntegerField(blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True)

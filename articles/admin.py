@@ -26,7 +26,7 @@ class CommentsAdmin(admin.ModelAdmin):
         elif obj.news:
             return obj.news
         elif obj.videos:
-            return obj.videos
+            return obj.videos       
         else:
             return 'Not Available'
 
