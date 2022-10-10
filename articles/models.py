@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 from users.models import Account
 from ckeditor.fields import RichTextField
@@ -33,7 +34,7 @@ class Articles(models.Model):
         blank=True,
         related_name = "last_edit"
     )
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name = "Tarih")
     category = models.ForeignKey(
         Categories,
         on_delete=models.CASCADE,
@@ -116,7 +117,7 @@ class News(models.Model):
         blank=True,
         related_name = "last_edit_news"
     )
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name = "Tarih")
     category = models.ForeignKey(
         Categories,
         on_delete=models.CASCADE,
@@ -174,7 +175,7 @@ class Videos(models.Model):
         blank=True,
         related_name = "last_edit_video"
     )
-    created_date = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name = "Tarih")
     category = models.ForeignKey(
         Categories,
         on_delete=models.CASCADE,
@@ -229,7 +230,7 @@ class Comments(models.Model):
     article = models.ForeignKey(
         Articles,
         on_delete=models.CASCADE,
-        verbose_name="Title",
+        verbose_name="Makale",
         null=True,
         editable=False
     )
@@ -237,21 +238,21 @@ class Comments(models.Model):
         News,
         null=True,
         on_delete=models.CASCADE,
-        verbose_name="Title",
+        verbose_name="Haber",
         editable=False
     )
     videos = models.ForeignKey(
         Videos,
         null=True,
         on_delete=models.CASCADE,
-        verbose_name="Title",
+        verbose_name="Video",
         editable=False
     )
     name = models.CharField(max_length=200,verbose_name="Ad Soyad")
     email = models.EmailField(verbose_name="E-Posta Adresi",blank=True)
     content = models.TextField(verbose_name="İçerik")
-    created_date = models.DateTimeField(auto_now_add=True)
-    available = models.BooleanField(default=False, verbose_name="Onayla")
+    created_date = models.DateTimeField(auto_now_add=True ,verbose_name="Tarih")
+    available = models.BooleanField(default=False, verbose_name="Durum")
     
     def __str__(self):
         return self.name

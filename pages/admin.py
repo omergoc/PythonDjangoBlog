@@ -3,7 +3,10 @@ from .models import Contact, Slider
 
 
 
-admin.site.register(Contact)
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name','email','phone','created_date')
+    list_filter = ('name','email','phone','created_date')
 
 
 @admin.register(Slider)

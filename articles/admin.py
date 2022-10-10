@@ -3,6 +3,8 @@ from .models import Articles,Categories,Comments, Images, News, Videos
 
 @admin.register(Categories)
 class CategoriesAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    list_filter = ('name',)
     prepopulated_fields ={'slug':('name',)}
 
 @admin.register(Comments)
@@ -18,8 +20,6 @@ class CommentsAdmin(admin.ModelAdmin):
         else:
             return obj.content
     
-    list_display = ('get_sub_title','Comment_Preview','name','created_date')
-
     def get_sub_title(self, obj):
         if obj.article:
             return obj.article
@@ -30,13 +30,22 @@ class CommentsAdmin(admin.ModelAdmin):
         else:
             return 'Not Available'
 
-    get_sub_title.short_description = 'Subtitle'
-admin.site.register(Images)
+    list_display = ('get_sub_title','Comment_Preview','name','created_date','available')
+    list_filter = ('videos','article','news','name','created_date','available')
 
+    get_sub_title.short_description = 'Konu'
+    Comment_Preview.short_description = 'Yorum içerik'
+
+@admin.register(Images)
+class ImagesAdmin(admin.ModelAdmin):
+    list_display = ('image_name',)
+    list_filter = ('image_name',)
 
 @admin.register(News)
-class Newsdmin(admin.ModelAdmin):
+class NewsAdmin(admin.ModelAdmin):
     readonly_fields=['writer','last_edit_news','available','types']
+    list_display = ('title','writer','last_edit_news','created_date','available')
+    list_filter = ('title','writer','last_edit_news','created_date','available')
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields=['writer','last_edit_news','available','types']
@@ -63,6 +72,8 @@ class Newsdmin(admin.ModelAdmin):
 @admin.register(Videos)
 class VideosAdmin(admin.ModelAdmin):
     readonly_fields=['writer','last_edit_video','available','types']
+    list_display = ('title','writer','last_edit_video','created_date','available')
+    list_filter = ('title','writer','last_edit_video','created_date','available')
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields=['writer','last_edit_video','available','types']
@@ -89,6 +100,8 @@ class VideosAdmin(admin.ModelAdmin):
 @admin.register(Articles)
 class ArticlesAdmin(admin.ModelAdmin):
     readonly_fields=['writer','last_edit','available','types']
+    list_display = ('title','writer','last_edit','created_date','available')
+    list_filter = ('title','writer','last_edit','created_date','available')
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields=['writer','last_edit','available','types']

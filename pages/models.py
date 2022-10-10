@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 from users.models import Account
 
@@ -8,7 +9,7 @@ class Contact(models.Model):
     subject = models.CharField(max_length=100,verbose_name="Konu",null=True)
     content = models.TextField(verbose_name="Mesaj",null=True)
 
-    created_date = models.DateTimeField(auto_now_add=True ,null=True)
+    created_date = models.DateTimeField(auto_now_add=True ,null=True, verbose_name = "Tarih")
 
     def __str__(self):
         return self.name
