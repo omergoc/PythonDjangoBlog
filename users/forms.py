@@ -56,6 +56,12 @@ class RegisterForm(forms.Form):
         kvkk = self.cleaned_data.get('kvkk')
         term_of_use = self.cleaned_data.get('term_of_use')
 
+        if  (first_name.strip() == ''):
+            raise forms.ValidationError('Adınız Boş olamaz')
+
+        if  (last_name.strip() == ''):
+            raise forms.ValidationError('Soyadınız Boş olamaz')
+
         if  (' ' in username.strip()) == True :
             raise forms.ValidationError('Kullanıcı Adında Boşluk Olamaz.')
             

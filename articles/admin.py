@@ -55,11 +55,11 @@ class NewsAdmin(admin.ModelAdmin):
                 readonly_fields.remove('types')
         return readonly_fields
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if request.user.is_superuser:
-            return qs
-        return qs.filter(writer=request.user)
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     if request.user.is_superuser:
+    #         return qs
+    #     return qs.filter(writer=request.user)
         
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'writer', None) is None:
@@ -83,11 +83,11 @@ class VideosAdmin(admin.ModelAdmin):
                 readonly_fields.remove('types')
         return readonly_fields
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if request.user.is_superuser:
-            return qs
-        return qs.filter(writer=request.user)
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     if request.user.is_superuser:
+    #         return qs
+    #     return qs.filter(writer=request.user)
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'writer', None) is None:
@@ -111,11 +111,11 @@ class ArticlesAdmin(admin.ModelAdmin):
                 readonly_fields.remove('types')
         return readonly_fields
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
-        if request.user.is_superuser:
-            return qs
-        return qs.filter(writer=request.user)
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     if request.user.is_superuser:
+    #         return qs
+    #     return qs.filter(writer=request.user)
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'writer', None) is None:

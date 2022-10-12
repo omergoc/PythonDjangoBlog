@@ -194,7 +194,7 @@ def profile(request):
         
 
         if 'cv' in request.FILES:
-            if str(request.FILES['cv'])[-3:] == 'pdf':
+            if str(request.FILES['cv'])[-3:].lower() == 'pdf':
                 cv = cv_upload(request.FILES['cv'], slug)
             else:
                 messages.warning(request, "CV Bölümüne Sadece PDF Dosya Yükleyiniz...")
@@ -203,11 +203,12 @@ def profile(request):
             cv = request.POST['old_cv']
 
         if 'image' in request.FILES:
-            if str(request.FILES['image'])[-3:] == 'jpg':
+            print(str(request.FILES['image'])[-3:])
+            if str(request.FILES['image'])[-3:].lower() == 'png':
                 image = image_upload(request.FILES['image'], slug)
 
             else:
-                messages.warning(request, "Profil Fotoğrafı Bölümüne Sadece jPG Dosya Yükleyiniz...")
+                messages.warning(request, "Profil Fotoğrafı Bölümüne Sadece PNG Dosya Yükleyiniz...")
                 return redirect("profile")
         else:
             image = request.POST['old_image']
@@ -232,15 +233,15 @@ def cv_upload(f,slug):
 
 
 def image_upload(f,slug): 
-    path = 'static/upload/author/'+slug+'.jpg'
-    with open('static/upload/author/'+slug+'.jpg' , 'wb+') as destination:  
+    print(slug)
+    path = 'static/upload/author/'+slug+'.png'
+    with open('static/upload/author/'+slug+'.png' , 'wb+') as destination:  
         for chunk in f.chunks():  
             destination.write(chunk)       
     return path
 
 @care_control
 def users(request):
-    
     User = get_user_model()
     writers_list = User.objects.all().filter(profile_activate=True)
     writers_list = [writers_list[i:i+4] for i in range(0, len(writers_list), 4)]
