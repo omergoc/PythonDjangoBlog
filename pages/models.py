@@ -1,4 +1,3 @@
-from tabnanny import verbose
 from django.db import models
 from users.models import Account
 
@@ -13,6 +12,9 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "İletişim"
 
 
 class Slider(models.Model):
@@ -30,5 +32,9 @@ class Slider(models.Model):
 
     created_date = models.DateTimeField(auto_now_add=True ,null=True)
 
+    class Meta:
+        verbose_name_plural = "Slaytlar"
+
     def __str__(self):
         return self.title
+        

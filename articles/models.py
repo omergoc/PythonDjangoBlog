@@ -12,6 +12,9 @@ class Categories(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name_plural = "Kategoriler"
 
 
 class Articles(models.Model):
@@ -61,6 +64,7 @@ class Articles(models.Model):
     table_name = models.CharField(default="makale", editable=False,max_length=20)
     class Meta:
         ordering = ['-created_date']
+        verbose_name_plural = "Makaleler"
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title.replace('ı', 'i'))
@@ -93,7 +97,9 @@ class Images(models.Model):
     image_description=models.CharField(max_length=300,verbose_name="Resim Açıklama")
     image = models.ImageField(upload_to = "static/upload/%Y/%m/%d", default="static/upload/default.jpg", verbose_name="Resim")
 
-    
+    class Meta:
+        verbose_name_plural = "Fotoğraflar"
+
     def __str__(self):
         return self.image_name
 
@@ -145,6 +151,7 @@ class News(models.Model):
 
     class Meta:
         ordering = ['-created_date']
+        verbose_name_plural = "Haberler"
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title.replace('ı', 'i'))
@@ -203,6 +210,7 @@ class Videos(models.Model):
 
     class Meta:
         ordering = ['-created_date']
+        verbose_name_plural = "Videolar"
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title.replace('ı', 'i'))
@@ -253,7 +261,10 @@ class Comments(models.Model):
     content = models.TextField(verbose_name="İçerik")
     created_date = models.DateTimeField(auto_now_add=True ,verbose_name="Tarih")
     available = models.BooleanField(default=False, verbose_name="Durum")
-    
+
+    class Meta:
+        verbose_name_plural = "Yorumlar"
+
     def __str__(self):
         return self.name
 

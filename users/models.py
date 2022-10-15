@@ -24,6 +24,9 @@ class Account(AbstractUser):
     github = models.CharField(max_length=500,null=True, default='/',verbose_name="Github")
     website = models.CharField(max_length=500,null=True, default='/',verbose_name="Web Site")
 
+    class Meta:
+        verbose_name_plural = "Kulanıcı Listesi"
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.username.replace('ı', 'i'))
         super(Account, self).save(*args, **kwargs)

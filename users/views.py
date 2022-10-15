@@ -32,20 +32,27 @@ def care_control(function):
 def loginUser(request):
     if  request.user.username:
         return redirect("index")
-        
-    form = LoginForm(request.POST or None)
-    if form.is_valid():       
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
 
-        user = authenticate(username=username, password=password)
-        if user is None:
-            messages.warning(request, "Kullanıcı Adı Yada Şifre Hatalı")
-            return redirect(loginUser)
-    
-        messages.success(request, "Giriş Başarılı...")
-        login(request,user)
-        return redirect("index")
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+
+        if form.is_valid():       
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+
+            if user is None:
+                messages.warning(request, "Kullanıcı Adı Yada Şifre Hatalı")
+                return redirect(loginUser)
+        
+            messages.success(request, "Giriş Başarılı...")
+            login(request,user)
+            return redirect("index")
+        else:  
+            return render(request, 'login.html', {'form':form})
+
+    else:
+        form = LoginForm()
 
     context = {
         'form': form
@@ -56,53 +63,55 @@ def loginUser(request):
 def register(request):
     if  request.user.username:
         return redirect("index")
-
-    form = RegisterForm(request.POST or None)
-    if form.is_valid():       
-        username = form.cleaned_data.get('username')
-        first_name = form.cleaned_data.get('first_name')
-        last_name = form.cleaned_data.get('last_name')
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-        try:
-            control = Account.objects.get(username = username, email=email)
-        except Account.DoesNotExist:
-            control = None
-
-        if control is  None:
-            is_active = False
-            new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active)
-            new_user.set_password(password)
-            new_user.save()
-            try:
-                current_site = get_current_site(request)  
-                mail_subject = 'Activation link has been sent to your email id'  
-                message = render_to_string('acc_active_email.html', {  
-                    'user': new_user,  
-                    'domain': current_site.domain,  
-                    'uid':urlsafe_base64_encode(force_bytes(new_user.pk)),  
-                    'token':account_activation_token.make_token(new_user),  
-                })  
-                to_email = form.cleaned_data.get('email')  
-                email = EmailMessage(  
-                            mail_subject, message, to=[to_email]  
-                )  
-                email.send()  
-                return render(request, 'Email.html',{'msg':'Kaydı tamamlamak için lütfen e-posta adresinizi onaylayın'})
-            except:
-                messages.warning(request, "Bilinmedik Bir Hata Oluştu Lütfen Site Yöneticilerine Bildiriniz.")
-                return redirect(loginUser) 
-
-        else:
-            messages.warning(request, "Kullanıcı Adı yada E-Posta Daha Önce Kullanılmış.")
-            return redirect(loginUser) 
         
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
+        if form.is_valid():       
+            username = form.cleaned_data.get('username')
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            try:
+                control = Account.objects.get(username = username, email=email)
+            except Account.DoesNotExist:
+                control = None
 
-    form = RegisterForm()
-    context = {
-        'form': form
-    }
-    return render(request, 'register.html',context)
+            if control is  None:
+                is_active = False
+                new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active)
+                new_user.set_password(password)
+                new_user.save()
+                try:
+                    current_site = get_current_site(request)  
+                    mail_subject = 'Activation link has been sent to your email id'  
+                    message = render_to_string('acc_active_email.html', {  
+                        'user': new_user,  
+                        'domain': current_site.domain,  
+                        'uid':urlsafe_base64_encode(force_bytes(new_user.pk)),  
+                        'token':account_activation_token.make_token(new_user),  
+                    })  
+                    to_email = form.cleaned_data.get('email')  
+                    email = EmailMessage(  
+                                mail_subject, message, to=[to_email]  
+                    )  
+                    email.send()  
+                    return render(request, 'Email.html',{'msg':'Kaydı tamamlamak için lütfen e-posta adresinizi onaylayın'})
+                except:
+                    messages.warning(request, "Bilinmedik Bir Hata Oluştu Lütfen Site Yöneticilerine Bildiriniz.")
+                    return redirect(loginUser) 
+        
+            else:
+                messages.warning(request, "Kullanıcı Adı yada E-Posta Daha Önce Kullanılmış.")
+                return redirect(loginUser)   
+        else:
+            return render(request, 'register.html', {'form':form})
+    else:
+        form = RegisterForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'register.html',context)
     
 
 def activate(request, uidb64, token):  

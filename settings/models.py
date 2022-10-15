@@ -25,3 +25,5 @@ class Setting(models.Model):
     def __str__(self):
         return "Site Ayarları"
     
+    class Meta:
+        verbose_name_plural = "Ayar Listesi"

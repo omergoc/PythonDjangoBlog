@@ -1,5 +1,4 @@
 from django import forms
-from django import forms
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
 
@@ -15,6 +14,25 @@ class LoginForm(forms.Form):
         'placeholder': 'Şifre'
     }))
     
+    def clean(self):
+        cleaned_data = super().clean()
+
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+
+        if  (username == None):
+            print("sa1")
+            raise forms.ValidationError('Kullanıcı Adı Boş olamaz')
+
+        if  (password == None):
+            print("sa2")
+            raise forms.ValidationError('Sifre Boş olamaz')
+        
+        values = {
+            "username" : username,
+            "password" : password,
+        }
+        return values
 
 class RegisterForm(forms.Form):
     captcha = ReCaptchaField(widget=ReCaptchaV3)
@@ -67,7 +85,7 @@ class RegisterForm(forms.Form):
             
         if not kvkk and not term_of_use:
             raise forms.ValidationError('KVKK VE Kullanım Şartlarını Kabul Etmelisiniz !!!')
-        elif password and confirm and password != confirm:
+        if password and confirm and password != confirm:
             raise forms.ValidationError('Şifreler Eşleşmiyor !!!')
         
         values = {

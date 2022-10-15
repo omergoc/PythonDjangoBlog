@@ -1,18 +1,3 @@
-"""blogapp URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
@@ -21,6 +6,9 @@ from rest_framework_simplejwt import views as jwt_views
 
 
 handler404 = 'pages.views.handler404'
+admin.site.site_header = 'Siberatay Yönetim Paneli'
+admin.site.site_title = 'Siberatay Panel'
+
 
 urlpatterns = [
     path('portal_fa956b808c8f8e3b59be14d7d584761e041a8359d58ba7e1829f12605d76203a/', admin.site.urls),
