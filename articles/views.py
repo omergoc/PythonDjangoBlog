@@ -147,7 +147,7 @@ def read_save(read_id, post_id):
 @care_control2
 def article(request,categories_slug,articles_slug):
     user = request.user.id if request.user.id else 0
-    read_id = request.session['cached_session_key']
+
     if request.method == "POST":
         return redirect(request.META['HTTP_REFERER'])
     else:
@@ -157,7 +157,7 @@ def article(request,categories_slug,articles_slug):
         article = Articles.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         video = Videos.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         news = News.objects.filter(slug = articles_slug, category=category_id,available=True).first()
-
+        read_id = request.session['cached_session_key']
         if video:
             data = video
             read_save(read_id, post_id=data.id)

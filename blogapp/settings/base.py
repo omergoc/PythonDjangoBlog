@@ -62,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'crum.CurrentRequestUserMiddleware',
     'blogapp.middleware.AnonymousUserTrackingMiddleware', 
 ]
@@ -90,9 +91,6 @@ WSGI_APPLICATION = 'blogapp.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-
-
 
 
 # Password validation
@@ -152,5 +150,7 @@ RECAPTCHA_PUBLIC_KEY = '6Lcp6SIiAAAAANGaVhoyl_Rq0R389ERx7ino2-BI'
 RECAPTCHA_PRIVATE_KEY = '6Lcp6SIiAAAAAMQXPUbeOv4nJxBeI3_mmLAAAFb8'
 RECAPTCHA_REQUIRED_SCORE = 0.85
 
-SESSION_COOKIE_AGE = 86400
-SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+#SESSION_EXPIRE_SECONDS = 20
+# SESSION_SAVE_EVERY_REQUEST = True
+SESSION_TIMEOUT_REDIRECT = 'login'
+# SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
