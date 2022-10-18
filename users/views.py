@@ -3,7 +3,7 @@ from users.models import Account
 from settings.models import Setting
 from django.contrib import messages
 from .forms import PasswordChange, RegisterForm, LoginForm,UpdateUserForm
-from articles.models import Articles
+from articles.models import Articles, News, Videos
 from django.contrib.auth import login, authenticate,logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -161,9 +161,10 @@ def index(request,writers_slug):
 
     writers = get_object_or_404(Account, slug=writers_slug)
     writer_id = writers.id
-
-    article_list = Articles.objects.filter(writer=writer_id ).all()
-    print(article_list)
+    article_list = list(Articles.objects.filter(writer=writer_id,available=True))
+    video_list = list(Videos.objects.filter(writer=writer_id,available=True))
+    new_list = list(News.objects.filter(writer=writer_id,available=True))
+    article_list = article_list + new_list + video_list
     paginator = Paginator(article_list, 5) 
 
     page = request.GET.get('sayfa')
@@ -242,7 +243,6 @@ def cv_upload(f,slug):
 
 
 def image_upload(f,slug): 
-    print(slug)
     path = 'static/upload/author/'+slug+'.png'
     with open('static/upload/author/'+slug+'.png' , 'wb+') as destination:  
         for chunk in f.chunks():  

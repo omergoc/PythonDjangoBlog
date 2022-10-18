@@ -197,16 +197,14 @@ def favorites(request):
 def trend(request):
     article_list = Articles.objects.filter(available=True).order_by('-views')
 
-    paginator = Paginator(article_list, 4) # Show 25 contacts per page
+    paginator = Paginator(article_list, 4) 
 
     page = request.GET.get('sayfa')
     try:
         articles = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         articles = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         articles = paginator.page(paginator.num_pages)
     context = {
         'articles':articles
