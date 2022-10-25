@@ -157,7 +157,15 @@ def article(request,categories_slug,articles_slug):
         article = Articles.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         video = Videos.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         news = News.objects.filter(slug = articles_slug, category=category_id,available=True).first()
+
+        if request.user.is_anonymous:
+            has_key = request.session.get('cached_session_key', None)
+            
+        if has_key is None:
+                request.session['cached_session_key'] = request.session.session_key
+        
         read_id = request.session['cached_session_key']
+
         if video:
             data = video
             read_save(read_id, post_id=data.id)

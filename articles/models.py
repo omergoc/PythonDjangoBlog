@@ -1,4 +1,4 @@
-from tabnanny import verbose
+
 from django.db import models
 from users.models import Account
 from ckeditor.fields import RichTextField
@@ -44,7 +44,7 @@ class Articles(models.Model):
         verbose_name="Kategori"
     )
     image = models.ImageField(upload_to = "static/upload/%Y/%m/%d", default="static/upload/default.jpg",  verbose_name="Resim(Önerilen:788x443)")
-    slug = models.SlugField(max_length=500,unique=True,null=True, verbose_name="Seo Adres", editable=False)
+    slug = models.SlugField(max_length=200,unique=True,null=True, verbose_name="Seo Adres", editable=False)
     views = models.IntegerField(verbose_name="Görüntülenme Sayısı",default=0, editable=False)
     TYPE1 = "1"
     TYPE2 = "2"
@@ -130,7 +130,7 @@ class News(models.Model):
         verbose_name="Kategori"
     )
     image = models.ImageField(upload_to = "static/upload/%Y/%m/%d", default="static/upload/default.jpg", verbose_name="Resim(Önerilen:788x443)")
-    slug = models.SlugField(max_length=500,unique=True,null=True, verbose_name="Seo Adres", editable=False)
+    slug = models.SlugField(max_length=200,unique=True,null=True, verbose_name="Seo Adres", editable=False)
     views = models.IntegerField(verbose_name="Görüntülenme Sayısı",default=0, editable=False)
     TYPE1 = "1"
     TYPE2 = "2"
@@ -172,7 +172,6 @@ class Videos(models.Model):
         verbose_name="Yazar",
         blank=True,
         null=True,
-        
     )
     last_edit_video = models.ForeignKey(
         Account,
@@ -189,7 +188,7 @@ class Videos(models.Model):
         verbose_name="Kategori"
     )
     image = models.ImageField(upload_to = "static/upload/%Y/%m/%d", default="static/upload/default.jpg", verbose_name="Resim(Önerilen:788x443)")
-    slug = models.SlugField(max_length=500,unique=True,null=True, verbose_name="Seo Adres", editable=False)
+    slug = models.SlugField(max_length=200,unique=True,null=True, verbose_name="Seo Adres", editable=False)
     views = models.IntegerField(verbose_name="Görüntülenme Sayısı",default=0, editable=False)
     TYPE1 = "1"
     TYPE2 = "2"

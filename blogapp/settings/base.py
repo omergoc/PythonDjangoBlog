@@ -56,6 +56,7 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "users.Account"
 
 MIDDLEWARE = [
+    'blogapp.middleware.AnonymousUserTrackingMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,7 +65,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_session_timeout.middleware.SessionTimeoutMiddleware',
     'crum.CurrentRequestUserMiddleware',
-    'blogapp.middleware.AnonymousUserTrackingMiddleware', 
 ]
 
 ROOT_URLCONF = 'blogapp.urls'
