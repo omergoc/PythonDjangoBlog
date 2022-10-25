@@ -65,6 +65,7 @@ class RegisterForm(forms.Form):
     term_of_use = forms.BooleanField()
 
     def clean(self):
+        captcha = self.cleaned_data.get('captcha')
         username = self.cleaned_data.get('username')
         first_name = self.cleaned_data.get('first_name')
         last_name = self.cleaned_data.get('last_name')

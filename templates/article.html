@@ -86,8 +86,8 @@
 
                                                 {% if comment.available == 1 %}
                                                 <div class="media">
-                                                    <a class="media-left" href="#">
-                                                        <img src="{% static 'upload/author.png' %}" alt="" class="rounded-circle">
+                                                    <a class="media-left" href="/writer/{{ comment.approver.slug }}/">
+                                                        <img src="{{ comment.approver.image.url }}" alt="{{ comment.name }}" class="rounded-circle">
                                                     </a>
                                                     <div class="media-body">
                                                         <h4 class="media-heading user_name">{{ comment.name }}<small>{{ comment.created_date }}</small></h4>

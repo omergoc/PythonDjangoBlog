@@ -44,7 +44,7 @@ class Articles(models.Model):
         verbose_name="Kategori"
     )
     image = models.ImageField(upload_to = "static/upload/%Y/%m/%d", default="static/upload/default.jpg",  verbose_name="Resim(Önerilen:788x443)")
-    slug = models.SlugField(max_length=50,unique=True,null=True, verbose_name="Seo Adres", editable=False)
+    slug = models.SlugField(max_length=500,unique=True,null=True, verbose_name="Seo Adres", editable=False)
     views = models.IntegerField(verbose_name="Görüntülenme Sayısı",default=0, editable=False)
     TYPE1 = "1"
     TYPE2 = "2"
@@ -104,7 +104,7 @@ class Images(models.Model):
         return self.image_name
 
 class News(models.Model):
-    title = models.CharField(max_length=100,verbose_name="Başlık",unique=True)
+    title = models.CharField(max_length=500,verbose_name="Başlık",unique=True)
     description = models.CharField(max_length=250,verbose_name="Açıklama", null=True)
     content = RichTextField(verbose_name="İçerik")
     writer = models.ForeignKey(
@@ -130,7 +130,7 @@ class News(models.Model):
         verbose_name="Kategori"
     )
     image = models.ImageField(upload_to = "static/upload/%Y/%m/%d", default="static/upload/default.jpg", verbose_name="Resim(Önerilen:788x443)")
-    slug = models.SlugField(max_length=50,unique=True,null=True, verbose_name="Seo Adres", editable=False)
+    slug = models.SlugField(max_length=500,unique=True,null=True, verbose_name="Seo Adres", editable=False)
     views = models.IntegerField(verbose_name="Görüntülenme Sayısı",default=0, editable=False)
     TYPE1 = "1"
     TYPE2 = "2"
@@ -189,7 +189,7 @@ class Videos(models.Model):
         verbose_name="Kategori"
     )
     image = models.ImageField(upload_to = "static/upload/%Y/%m/%d", default="static/upload/default.jpg", verbose_name="Resim(Önerilen:788x443)")
-    slug = models.SlugField(max_length=50,unique=True,null=True, verbose_name="Seo Adres", editable=False)
+    slug = models.SlugField(max_length=500,unique=True,null=True, verbose_name="Seo Adres", editable=False)
     views = models.IntegerField(verbose_name="Görüntülenme Sayısı",default=0, editable=False)
     TYPE1 = "1"
     TYPE2 = "2"
