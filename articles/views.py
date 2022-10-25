@@ -159,10 +159,11 @@ def article(request,categories_slug,articles_slug):
         news = News.objects.filter(slug = articles_slug, category=category_id,available=True).first()
 
         if request.user.is_anonymous:
+            global has_key
             has_key = request.session.get('cached_session_key', None)
             
         if has_key is None:
-                request.session['cached_session_key'] = request.session.session_key
+            request.session['cached_session_key'] = request.session.session_key
         
         read_id = request.session['cached_session_key']
 
