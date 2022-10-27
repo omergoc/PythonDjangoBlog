@@ -56,10 +56,10 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = "users.Account"
 
 MIDDLEWARE = [
+    'django.middleware.common.CommonMiddleware',
     'blogapp.middleware.AnonymousUserTrackingMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -125,6 +125,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+APPEND_SLASH = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

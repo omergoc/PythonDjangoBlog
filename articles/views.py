@@ -144,6 +144,7 @@ def read_save(read_id, post_id):
     if control == None:
         like, created = ReadPost.objects.get_or_create(read_id = read_id, post=post_id)
 
+
 @care_control2
 def article(request,categories_slug,articles_slug):
     user = request.user.id if request.user.id else 0
@@ -162,8 +163,12 @@ def article(request,categories_slug,articles_slug):
             global has_key
             has_key = request.session.get('cached_session_key', None)
             if has_key is None:
+                if not request.session.session_key:
+                    request.session.save()
                 request.session['cached_session_key'] = request.session.session_key
-        
+        if not request.session.session_key:
+            request.session.save()
+            request.session['cached_session_key'] = request.session.session_key
         read_id = request.session['cached_session_key']
 
         if video:
