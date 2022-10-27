@@ -1,4 +1,3 @@
-from os import read
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -147,6 +146,10 @@ def read_save(read_id, post_id):
 
 @care_control2
 def article(request,categories_slug,articles_slug):
+    read_id = request.session.get('cached_session_key', None)
+    if read_id is None:
+        request.session['cached_session_key'] = request.session.session_key
+        read_id = request.session.get('cached_session_key', None)
     user = request.user.id if request.user.id else 0
 
     if request.method == "POST":
@@ -159,17 +162,9 @@ def article(request,categories_slug,articles_slug):
         video = Videos.objects.filter(slug = articles_slug, category=category_id,available=True).first()
         news = News.objects.filter(slug = articles_slug, category=category_id,available=True).first()
 
-        if request.user.is_anonymous:
-            global has_key
-            has_key = request.session.get('cached_session_key', None)
-            if has_key is None:
-                request.session['cached_session_key'] = request.session.session_key
-        
-        read_id = request.session['cached_session_key']
-
         if video:
             data = video
-            read_save(read_id, post_id=data.id)
+            read_save(read_id,data.id)
             comments= Comments.objects.filter(videos=data,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
@@ -180,7 +175,8 @@ def article(request,categories_slug,articles_slug):
 
         elif article:
             data = article
-            read_save(read_id, post_id=data.id)
+
+            read_save(read_id, data.id)
             comments= Comments.objects.filter(article=data,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
@@ -190,8 +186,9 @@ def article(request,categories_slug,articles_slug):
             return response
 
         elif news:
+
             data = news
-            read_save(read_id, post_id=data.id)
+            read_save(read_id, data.id)
             comments= Comments.objects.filter(news=data,available=True).all()
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
