@@ -1,6 +1,4 @@
-from asyncore import write
-from re import A
-from traceback import print_tb
+from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.views.generic import View, TemplateView
@@ -72,7 +70,7 @@ def PostJsonListView(request, id):
                 'category_slug':category['slug'],
                 'writer_name': f"{writer['first_name']} {writer['last_name']}",
                 'writer_slug': writer['slug'],
-                'article_created_date':article['created_date'],
+                'article_created_date':datetime.date(article['created_date']),
                 'article_image':article['image'],
                 'article_title':article['title'],
                 'article_slug':article['slug'],
@@ -90,7 +88,7 @@ def PostJsonListView(request, id):
                 'writer_name': f"{writer['first_name']} {writer['last_name']}",
                 'writer_slug': writer['slug'],
                 'article_title':article['title'],
-                'article_created_date':article['created_date'],
+                'article_created_date':datetime.date(article['created_date']),
                 'article_image':article['image'],
                 'article_slug':article['slug'],
                 'article_content':article['description']
@@ -106,7 +104,7 @@ def PostJsonListView(request, id):
                 'category_slug':category['slug'],
                 'writer_name': f"{writer['first_name']} {writer['last_name']}",
                 'writer_slug': writer['slug'],
-                'article_created_date':article['created_date'],
+                'article_created_date': datetime.date(article['created_date']),
                 'article_title':article['title'],
                 'article_image':article['image'],
                 'article_slug':article['slug'],
