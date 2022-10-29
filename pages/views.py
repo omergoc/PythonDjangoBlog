@@ -70,7 +70,7 @@ def PostJsonListView(request, id):
                 'category_slug':category['slug'],
                 'writer_name': f"{writer['first_name']} {writer['last_name']}",
                 'writer_slug': writer['slug'],
-                'article_created_date':datetime.date(article['created_date']),
+                'article_created_date':article['created_date'].strftime("%m/%b/%Y %H:%M"),
                 'article_image':article['image'],
                 'article_title':article['title'],
                 'article_slug':article['slug'],
@@ -81,6 +81,7 @@ def PostJsonListView(request, id):
         for article in videos:
             category = get_category(article['category_id'])
             writer = get_writer(article['writer_id'])
+            
             data = {
                 'id': article['id'],
                 'category_title':category['name'],
@@ -88,7 +89,7 @@ def PostJsonListView(request, id):
                 'writer_name': f"{writer['first_name']} {writer['last_name']}",
                 'writer_slug': writer['slug'],
                 'article_title':article['title'],
-                'article_created_date':datetime.date(article['created_date']),
+                'article_created_date':article['created_date'].strftime("%m/%b/%Y %H:%M"),
                 'article_image':article['image'],
                 'article_slug':article['slug'],
                 'article_content':article['description']
@@ -98,13 +99,14 @@ def PostJsonListView(request, id):
         for article in news:
             category = get_category(article['category_id'])
             writer = get_writer(article['writer_id'])
+            
             data = {
                 'id': article['id'],
                 'category_title':category['name'],
                 'category_slug':category['slug'],
                 'writer_name': f"{writer['first_name']} {writer['last_name']}",
                 'writer_slug': writer['slug'],
-                'article_created_date': datetime.date(article['created_date']),
+                'article_created_date': article['created_date'].strftime("%m/%b/%Y %H:%M"),
                 'article_title':article['title'],
                 'article_image':article['image'],
                 'article_slug':article['slug'],
