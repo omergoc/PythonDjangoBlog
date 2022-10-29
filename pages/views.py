@@ -70,7 +70,7 @@ def PostJsonListView(request, id):
                 'category_slug':category['slug'],
                 'writer_name': f"{writer['first_name']} {writer['last_name']}",
                 'writer_slug': writer['slug'],
-                'article_created_date':article['created_date'].strftime("%m/%b/%Y %H:%M"),
+                'article_created_date':article['created_date'].strftime("%m/%d/%Y %H:%M"),
                 'article_image':article['image'],
                 'article_title':article['title'],
                 'article_slug':article['slug'],
@@ -89,7 +89,7 @@ def PostJsonListView(request, id):
                 'writer_name': f"{writer['first_name']} {writer['last_name']}",
                 'writer_slug': writer['slug'],
                 'article_title':article['title'],
-                'article_created_date':article['created_date'].strftime("%m/%b/%Y %H:%M"),
+                'article_created_date':article['created_date'].strftime("%m/%d/%Y %H:%M"),
                 'article_image':article['image'],
                 'article_slug':article['slug'],
                 'article_content':article['description']
