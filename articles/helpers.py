@@ -48,6 +48,7 @@ def articles_list(query="All"):
             "description":data[3],
             "view_count":data[2],
             "title":data[1],
+            "id":data[0],
         }
         data_list.append(json_data)
     return data_list
@@ -73,6 +74,7 @@ def category_list(slug):
             "description":data[3],
             "view_count":data[2],
             "title":data[1],
+            "id":data[0],
         }
         data_list.append(json_data)
     return data_list
@@ -99,5 +101,6 @@ def get_article(slug):
             "description":data[3],
             "view_count":data[2],
             "title":data[1],
+            "id":data[0],
         }
     return json_data
