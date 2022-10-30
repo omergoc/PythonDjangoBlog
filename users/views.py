@@ -73,11 +73,13 @@ def register(request):
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
             try:
-                control = Account.objects.filter(username__iexact = username).filter(email=email)
+                control_username = Account.objects.filter(username__iexact = username)
+                control_email = Account.objects.filter(email = email)
             except Account.DoesNotExist:
-                control = None
+                control_username = []
+                control_email = []
 
-            if control is  None:
+            if len(list(control_username)) == 0 and len(list(control_email)) == 0:
                 is_active = False
                 new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active)
                 new_user.set_password(password)

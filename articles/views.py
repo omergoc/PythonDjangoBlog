@@ -1,3 +1,4 @@
+from hashlib import new
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -156,7 +157,13 @@ def article(request,categories_slug,articles_slug):
         if article:
             data = article
             read_save(read_id, data['id'])
-            comments= Comments.objects.filter(article=data['id'],available=True).all()
+            if article['kind'] == "articles":
+                comments= Comments.objects.filter(article=data['id'],available=True).all()
+            elif article['kind'] == "news":
+                comments= Comments.objects.filter(news=data['id'],available=True).all()
+            elif article['kind'] == "videos":
+                comments= Comments.objects.filter(videos=data['id'],available=True).all()
+                
             count = comments.count()
             control_like = LikedArticle.objects.filter(user_id = user, post=data['id']).last()
             control_like = control_like.status if control_like != None else 0

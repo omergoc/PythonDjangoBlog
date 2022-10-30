@@ -10,7 +10,6 @@ def categories_renderer(request):
     videos = Videos.objects.filter(available=True).order_by('-id')[:3]
 
     article_list = get_articles_sidebar()
-    print(article_list)
     categories = Categories.objects.all()
 
     return { 'all_categories': categories, 'sidebar_videos': videos, 'sidebar_news': article_list, 'sidebar_comms': comms, 'settings': settings}
