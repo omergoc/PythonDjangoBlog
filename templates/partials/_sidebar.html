@@ -6,9 +6,9 @@
         <div class="list-group">
             
             {% for sidebar_article in sidebar_news %}
-            <a href="/{{ sidebar_article.category.slug }}/{{ sidebar_article.slug }}/" class="list-group-item list-group-item-action flex-column align-items-start">
+            <a href="/{{ sidebar_article.category_slug }}/{{ sidebar_article.slug }}/" class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="w-100 last-item justify-content-between">
-                    <img src="{{ sidebar_article.image.url }}" alt="{{ sidebar_article.image.url }}" class="img-fluid float-left">
+                    <img src="/{{ sidebar_article.image }}" alt="{{ sidebar_article.title }}" class="img-fluid float-left">
                     <h5 class="mb-1">{{ sidebar_article.title }}</h5>
                     <small>{{ sidebar_article.created_date }}</small>
                 </div>

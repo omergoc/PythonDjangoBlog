@@ -1,7 +1,28 @@
+from cgi import print_arguments
 from django.db import connection
 from .models import Categories
 from users.models import Account
 
+def get_articles_sidebar():
+    query = f"SELECT * FROM articles WHERE category_id = %s LIMIT 3"
+    data_list = []
+    with connection.cursor() as cursor:
+        cursor.execute(query,[4])
+        rows = cursor.fetchall()
+        for data in rows:
+            json_data = {
+                "name_slug":data[11],
+                "name":data[10],
+                "created_date":data[9],
+                "category_slug":data[8],
+                "category_name":data[7],
+                "image":data[6],
+                "slug":data[5],
+                "title":data[1],
+                "id":data[0],
+            }
+            data_list.append(json_data)
+    return data_list
 
 
 def get_category(id):
