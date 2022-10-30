@@ -1,8 +1,5 @@
-from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
-from django.views.generic import View, TemplateView
-from django.db.models import Count
 from django.shortcuts import render
 from articles.models import Articles,News,Videos,Categories
 from users.models import Account
@@ -11,7 +8,7 @@ from django.contrib import messages
 from .models import Slider
 from django.shortcuts import redirect
 from .forms import ContactForm
-from django.db import connection
+from .helpers import mostliked_list, get_articles_list, get_viewcount, date_convert
 
 
 def care(request):
@@ -64,13 +61,16 @@ def PostJsonListView(request, id):
         for article in articles:
             category = get_category(article['category_id'])
             writer = get_writer(article['writer_id'])
+
+            view_count = get_viewcount(article['id'])
             data = {
+                'view_count':view_count['view_count'],
                 'id': article['id'],
                 'category_title':category['name'],
                 'category_slug':category['slug'],
                 'writer_name': f"{writer['first_name']} {writer['last_name']}",
                 'writer_slug': writer['slug'],
-                'article_created_date':article['created_date'].strftime("%d/%m/%Y %H:%M"),
+                'article_created_date':date_convert(article['created_date'].strftime("%d/%m/%Y %H:%M")),
                 'article_image':article['image'],
                 'article_title':article['title'],
                 'article_slug':article['slug'],
@@ -81,15 +81,16 @@ def PostJsonListView(request, id):
         for article in videos:
             category = get_category(article['category_id'])
             writer = get_writer(article['writer_id'])
-            
+            view_count = get_viewcount(article['id'])
             data = {
+                'view_count':view_count['view_count'],
                 'id': article['id'],
                 'category_title':category['name'],
                 'category_slug':category['slug'],
                 'writer_name': f"{writer['first_name']} {writer['last_name']}",
                 'writer_slug': writer['slug'],
                 'article_title':article['title'],
-                'article_created_date':article['created_date'].strftime("%d/%m/%Y %H:%M"),
+                'article_created_date':date_convert(article['created_date'].strftime("%d/%m/%Y %H:%M")),
                 'article_image':article['image'],
                 'article_slug':article['slug'],
                 'article_content':article['description']
@@ -100,13 +101,15 @@ def PostJsonListView(request, id):
             category = get_category(article['category_id'])
             writer = get_writer(article['writer_id'])
             
+            view_count = get_viewcount(article['id'])
             data = {
+                'view_count':view_count['view_count'],
                 'id': article['id'],
                 'category_title':category['name'],
                 'category_slug':category['slug'],
                 'writer_name': f"{writer['first_name']} {writer['last_name']}",
                 'writer_slug': writer['slug'],
-                'article_created_date': article['created_date'].strftime("%d/%m/%Y %H:%M"),
+                'article_created_date': date_convert(article['created_date'].strftime("%d/%m/%Y %H:%M")),
                 'article_title':article['title'],
                 'article_image':article['image'],
                 'article_slug':article['slug'],
@@ -153,29 +156,6 @@ def not_found_404(request,exception):
 def dashboard(request,exception):
     return render(request, 'dashboard.html')
 
-def mostliked_list():
-    data_list = []
-    query = "SELECT * FROM mostlike"
-    
-    with connection.cursor() as cursor:
-        cursor.execute(query)
-        rows = cursor.fetchall()
-
-    for data in rows:
-        json_data = {
-            "name_slug":data[9],
-            "name":data[8],
-            "created_date":data[7],
-            "category_slug":data[6],
-            "category_name":data[5],
-            "image":data[4],
-            "slug":data[3],
-            "description":data[2],
-            "title":data[1],
-        }
-        data_list.append(json_data)
-    return data_list
-
 @care_control
 def favorites(request):
     article_list = mostliked_list()
@@ -195,7 +175,7 @@ def favorites(request):
     
 @care_control
 def trend(request):
-    article_list = Articles.objects.filter(available=True).order_by('-views')
+    article_list = get_articles_list()
 
     paginator = Paginator(article_list, 4) 
 

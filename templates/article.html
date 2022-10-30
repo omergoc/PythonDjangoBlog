@@ -12,27 +12,34 @@
                         <div class="page-wrapper">
                             <div class="blog-title-area text-center">
                                 <ol class="breadcrumb hidden-xs-down">
-                                    <li class="breadcrumb-item"><a href="/">Anasayfa {{control_like}}</a></li>
-                                    <li class="breadcrumb-item"><a href="/{{ article.category.slug }}/">{{ article.category.name }}</a></li>
+                                    <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                                    <li class="breadcrumb-item"><a href="/{{ article.category_slug }}/">{{ article.category_name }}</a></li>
                                     <li class="breadcrumb-item active">{{ article.title }}</li>
                                 </ol>
-
-                                <span><a style="background-color: #009ff2; color: white !important;" href="/{{ article.category.slug }}/"> Makale | {{ article.category.name }}</a></span>
+                                <span><a style="background-color: #009ff2; color: white !important;" href="/{{ article.category_slug }}/"> 
+                                    {% if article.kind == 'articles' %}
+                                    Makale
+                                    {% elif article.kind == 'videos' %}
+                                    Video
+                                    {% elif article.kind == 'news' %}
+                                    Haber
+                                    {% endif %}
+                                    | {{ article.category_name }}</a></span>
 
                                 <h3>{{article.title}}</h3>
 
                                 <div class="blog-meta big-meta">
-                                    <small><a href="#" title="">{{ article.created_date }}</a></small>
-                                    <small><a href="/writer/{{ article.writer.slug }}/" title="">{{ article.writer.first_name }} {{ article.writer.last_name }}</a></small>
-                                    <small><i class="fa fa-eye"></i> {{ article.views }}</small>
+                                    <small><a href="#" title="{{ article.created_date }}">{{ article.created_date }}</a></small>
+                                    <small><a href="/writer/{{ article.name_slug }}/" title="">{{ article.name }}</a></small>
+                                    <small><i class="fa fa-eye"></i> {{ article.view_count }}</small>
                                 </div><!-- end meta -->
                             </div><!-- end title -->
 
                             <div class="single-post-media"> 
-                                <img  src="{{ article.image.url }}" alt="{{ article.image.url }}" style="width: 788px !important; height:488px !important" class="img-fluid">
+                                <img  src="/{{ article.image }}" alt="{{ article.title }}" style="width: 788px !important; height:488px !important" class="img-fluid">
                             </div><!-- end media -->
 
-                            <div class="blog-content">  
+                            <div class="blog-content" style="max-width: 788px;">  
                                 {{ article.content | safe }}
                             </div><!-- end content -->
                             {% if request.user.is_authenticated %}
@@ -62,10 +69,10 @@
                                 <h4 class="small-title">Yazar Hakkında</h4>
                                 <div class="row">
                                     <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
-                                        <img src="{{ article.writer.image.url }}" alt="{{ article.writer.first_name }}  {{ article.writer.last_name }}" class="img-fluid rounded-circle">                                     </div><!-- end col -->
+                                        <img src="/{{ article.name_image }}" alt="{{ article.name }}" class="img-fluid rounded-circle"></div><!-- end col -->
 
                                     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
-                                        <h4><a href="/writer/{{ article.writer.slug }}/">{{ article.writer.first_name }}  {{ article.writer.last_name }}</a></h4>
+                                        <h4><a href="/writer/{{ article.name_slug }}/">{{ article.name }}</a></h4>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
                             </div>
@@ -110,13 +117,13 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div id="commentpanel" class="form-wrapper">
-                                            <input type="hidden" id="slug" value="{{ article.slug }}" class="form-control" >
-                                            <input type="hidden" id="type" value="{{ article.table_name }}" class="form-control" >
+                                            <input type="hidden" id="id" value="{{ article.id }}" class="form-control" >
+                                            <input type="hidden" id="type" value="{{ article.kind }}" class="form-control" >
                                             <textarea class="form-control" id="content" placeholder="Yorumunuz"></textarea>
                                             <button id="comment" class="fb-button btn btn-warring"><i class="fa fa-thumbs-up" aria-hidden="true"></i>
                                                 <span class="down-mobile">Yorum Yap</span></button>                                        
                                             </div>
-                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             {% else %}
@@ -156,16 +163,15 @@
                         }
                     });
                 });
-
                 $("button[id^='comment'").click(function() {
-                    var slug = $(this).closest("#commentpanel").find('#slug').val();
+                    var id = $(this).closest("#commentpanel").find('#id').val();
                     var type = $(this).closest("#commentpanel").find('#type').val();
                     var content = $(this).closest("#commentpanel").find('#content').val();
                     $.ajax({
                         url: "{% url 'article_comment' %}",
                         type: 'POST',
                         data: {
-                            slug: slug,
+                            id: id,
                             type: type,
                             content: content,
                         },
@@ -181,4 +187,3 @@
             });
         </script>
 {% endblock body %}
-

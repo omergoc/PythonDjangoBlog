@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_session_timeout.middleware.SessionTimeoutMiddleware',
-    'crum.CurrentRequestUserMiddleware',
+    'blogapp.slash_middleware.AppendOrRemoveSlashMiddleware',
 ]
 
 ROOT_URLCONF = 'blogapp.urls'
@@ -125,7 +125,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-APPEND_SLASH = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -155,3 +154,5 @@ SESSION_EXPIRE_SECONDS = 86400
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_TIMEOUT_REDIRECT = 'login'
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+APPEND_SLASH = True

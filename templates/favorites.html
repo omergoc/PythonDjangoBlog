@@ -30,7 +30,7 @@
                             {% for article  in articles  %}
                             
                                 <div class="blog-box row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="post-media">
                                             <a href="/{{ article.category_slug }}/{{ article.slug }}/" title="{{ article.title }}">
                                                 <img src="/{{ article.image }}" alt="" class="img-fluid">
@@ -38,12 +38,13 @@
                                             </a>
                                         </div><!-- end media -->
                                     </div><!-- end col -->
-                                    <div class="blog-meta big-meta col-md-6">
+                                    <div class="blog-meta big-meta col-md-8">
                                         <h4><a href="/{{ article.category_slug }}/{{ article.slug }}/" title="{{ article.title }}">{{ article.title }}</a></h4>
                                         <p>{{ article.description}}</p>
                                         <small class="firstsmall"><a class="bg-orange" href="/{{ article.category_slug }}/" title="{{ article.category_name }}">{{ article.category_name }}</a></small>
                                         <small>{{ article.created_date }}</small>
                                         <small><a href="/writer/{{ article.name_slug }}/" title="">{{ article.name }}</a></small>
+                                        <small><i class="fa fa-eye"></i> {{ article.view_count }}</small>
                                     </div><!-- end meta -->
                                 </div><!-- end blog-box -->
                                 <br><br>

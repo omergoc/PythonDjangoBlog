@@ -37,63 +37,44 @@
                     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
                         <div class="page-wrapper">
                             <div class="blog-list clearfix">
-                            {% for article  in articles  %}
-
-                            <div class="blog-box row">
-                                {% if category.type == "video" %}
-                                    <div class="col-md-8">
-                                {% elif category.type == "haber" %}
-                                    <div class="col-md-6">
-                                {% elif category.type == "makale" %}
-                                    <div class="col-md-4">
-                                {% else %}                            
-                                    <div class="col-md-4">
-                                {% endif %}
-                                
-                                    <div class="post-media">
-                                        <a title="{{ article.image.url }}">
-                                            <img src="{{ article.image.url }}" alt="{{ article.image.url }}" style="width: 788px !important; height:200px !important" class="img-fluid">
-                                         <div class="hovereffect"></div>
-                                        </a>
-                                    </div><!-- end media -->
-                                </div><!-- end col -->
-
-                                {% if category.type == "video" %}
-                                    <div class="blog-meta big-meta col-md-4">
-                                {% elif category.type == "haber" %}
-                                    <div class="blog-meta big-meta col-md-6">
-                                {% elif category.type == "makale" %}
-                                    <div class="blog-meta big-meta col-md-8">
-                                {% else %}                            
-                                    <div class="blog-meta big-meta col-md-8">
-                                {% endif %}
-
-
-                                    <h4><a href="/{{ article.category.slug }}/{{ article.slug }}/" title="{{ article.title }}">{{ article.title }}</a></h4>
-                                    <p>{{ article.description  }}</p>
-                                    <small class="firstsmall">
-
-                                        {% if category.type == "video" %}
-                                            <a style="background-color: #f23a2f; color:white !important;" href="/{{ article.category.slug }}/" title="{{ article.category.name }}">{{ article.category.name }}</a>
-                                        {% elif category.type == "haber" %}
-                                            <a style="background-color: #ff8d05; color:white !important;" href="/{{ article.category.slug }}/" title="{{ article.category.name }}">{{ article.category.name }}</a>
-                                        {% elif category.type == "makale" %}
-                                            <a style="background-color: #009ff2; color:white !important;" href="/{{ article.category.slug }}/" title="{{ article.category.name }}">{{ article.category.name }}</a>
-                                        {% else %}                            
-                                            <a class="bg-orange" href="/{{ article.category.slug }}/" title="{{ article.category.name }}">{{ article.category.name }}</a>
-                                        {% endif %}
-                                    
-                                    </small>
-                                    <small>{{ article.created_date }}</small>
-                                    <small><a href="/writer/{{ article.writer.slug }}/" title="{{ article.writer.first_name }} {{ article.writer.last_name }}">{{ article.writer.first_name }} {{ article.writer.last_name }}</a></small>
-                                    <small><i class="fa fa-eye"></i> {{ article.views }}</small>
-                                </div><!-- end meta -->
-                            </div><!-- end blog-box -->
-                            <br><br>
-
-
+                                {% for article  in articles  %}
+                            
+                                <div class="blog-box row">
+                                    {% if category.type == "video" %}
+                                        <div class="col-md-8">
+                                    {% elif category.type == "haber" %}
+                                        <div class="col-md-6">
+                                    {% elif category.type == "makale" %}
+                                        <div class="col-md-4">
+                                    {% else %}                            
+                                        <div class="col-md-4">
+                                    {% endif %}
+                                        <div class="post-media">
+                                            <a href="/{{ article.category_slug }}/{{ article.slug }}/" title="{{ article.title }}">
+                                                <img src="/{{ article.image }}" alt="" class="img-fluid">
+                                             <div class="hovereffect"></div>
+                                            </a>
+                                        </div><!-- end media -->
+                                    </div><!-- end col -->
+                                    {% if category.type == "video" %}
+                                        <div class="blog-meta big-meta col-md-4">
+                                    {% elif category.type == "haber" %}
+                                        <div class="blog-meta big-meta col-md-6">
+                                    {% elif category.type == "makale" %}
+                                        <div class="blog-meta big-meta col-md-8">
+                                    {% else %}                            
+                                        <div class="blog-meta big-meta col-md-8">
+                                    {% endif %}
+                                        <h4><a href="/{{ article.category_slug }}/{{ article.slug }}/" title="{{ article.title }}">{{ article.title }}</a></h4>
+                                        <p>{{ article.description}}</p>
+                                        <small class="firstsmall"><a class="bg-orange" href="/{{ article.category_slug }}/" title="{{ article.category_name }}">{{ article.category_name }}</a></small>
+                                        <small>{{ article.created_date }}</small>
+                                        <small><a href="/writer/{{ article.name_slug }}/" title="">{{ article.name }}</a></small>
+                                        <small><i class="fa fa-eye"></i> {{ article.view_count }}</small>
+                                    </div><!-- end meta -->
+                                </div><!-- end blog-box -->
+                                <br><br>
                             {% endfor %}
-
                             </div><!-- end blog-list -->
                         </div><!-- end page-wrapper -->
                         <hr class="invis">

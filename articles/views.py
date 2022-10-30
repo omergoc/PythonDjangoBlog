@@ -6,7 +6,7 @@ from .models import Categories, Articles,Comments,LikedArticle, Videos, News,Rea
 from users.models import Account
 from settings.models import Setting
 from django.http import Http404
-import datetime
+from .helpers import articles_list , category_list, get_article
 
 
 def care(request,categories_slug):
@@ -21,7 +21,6 @@ def care_control(function):
             return function(request, *args, **kwargs)
     return wrap
 
-
 def care2(request,categories_slug,articles_slug):
     return render(request, 'care.html')
 
@@ -34,9 +33,10 @@ def care_control2(function):
             return function(request, *args, **kwargs)
     return wrap
 
+
 @care_control
 def articles(request):
-    article_list = Articles.objects.all().filter(available=True)
+    article_list = articles_list("articles")
     paginator = Paginator(article_list, 5) 
 
     page = request.GET.get('sayfa')
@@ -57,11 +57,12 @@ def articles(request):
     }
     return render(request, 'category.html',context)
 
+
 @care_control
 def news(request):
 
-    news_list = News.objects.all().filter(available=True)
-    paginator = Paginator(news_list, 5) # Show 25 contacts per page
+    news_list = articles_list("news")
+    paginator = Paginator(news_list, 5)
 
     page = request.GET.get('sayfa')
     try:
@@ -84,8 +85,8 @@ def news(request):
 @care_control
 def videos(request):
 
-    video_list = Videos.objects.all().filter(available=True)
-    paginator = Paginator(video_list, 5) # Show 25 contacts per page
+    video_list = articles_list("videos")
+    paginator = Paginator(video_list, 5)
 
     page = request.GET.get('sayfa')
     try:
@@ -116,11 +117,7 @@ def category(request,categories_slug):
         raise Http404("404 Not Found | Aradığınız Sayfa Bulunamadı.")
 
     category = Categories.objects.get(slug=categories_slug)
-    category_id = category.id
-    article_list = list(Articles.objects.filter(category=category_id,available=True))
-    video_list = list(Videos.objects.filter(category=category_id,available=True))
-    new_list = list(News.objects.filter(category=category_id,available=True))
-    article_list = article_list + new_list + video_list
+    article_list = category_list(categories_slug)
     category_types = category
         
     paginator = Paginator(article_list, 4) 
@@ -155,50 +152,19 @@ def article(request,categories_slug,articles_slug):
     if request.method == "POST":
         return redirect(request.META['HTTP_REFERER'])
     else:
-        category = Categories.objects.get(slug=categories_slug)
-        category_id = category.id
-
-        article = Articles.objects.filter(slug = articles_slug, category=category_id,available=True).first()
-        video = Videos.objects.filter(slug = articles_slug, category=category_id,available=True).first()
-        news = News.objects.filter(slug = articles_slug, category=category_id,available=True).first()
-
-        if video:
-            data = video
-            read_save(read_id,data.id)
-            comments= Comments.objects.filter(videos=data,available=True).all()
-            count = comments.count()
-            control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
-            control_like = control_like.status if control_like != None else 0
-            context = { 'video': data, 'comments':comments,'count':count,'control_like':control_like}
-            response = render(request ,'video.html',context)
-            return response
-
-        elif article:
+        article = get_article(articles_slug)
+        if article:
             data = article
-
-            read_save(read_id, data.id)
-            comments= Comments.objects.filter(article=data,available=True).all()
+            read_save(read_id, data['id'])
+            comments= Comments.objects.filter(article=data['id'],available=True).all()
             count = comments.count()
-            control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
+            control_like = LikedArticle.objects.filter(user_id = user, post=data['id']).last()
             control_like = control_like.status if control_like != None else 0
             context = { 'article': data, 'comments':comments,'count':count,'control_like':control_like}
             response = render(request ,'article.html',context)
             return response
-
-        elif news:
-
-            data = news
-            read_save(read_id, data.id)
-            comments= Comments.objects.filter(news=data,available=True).all()
-            count = comments.count()
-            control_like = LikedArticle.objects.filter(user_id = user, post=data.id).last()
-            control_like = control_like.status if control_like != None else 0
-            context = { 'new': data, 'comments':comments,'count':count,'control_like':control_like}
-            response = render(request ,'new.html',context)
-            return response
         else:
             return redirect(request.META['HTTP_REFERER'])
-
 
 def article_like(request):
     if request.method == 'POST':
@@ -220,28 +186,27 @@ def article_like(request):
         else:
             return HttpResponse("İlgili İçeriği Beğenmekten Vazgeçtiniz")
 
-
 def article_comment(request):
     if request.method == 'POST':
+        id = request.POST['id']
         type = request.POST['type']
         content = request.POST['content']
-        slug = request.POST['slug']
-        if slug.strip() == '' or content.strip() == '' or type.strip() == '':
+        if id.strip() == '' or content.strip() == '' or type.strip() == '':
             return HttpResponse("None")
 
         username = request.user
         user = Account.objects.filter(username = username).first()
         created = False
-        if 'makale' == type:
-            article = Articles.objects.get(slug=slug)
+        if 'articles' == type:
+            article = Articles.objects.get(id=id)
             comment, created = Comments.objects.get_or_create(name=f"{user.first_name} {user.last_name}", email=user.email, content=content, article = article)
         
-        if 'video' == type:
-            article = Videos.objects.get(slug=slug)
+        elif 'videos' == type:
+            article = Videos.objects.get(id=id)
             comment, created = Comments.objects.get_or_create(name=f"{user.first_name} {user.last_name}", email=user.email, content=content, videos = article)
         
-        if 'haber' == type:
-            article = News.objects.get(slug=slug)
+        elif 'news' == type:
+            article = News.objects.get(id=id)
             comment, created = Comments.objects.get_or_create(name=f"{user.first_name} {user.last_name}", email=user.email, content=content, news = article)
 
         if created:

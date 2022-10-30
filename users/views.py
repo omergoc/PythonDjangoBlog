@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from users.models import Account
 from settings.models import Setting
 from django.contrib import messages
-from .forms import PasswordChange, RegisterForm, LoginForm,UpdateUserForm
+from .forms import PasswordChange, RegisterForm, LoginForm
 from articles.models import Articles, News, Videos
 from django.contrib.auth import login, authenticate,logout
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -14,6 +14,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string  
 from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMessage  
+import random
 
 
 def care(request):
@@ -50,7 +51,6 @@ def loginUser(request):
             return redirect("index")
         else:  
             return render(request, 'login.html', {'form':form})
-
     else:
         form = LoginForm()
 
@@ -73,7 +73,7 @@ def register(request):
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password')
             try:
-                control = Account.objects.get(username = username, email=email)
+                control = Account.objects.filter(username__iexact = username).filter(email=email)
             except Account.DoesNotExist:
                 control = None
 
@@ -100,7 +100,6 @@ def register(request):
                 except:
                     messages.warning(request, "Bilinmedik Bir Hata Oluştu Lütfen Site Yöneticilerine Bildiriniz.")
                     return redirect(loginUser) 
-        
             else:
                 messages.warning(request, "Kullanıcı Adı yada E-Posta Daha Önce Kullanılmış.")
                 return redirect(loginUser)   
@@ -254,6 +253,8 @@ def users(request):
     User = get_user_model()
     writers_list = User.objects.all().filter(profile_activate=True)
     writers_list = [writers_list[i:i+4] for i in range(0, len(writers_list), 4)]
+    writers_list = random.sample(writers_list, 5)
+
     paginator = Paginator(writers_list, 5)
 
     page = request.GET.get('sayfa')
