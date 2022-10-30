@@ -106,7 +106,7 @@ def get_article(slug):
     with connection.cursor() as cursor:
         cursor.execute(query,[slug])
         data = cursor.fetchone()
-        writer = get_writer(data[16])
+        writer = get_writer(data[17])
         json_data = {
             "name_image":writer['image'],
             "name_description":writer['description'],
