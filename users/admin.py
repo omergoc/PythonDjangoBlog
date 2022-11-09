@@ -8,7 +8,6 @@ class AccountAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets
     fieldsets[1][1]['fields'] += ('birthday','cv','profile_activate','gender','description','image','facebook','twitter','instagram','youtube','github','website','linkedin','rank','rank_sub')
 
-
 admin.site.register(Account, UserAdmin)
 
 admin.site.register(RankSub)
