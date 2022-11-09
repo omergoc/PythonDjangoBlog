@@ -1,15 +1,17 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Account, Rank, RankRequest
+from .models import Account, Rank, RankRequest, RankSub
 
 class AccountAdmin(UserAdmin):
-    list_display = ('username', 'last_login','cv','profile_activate','birthday','gender','description','image','facebook','twitter','instagram','youtube','github','website','linkedin','rank')
+    list_display = ('username', 'last_login','cv','profile_activate','birthday','gender','description','image','facebook','twitter','instagram','youtube','github','website','linkedin','rank','rank_sub')
     list_filter = ()
     fieldsets = UserAdmin.fieldsets
-    fieldsets[1][1]['fields'] += ('birthday','cv','profile_activate','gender','description','image','facebook','twitter','instagram','youtube','github','website','linkedin','rank')
+    fieldsets[1][1]['fields'] += ('birthday','cv','profile_activate','gender','description','image','facebook','twitter','instagram','youtube','github','website','linkedin','rank','rank_sub')
 
 
 admin.site.register(Account, UserAdmin)
+
+admin.site.register(RankSub)
 
 admin.site.register(Rank)
 

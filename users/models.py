@@ -5,11 +5,22 @@ from django.contrib.auth.models import AbstractUser
 
 
 class Rank(models.Model):
-    title = models.CharField(max_length=200,null=True, default='Unvan Başlık',verbose_name="Unvan Başlık")
-    description = models.CharField(max_length=500,null=True, default='Unvan Açıklama',verbose_name="Unvan Açıklama")
+    title = models.CharField(max_length=200,null=True, default='Ekip Başlık',verbose_name="Ekip Başlık")
+    description = models.CharField(max_length=500,null=True, default='Ekip Açıklama',verbose_name="Ekip Açıklama")
 
     class Meta:
-        verbose_name_plural = "Kulanıcı Rütbeleri"
+        verbose_name_plural = "Ekipler"
+
+    def __str__(self):
+        return self.title
+
+class RankSub(models.Model):
+    team = models.ForeignKey(Rank, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=200,null=True, default='Rütbe Başlık',verbose_name="Rütbe Başlık")
+    description = models.CharField(max_length=500,null=True, default='Rütbe Açıklama',verbose_name="Rütbe Açıklama")
+
+    class Meta:
+        verbose_name_plural = "Rütbeler"
 
     def __str__(self):
         return self.title
@@ -37,10 +48,15 @@ class Account(AbstractUser):
     rank = models.ForeignKey(
         Rank,
         on_delete=models.CASCADE,
+        verbose_name="Ekip",
+        null=True
+    )
+    rank_sub = models.ForeignKey(
+        RankSub,
+        on_delete=models.CASCADE,
         verbose_name="Rütbe",
         null=True
     )
-
     class Meta:
         verbose_name_plural = "Kulanıcı Listesi"
 
@@ -50,7 +66,7 @@ class Account(AbstractUser):
 
 
 class RankRequest(models.Model):
-    username = models.CharField(max_length=200,verbose_name="Ad Soyad")
+    username = models.CharField(max_length=200,verbose_name="Kullanıcı Adı")
     title = models.CharField(max_length=200,null=True, default='Başlık',verbose_name="Başlık")
     description = models.CharField(max_length=500,null=True, default='Açıklama',verbose_name="Açıklama")
     created_date = models.DateTimeField(auto_now_add=True, verbose_name = "Tarih")
