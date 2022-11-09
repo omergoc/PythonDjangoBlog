@@ -254,8 +254,9 @@ def image_upload(f,slug):
 def users(request):
     User = get_user_model()
     writers_list = User.objects.all().filter(profile_activate=True)
+    print(len(writers_list))
     writers_list = [writers_list[i:i+4] for i in range(0, len(writers_list), 4)]
-    writers_list = random.sample(writers_list, 5)
+    writers_list = random.sample(writers_list, len(writers_list))
 
     paginator = Paginator(writers_list, 5)
 
