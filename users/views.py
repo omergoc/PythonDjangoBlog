@@ -16,7 +16,7 @@ from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMessage  
 from .models import RankRequest
 import random
-
+import re
 
 def care(request):
     return render(request, 'care.html')
@@ -69,43 +69,48 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():       
             username = form.cleaned_data.get('username')
-            first_name = form.cleaned_data.get('first_name')
-            last_name = form.cleaned_data.get('last_name')
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
-            try:
-                control_username = Account.objects.filter(username__iexact = username)
-                control_email = Account.objects.filter(email = email)
-            except Account.DoesNotExist:
-                control_username = []
-                control_email = []
-
-            if len(list(control_username)) == 0 and len(list(control_email)) == 0:
-                is_active = False
-                new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active)
-                new_user.set_password(password)
-                new_user.save()
-                try:
-                    current_site = get_current_site(request)  
-                    mail_subject = 'Activation link has been sent to your email id'  
-                    message = render_to_string('acc_active_email.html', {  
-                        'user': new_user,  
-                        'domain': current_site.domain,  
-                        'uid':urlsafe_base64_encode(force_bytes(new_user.pk)),  
-                        'token':account_activation_token.make_token(new_user),  
-                    })  
-                    to_email = form.cleaned_data.get('email')  
-                    email = EmailMessage(  
-                                mail_subject, message, to=[to_email]  
-                    )  
-                    email.send()  
-                    return render(request, 'Email.html',{'msg':'Kaydı tamamlamak için lütfen e-posta adresinizi onaylayın'})
-                except:
-                    messages.warning(request, "Bilinmedik Bir Hata Oluştu Lütfen Site Yöneticilerine Bildiriniz.")
-                    return redirect(loginUser) 
-            else:
-                messages.warning(request, "Kullanıcı Adı yada E-Posta Daha Önce Kullanılmış.")
+            regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
+            if(regex.search(username) != None):
+                messages.warning(request, "Kullanıcı Adı Özel Karakter İçeremez !!!")
                 return redirect(loginUser)   
+            else:
+                first_name = form.cleaned_data.get('first_name')
+                last_name = form.cleaned_data.get('last_name')
+                email = form.cleaned_data.get('email')
+                password = form.cleaned_data.get('password')
+                try:
+                    control_username = Account.objects.filter(username__iexact = username)
+                    control_email = Account.objects.filter(email = email)
+                except Account.DoesNotExist:
+                    control_username = []
+                    control_email = []
+
+                if len(list(control_username)) == 0 and len(list(control_email)) == 0:
+                    is_active = False
+                    new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active)
+                    new_user.set_password(password)
+                    new_user.save()
+                    try:
+                        current_site = get_current_site(request)  
+                        mail_subject = 'Activation link has been sent to your email id'  
+                        message = render_to_string('acc_active_email.html', {  
+                            'user': new_user,  
+                            'domain': current_site.domain,  
+                            'uid':urlsafe_base64_encode(force_bytes(new_user.pk)),  
+                            'token':account_activation_token.make_token(new_user),  
+                        })  
+                        to_email = form.cleaned_data.get('email')  
+                        email = EmailMessage(  
+                                    mail_subject, message, to=[to_email]  
+                        )  
+                        email.send()  
+                        return render(request, 'Email.html',{'msg':'Kaydı tamamlamak için lütfen e-posta adresinizi onaylayın'})
+                    except:
+                        messages.warning(request, "Bilinmedik Bir Hata Oluştu Lütfen Site Yöneticilerine Bildiriniz.")
+                        return redirect(loginUser) 
+                else:
+                    messages.warning(request, "Kullanıcı Adı yada E-Posta Daha Önce Kullanılmış.")
+                    return redirect(loginUser)   
         else:
             return render(request, 'register.html', {'form':form})
     else:
