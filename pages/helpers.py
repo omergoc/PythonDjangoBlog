@@ -102,7 +102,7 @@ def get_articles_list():
 def articles_list_json():
     data_list = []
 
-    query = "SELECT * FROM articles ORDER BY id DESC"
+    query = "SELECT * FROM articles ORDER BY created_date DESC"
 
     with connection.cursor() as cursor:
         cursor.execute(query)
