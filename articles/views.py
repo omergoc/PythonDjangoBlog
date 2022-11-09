@@ -9,7 +9,7 @@ from django.http import Http404
 from .helpers import articles_list , category_list, get_article
 
 
-def care(request,categories_slug):
+def care(request,categories_slug,articles_slug):
     return render(request, 'care.html')
 
 def care_control(function):
