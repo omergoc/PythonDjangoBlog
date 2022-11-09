@@ -164,11 +164,31 @@ class PasswordChange(forms.Form):
         confirm = self.cleaned_data.get('confirm')
 
         if password and confirm and password != confirm:
-            print("hatalı sifreler")
             raise forms.ValidationError('Şifreler Eşleşmiyor !!!')
         
         values = {
             "password" : password,
             "confirm" : confirm,
+        }
+        return values
+
+class PasswordChange(forms.Form):
+    title = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control'
+    }))
+    description = forms.CharField(widget=forms.Textarea(attrs={
+        'class': 'form-control'
+    }))
+
+    def clean(self):
+        title = self.cleaned_data.get('title')
+        description = self.cleaned_data.get('description')
+
+        if not title or not description:
+            raise forms.ValidationError('Alanları Lütfen Doldurunuz.')
+        
+        values = {
+            "title" : title,
+            "description" : description,
         }
         return values

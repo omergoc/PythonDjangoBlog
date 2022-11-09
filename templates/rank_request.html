@@ -1,0 +1,43 @@
+{% extends "partials/_base.html" %}
+{% load static %}
+{% block body %}
+
+<div class="page-title lb single-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <h2><i class="fa fa-font-awesome bg-orange"></i>Yetki Talep Formu</h2>
+                    </div><!-- end col -->
+                    <div class="col-lg-4 col-md-4 col-sm-12 hidden-xs-down hidden-sm-down">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Anasayfa</a></li>
+                            <li class="breadcrumb-item active">Yetki Talep</li>
+                        </ol>
+                    </div><!-- end col -->                    
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </div><!-- end page-title -->
+
+        <section class="section wb">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-3"></div>
+                    <div class="col-lg-6">
+                        {% include 'partials/_messages.html' %}
+                       <form method="post">
+                        {% csrf_token %}
+                        <label for="inputEmail4">Başlık*</label>
+                        {{ form.title }}
+                        <br>
+                        <label for="inputEmail4">Açıklama*</label>
+                        {{ form.description }}
+                        <br>
+                        <button type="submit" class="btn btn-primary">Gönder</button>
+                    </form>
+                    <br><br><br>
+                    </div><!-- end col -->
+                    <div class="col-lg-3"></div>
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section>
+{% endblock body %}

@@ -14,6 +14,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string  
 from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMessage  
+from .models import RankRequest
 import random
 
 
@@ -150,6 +151,33 @@ def userPasswordChange(request):
     }
     return render(request, 'password_change.html',context)
 
+@care_control
+def rankRequest(request):
+    if not request.user.username:
+        return redirect("index")
+
+    if request.method == 'POST':
+        form = PasswordChange(request.POST or None)
+        if form.is_valid():       
+            title = form.cleaned_data.get('title')
+            description = form.cleaned_data.get('description')
+            if request.user.cv == "" and not request.user.cv:
+                 messages.warning(request, "CV niz Bulunmamaktadır. Lütfen Profil Sayfanızda CV nizi Güncelleyiniz.")
+
+            comment, created = RankRequest.objects.get_or_create(title=title, description=description, username=request.user.username)
+            
+            if created:
+                messages.success(request, "Başarılılı Bir Şekilde Talebeniz Gönderilmiştir.")
+            else:
+                messages.success(request, "Hata Talep Gönderilemedi Bir Sorun Oluştu.")
+        else:
+            messages.warning(request, "Lütfen Boş Alanları Doldurunuz.")
+            
+    form = PasswordChange()
+    context = {
+        'form': form
+    }
+    return render(request, 'rank_request.html',context)
 
 @care_control
 def userLogout(request):
@@ -254,7 +282,6 @@ def image_upload(f,slug):
 def users(request):
     User = get_user_model()
     writers_list = User.objects.all().filter(profile_activate=True)
-    print(len(writers_list))
     writers_list = [writers_list[i:i+4] for i in range(0, len(writers_list), 4)]
     writers_list = random.sample(writers_list, len(writers_list))
 

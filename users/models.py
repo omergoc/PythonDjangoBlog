@@ -3,6 +3,17 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import AbstractUser
 
 
+
+class Rank(models.Model):
+    title = models.CharField(max_length=200,null=True, default='Unvan Başlık',verbose_name="Unvan Başlık")
+    description = models.CharField(max_length=500,null=True, default='Unvan Açıklama',verbose_name="Unvan Açıklama")
+
+    class Meta:
+        verbose_name_plural = "Kulanıcı Rütbeleri"
+
+    def __str__(self):
+        return self.title
+
 class Account(AbstractUser):
     birthday = models.TextField(null=True, verbose_name="Doğum Tarihi")
     gender = models.CharField(
@@ -23,6 +34,12 @@ class Account(AbstractUser):
     youtube = models.CharField(max_length=500,null=True,default='/',verbose_name="Youtube")
     github = models.CharField(max_length=500,null=True, default='/',verbose_name="Github")
     website = models.CharField(max_length=500,null=True, default='/',verbose_name="Web Site")
+    rank = models.ForeignKey(
+        Rank,
+        on_delete=models.CASCADE,
+        verbose_name="Rütbe",
+        null=True
+    )
 
     class Meta:
         verbose_name_plural = "Kulanıcı Listesi"
@@ -31,3 +48,17 @@ class Account(AbstractUser):
         self.slug = slugify(self.username.replace('ı', 'i'))
         super(Account, self).save(*args, **kwargs)
 
+
+class RankRequest(models.Model):
+    username = models.CharField(max_length=200,verbose_name="Ad Soyad")
+    title = models.CharField(max_length=200,null=True, default='Başlık',verbose_name="Başlık")
+    description = models.CharField(max_length=500,null=True, default='Açıklama',verbose_name="Açıklama")
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name = "Tarih")
+    approver = models.ForeignKey(Account, on_delete=models.CASCADE, null=True,blank=True,editable=False)
+    available = models.BooleanField(default=False, verbose_name="Durum")
+
+    class Meta:
+        verbose_name_plural = "Kulanıcı Yetki Talepleri"
+
+    def __str__(self):
+        return self.title
