@@ -152,7 +152,11 @@ def article(request,categories_slug,articles_slug):
     if request.method == "POST":
         return redirect(request.META['HTTP_REFERER'])
     else:
-        article = get_article(articles_slug)
+        try:
+            article = get_article(articles_slug)
+        except:
+            raise Http404("404 Not Found | Aradığınız Sayfa Bulunamadı.")
+
         if article:
             data = article
             read_save(read_id, data['id'])
