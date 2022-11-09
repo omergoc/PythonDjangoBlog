@@ -8,8 +8,7 @@ from django.contrib import messages
 from .models import Slider
 from django.shortcuts import redirect
 from .forms import ContactForm
-from .helpers import mostliked_list, get_articles_list, get_viewcount, date_convert
-
+from .helpers import mostliked_list, get_articles_list, get_viewcount, date_convert, articles_list_json
 
 def care(request):
     return render(request, 'care.html')
@@ -57,63 +56,20 @@ def PostJsonListView(request, id):
         data_list = []
         upper = id
         lower = upper - 5
-        articles = Articles.objects.filter(available=True).values()
+        articles = articles_list_json()
         for article in articles:
-            category = get_category(article['category_id'])
-            writer = get_writer(article['writer_id'])
-
-            view_count = get_viewcount(article['id'])
             data = {
-                'view_count':view_count['view_count'],
+                'view_count':article['view_count'],
                 'id': article['id'],
-                'category_title':category['name'],
-                'category_slug':category['slug'],
-                'writer_name': f"{writer['first_name']} {writer['last_name']}",
-                'writer_slug': writer['slug'],
+                'category_title':article['category_name'],
+                'category_slug':article['category_slug'],
+                'writer_name': article['name'],
+                'writer_slug': article['name_slug'],
                 'article_created_date':date_convert(article['created_date'].strftime("%d/%m/%Y %H:%M")),
                 'article_image':article['image'],
                 'article_title':article['title'],
                 'article_slug':article['slug'],
                 'article_content':article['description'],
-            }
-            data_list.append(data)
-        videos = Videos.objects.filter(available=True).values()
-        for article in videos:
-            category = get_category(article['category_id'])
-            writer = get_writer(article['writer_id'])
-            view_count = get_viewcount(article['id'])
-            data = {
-                'view_count':view_count['view_count'],
-                'id': article['id'],
-                'category_title':category['name'],
-                'category_slug':category['slug'],
-                'writer_name': f"{writer['first_name']} {writer['last_name']}",
-                'writer_slug': writer['slug'],
-                'article_title':article['title'],
-                'article_created_date':date_convert(article['created_date'].strftime("%d/%m/%Y %H:%M")),
-                'article_image':article['image'],
-                'article_slug':article['slug'],
-                'article_content':article['description']
-            }
-            data_list.append(data)
-        news = News.objects.filter(available=True).values()
-        for article in news:
-            category = get_category(article['category_id'])
-            writer = get_writer(article['writer_id'])
-            
-            view_count = get_viewcount(article['id'])
-            data = {
-                'view_count':view_count['view_count'],
-                'id': article['id'],
-                'category_title':category['name'],
-                'category_slug':category['slug'],
-                'writer_name': f"{writer['first_name']} {writer['last_name']}",
-                'writer_slug': writer['slug'],
-                'article_created_date': date_convert(article['created_date'].strftime("%d/%m/%Y %H:%M")),
-                'article_title':article['title'],
-                'article_image':article['image'],
-                'article_slug':article['slug'],
-                'article_content':article['description']
             }
             data_list.append(data)
         posts_size = len(data_list)

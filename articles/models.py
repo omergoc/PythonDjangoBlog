@@ -18,9 +18,27 @@ class Categories(models.Model):
 
 
 class Articles(models.Model):
+    #id
     title = models.CharField(max_length=100,verbose_name="Başlık",unique=True)
+    #view_count
     description = models.CharField(max_length=250,verbose_name="Açıklama", null=True)
     content = RichTextField(verbose_name="İçerik")
+    #slug
+    #image
+    #category_name
+    #category_slug
+    #created_date
+    #name
+    #name_slug
+    #views
+    #types
+    #available
+    #category_id
+    #last_edit_id
+    #writer_id
+    #kind
+
+
     writer = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
@@ -65,6 +83,7 @@ class Articles(models.Model):
     class Meta:
         ordering = ['-created_date']
         verbose_name_plural = "Makaleler"
+        #manages=False
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title.replace('ı', 'i'))

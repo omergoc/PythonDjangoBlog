@@ -125,3 +125,31 @@ def get_article(slug):
             "id":data[0],
         }
     return json_data
+
+
+def articles_list_json():
+    data_list = []
+
+    query = "SELECT * FROM articles ORDER BY id DESC"
+
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+    for data in rows:
+        json_data = {
+            "name_slug":data[11],
+            "name":data[10],
+            "created_date":data[9],
+            "category_slug":data[8],
+            "category_name":data[7],
+            "image":data[6],
+            "slug":data[5],
+            "content":data[4],
+            "description":data[3],
+            "view_count":data[2],
+            "title":data[1],
+            "id":data[0],
+        }
+        data_list.append(json_data)
+    return data_list
