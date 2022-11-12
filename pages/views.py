@@ -26,6 +26,9 @@ def care_control(function):
 def handler404(request, exception=None):
     return render(request, '404.html')
 
+def handler500(request, exception=None):
+    return render(request, "500.html")
+
 @care_control
 def index(request):
     slider_article = Slider.objects.order_by('-id')[:2]

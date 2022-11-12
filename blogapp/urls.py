@@ -6,6 +6,8 @@ from rest_framework_simplejwt import views as jwt_views
 
 
 handler404 = 'pages.views.handler404'
+handler500 = 'pages.views.handler500'
+
 admin.site.site_header = 'Siberatay Yönetim Paneli'
 admin.site.site_title = 'Siberatay Panel'
 
