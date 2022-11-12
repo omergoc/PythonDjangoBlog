@@ -39,8 +39,8 @@ SIMPLE_JWT = {
 INSTALLED_APPS = [
     'captcha',
     'users.apps.UsersConfig',
-    'material',
-    'material.admin',
+    # 'material',
+    # 'material.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
