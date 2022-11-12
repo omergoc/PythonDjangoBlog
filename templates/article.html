@@ -3,6 +3,9 @@
 {% block seo %}
     <meta name="description" content="{{ article.description }}">
     <meta name="author" content="{{ article.author }}">
+    <meta property="og:title" content="{{ article.title }}" />
+    <meta property="og:url" content="/{{ article.category_slug }}/{{ article.slug }}/" />
+    <meta property="og:image" content="/{{ article.image }}" />
 {% endblock seo %}
 {% block body %}
         <section class="section single-wrapper">
