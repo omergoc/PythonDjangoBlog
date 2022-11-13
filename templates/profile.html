@@ -46,7 +46,7 @@
                             {% endif %}
                             name="profile_activate" class="form-control" id="vehicle1"></label>
                         <br>
-                    </div><!-- end col -->
+                    </div>
                     <div class="col-lg-4">
                          <label for="inputEmail4">Facebook</label>
                          <input type="text" name="facebook" class="form-control" value="{{ user.facebook }}" placeholder="Sadece Kullanıcı Adı Giriniz !">
@@ -73,6 +73,7 @@
                      <div class="col-lg-4">
                         <img src="{{ user.image.url }}" alt="yazar" class="img-fluid rounded-circle">
                         <br><br>
+                        <label for="inputEmail4"><b>{{ team }} | {{ rank }}</b></label> <br>
                         <label for="inputEmail4">Profil Fotoğrafı</label>
                         <input type="file" name="image"  class="form-control" id="inputEmail4">
                         <br>

@@ -14,7 +14,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string  
 from django.shortcuts import get_object_or_404
 from django.core.mail import EmailMessage  
-from .models import RankRequest
+from .models import RankRequest, RankSub, Rank
 import random
 import re
 
@@ -41,15 +41,25 @@ def loginUser(request):
         if form.is_valid():       
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+            try:
+                control_username = Account.objects.filter(username = username, is_active=False)
+            except Account.DoesNotExist:
+                control_username = []
 
-            if user is None:
-                messages.warning(request, "Kullanıcı Adı Yada Şifre Hatalı")
-                return redirect(loginUser)
-        
-            messages.success(request, "Giriş Başarılı...")
-            login(request,user)
-            return redirect("index")
+            if len(list(control_username)) == 0:
+                user = authenticate(username=username, password=password)
+
+                if user is None:
+                    messages.warning(request, "Kullanıcı Adı Yada Şifre Hatalı")
+                    return redirect(loginUser)
+            
+                messages.success(request, "Giriş Başarılı...")
+                login(request,user)
+                return redirect("index")
+            else:
+                messages.warning(request, "Onaylanmamış Hesap, Hesabı Doğrulamak İçin Site Yöneticileri İle İletişime Geçiniz.")
+                return redirect(loginUser)   
+
         else:  
             return render(request, 'login.html', {'form':form})
     else:
@@ -72,7 +82,7 @@ def register(request):
             regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
             if(regex.search(username) != None):
                 messages.warning(request, "Kullanıcı Adı Özel Karakter İçeremez !!!")
-                return redirect(loginUser)   
+                return redirect(register)   
             else:
                 first_name = form.cleaned_data.get('first_name')
                 last_name = form.cleaned_data.get('last_name')
@@ -110,7 +120,7 @@ def register(request):
                         return redirect(loginUser) 
                 else:
                     messages.warning(request, "Kullanıcı Adı yada E-Posta Daha Önce Kullanılmış.")
-                    return redirect(loginUser)   
+                    return redirect(register)   
         else:
             return render(request, 'register.html', {'form':form})
     else:
@@ -219,6 +229,14 @@ def index(request,writers_slug):
 def profile(request):
     if not request.user.username:
         return redirect("index")
+    try:
+        team = Rank.objects.get(id = request.user.rank_id)
+        rank = RankSub.objects.get(id = request.user.rank_sub_id)
+    except:
+        team = "Bulunamadı"
+        rank = "Bulunamadı"
+
+    data = {'team':team.title, 'rank':rank.title}
     
     if request.method == 'POST':  
         
@@ -236,7 +254,6 @@ def profile(request):
         website = request.POST['website']
         profile_activate = 1 if request.POST.get('profile_activate', 0) == 'on' else 0
         
-
         if 'cv' in request.FILES:
             if str(request.FILES['cv'])[-3:].lower() == 'pdf':
                 cv = cv_upload(request.FILES['cv'], slug)
@@ -262,10 +279,10 @@ def profile(request):
             messages.success(request, "Güncelleme Başarılı...")
         except:
             messages.warning(request, "Hata Oluştu...")
-
-        return redirect("profile")
-
-    return render(request,'profile.html')
+            return redirect("profile")
+    else:     
+        print(data)
+        return render(request,'profile.html', data)
 
 
 def cv_upload(f,slug): 

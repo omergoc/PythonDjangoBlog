@@ -42,7 +42,7 @@
                                 <img  src="/{{ article.image }}" alt="{{ article.title }}" style="width: 788px !important; height:488px !important" class="img-fluid">
                             </div><!-- end media -->
 
-                            <div class="blog-content" style="max-width: 788px;">  
+                            <div class="blog-content" style="max-width: 788px !important;">  
                                 {{ article.content | safe }}
                             </div><!-- end content -->
                             {% if request.user.is_authenticated %}
