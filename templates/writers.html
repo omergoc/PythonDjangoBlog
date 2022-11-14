@@ -104,7 +104,7 @@
                                         <h4><a href="/writer/{{ author.slug }}/" title="{{ author.first_name }} {{ author.last_name }}"><b>{{ author.first_name }} {{ author.last_name }}</b></a></h4>
                                         <!--p>{{ author.description  }}</p!-->
                                         <small>{{ author.date_joined }}</small>
-                                        <small><a href="/writer/{{ author.slug }}/" title="">{{ author.username }}</a></small>
+                                        <small><a href="/writer/{{ author.slug }}/" title="">{{ author.rank.title }} | {{ author.rank_sub.title }}</a></small>
                                     </div>
                                 </div>
                                 {% endfor %}

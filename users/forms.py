@@ -18,14 +18,12 @@ class LoginForm(forms.Form):
         cleaned_data = super().clean()
 
         username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
+        password = self.cleaned_data.get('password') 
 
         if  (username == None):
-            print("sa1")
             raise forms.ValidationError('Kullanıcı Adı Boş olamaz')
 
         if  (password == None):
-            print("sa2")
             raise forms.ValidationError('Sifre Boş olamaz')
         
         values = {

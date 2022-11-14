@@ -97,7 +97,7 @@ def register(request):
 
                 if len(list(control_username)) == 0 and len(list(control_email)) == 0:
                     is_active = False
-                    new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active)
+                    new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active,rank=1, rank_sub=1)
                     new_user.set_password(password)
                     new_user.save()
                     try:
@@ -281,7 +281,6 @@ def profile(request):
             messages.warning(request, "Hata Oluştu...")
             return redirect("profile")
     else:     
-        print(data)
         return render(request,'profile.html', data)
 
 

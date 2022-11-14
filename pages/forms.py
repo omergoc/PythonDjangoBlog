@@ -1,8 +1,11 @@
 from django import forms
 from . models import Contact
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV3
 
 
 class ContactForm(forms.ModelForm):
+    captcha = ReCaptchaField(widget=ReCaptchaV3)
     name = forms.CharField(widget=forms.TextInput(attrs={
         'class':'form-control',
         'placeholder':'Ad Soyad'
@@ -26,5 +29,5 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        fields = ['name','email','phone','subject','content']
+        fields = ['captcha','name','email','phone','subject','content']
 

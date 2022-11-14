@@ -5,7 +5,7 @@
     <meta name="author" content="{{ article.author }}">
     <meta property="og:title" content="{{ article.title }}" />
     <meta property="og:url" content="https://siberatay.com/{{ article.category_slug }}/{{ article.slug }}/" />
-    <meta property="og:image" content="https://siberatay.com//{{ article.image }}" />
+    <meta property="og:image" content="https://siberatay.com/{{ article.image }}" />
 {% endblock seo %}
 {% block body %}
         <section class="section single-wrapper">
@@ -76,6 +76,7 @@
 
                                     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
                                         <h4><a href="/writer/{{ article.name_slug }}/">{{ article.name }}</a></h4>
+                                        <p><b>{{ article.rank_name }} | {{ article.rank_sub_name }}</b></p>
                                     </div><!-- end col -->
                                 </div><!-- end row -->
                             </div>

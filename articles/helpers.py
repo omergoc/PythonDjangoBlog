@@ -111,6 +111,8 @@ def get_article(slug):
             "name_image":writer['image'],
             "name_description":writer['description'],
             "kind":data[18],
+            "rank_name":data[19],
+            "rank_sub_name":data[20],
             "name_slug":data[11],
             "name":data[10],
             "created_date":data[9],
