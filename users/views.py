@@ -96,8 +96,10 @@ def register(request):
                     control_email = []
 
                 if len(list(control_username)) == 0 and len(list(control_email)) == 0:
+                    rank = Rank.objects.filter()[:1].get()
+                    rank_sub = RankSub.objects.filter()[:1].get()
                     is_active = False
-                    new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active,rank=1, rank_sub=1)
+                    new_user = Account(username=username, first_name=first_name, last_name= last_name, email = email, is_active=is_active,rank=rank, rank_sub=rank_sub)
                     new_user.set_password(password)
                     new_user.save()
                     try:
