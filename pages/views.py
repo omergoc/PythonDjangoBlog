@@ -1,16 +1,14 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.shortcuts import render
-from articles.models import Articles,News,Videos,Categories
-from dateutil import tz
-import pytz
+from articles.models import Categories
 from users.models import Account
 from settings.models import Setting
 from django.contrib import messages
 from .models import Slider
 from django.shortcuts import redirect
 from .forms import ContactForm
-from .helpers import mostliked_list, get_articles_list, get_viewcount, date_convert, articles_list_json
+from .helpers import mostliked_list, get_articles_list, date_convert, articles_list_json
 
 def care(request):
     return render(request, 'care.html')
@@ -58,8 +56,6 @@ def get_writer(id):
 
 @care_control
 def PostJsonListView(request, id):
-        local = pytz.timezone("Europe/Istanbul")
-
         data_list = []
         upper = id
         lower = upper - 5
@@ -72,7 +68,7 @@ def PostJsonListView(request, id):
                 'category_slug':article['category_slug'],
                 'writer_name': article['name'],
                 'writer_slug': article['name_slug'],
-                'article_created_date':date_convert(article['created_date'].strptime("%d/%m/%Y %H:%M")),
+                'article_created_date':date_convert(article['created_date'].strftime("%d/%m/%Y %H:%M")),
                 'article_image':article['image'],
                 'article_title':article['title'],
                 'article_slug':article['slug'],
