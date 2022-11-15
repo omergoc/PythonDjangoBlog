@@ -280,7 +280,7 @@ def profile(request):
             messages.success(request, "Güncelleme Başarılı...")
         except:
             messages.warning(request, "Hata Oluştu...",data)
-            return redirect("profile")
+            return render("profile",data)
     else:  
            
         return render(request,'profile.html', data)
