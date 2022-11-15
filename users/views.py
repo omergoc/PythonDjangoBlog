@@ -178,6 +178,9 @@ def rankRequest(request):
         if form.is_valid():       
             title = form.cleaned_data.get('title')
             description = form.cleaned_data.get('description')
+            
+            if request.user.birthday == "" and not request.user.birthday:
+                 messages.warning(request, "Eksik Bilgileriniz Bulunmaktadır. Lütfen Profil Sayfanızda Bilgilerinizi Güncelleyiniz.")           
             if request.user.cv == "" and not request.user.cv:
                  messages.warning(request, "CV niz Bulunmamaktadır. Lütfen Profil Sayfanızda CV nizi Güncelleyiniz.")
 
