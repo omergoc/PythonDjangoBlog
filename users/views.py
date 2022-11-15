@@ -266,6 +266,7 @@ def profile(request):
             cv = request.POST['old_cv']
 
         if 'image' in request.FILES:
+
             if str(request.FILES['image'])[-3:].lower() == 'png':
                 image = image_upload(request.FILES['image'], slug)
 
@@ -278,9 +279,10 @@ def profile(request):
         try:
             Account.objects.filter(username=request.user.username).update(profile_activate=profile_activate, email=email, first_name=first_name, last_name=last_name, birthday=birthday,description=description, facebook=facebook, instagram=instagram, twitter=twitter, linkedin=linkedin, github=github, website=website,cv=cv,image=image)
             messages.success(request, "Güncelleme Başarılı...")
+            return redirect("profile")
         except:
             messages.warning(request, "Hata Oluştu...",data)
-            return render("profile",data)
+            return redirect("profile")
     else:  
            
         return render(request,'profile.html', data)
