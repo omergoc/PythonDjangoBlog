@@ -98,6 +98,7 @@
                         {% for chunk in writers_list %}
                             <div class="row col-md-12">
                                 {% for author in chunk %}
+                                {% if author %}
                                 <div class="col-md-3 card">
                                     <img src="{{ author.image.url }}" alt="Avatar" style="width:100%">
                                     <div class="container">
@@ -107,6 +108,7 @@
                                         <small><a href="/writer/{{ author.slug }}/" title="{{ author.rank.title }} | {{ author.rank_sub.title }}">{{ author.rank.title }} | {{ author.rank_sub.title }}</a></small>
                                     </div>
                                 </div>
+                                {% endif %}
                                 {% endfor %}
                             </div>
                         {% endfor %}
