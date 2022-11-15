@@ -18,7 +18,8 @@
                 {% for slider in slider_article %}
                     <div class="first-slot">
                         <div class="masonry-box post-media">
-                             <img src="{{ slider.url }}" alt="{{ slider.title }}" style="width:900px;height:443px;" class="img-fluid">
+                            <a href="{{ slider.url }}"></a>
+                             <img src="{{ slider.image.url }}" alt="slider" style="width:900px;height:443px;" class="img-fluid"></a>
                              <div class="shadoweffect">
                                 <div class="shadow-desc">
                                     <div class="blog-meta">
