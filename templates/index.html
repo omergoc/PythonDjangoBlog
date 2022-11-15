@@ -16,12 +16,10 @@
 
 
                 {% for slider in slider_article %}
-                <a href="{{ slider.url }}">
                     <div class="first-slot">
                         <div class="masonry-box post-media">
-
                              <img src="{{ slider.image.url }}" alt="slider" style="width:900px;height:443px;" class="img-fluid">
-                             <div class="shadoweffect">
+                             <div style="cursor: pointer;" class="shadoweffect" onclick="window.open('{{ slider.url }}','mywindow');">
                                 <div class="shadow-desc">
                                     <div class="blog-meta">
                                         <h4><a href="{{ slider.url }}">{{ slider.title }}</a></h4>
@@ -32,7 +30,6 @@
                             </div>
                         </div>
                     </div> 
-                </a>
                 {% endfor %}  
                 
                 
