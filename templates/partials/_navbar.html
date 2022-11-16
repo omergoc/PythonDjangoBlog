@@ -62,6 +62,9 @@
       <a href="{% url 'contact' %}">İletişim</a>
 
       <hr style="border: 1px solid white;">
+      {% if request.user.is_staff %}
+          <a href="/portal_f4bf9f7fcbedaba0392f108c59d8f4a38b3838efb64877380171b54475c2ade8">Yönetim Paneli</a>
+      {% endif %}
       {% if request.user.is_authenticated %}
       <a href="{% url 'profile' %}">{{ user.first_name }} {{ user.last_name }}</a>
       <a href="{% url 'rank_request' %}">Bize Katılmak İster misin ?</a>

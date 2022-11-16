@@ -152,19 +152,23 @@
             </div><!-- end container -->
         </section>
         <script>
-            function resize() {
-        var widthWindow = $(window).width();
-        var articleImages = $("img"); 
-        if(widthWindow>=810){
-            for(let i=1;i<articleImages.length;i++){
-                articleImages[i].width=788;
-            }
-        }else{
-            for(let i=1;i<articleImages.length;i++){
-                articleImages[i].width=widthWindow;
-            }
+function resize() {
+    var widthWindow = $(window).width();
+    var articleImages = $("img"); 
+    var currentW = articleImages[i].width;
+    var currentH = articleImages[i].heigth;
+    if(widthWindow>=810){
+        for(let i=1;i<articleImages.length;i++){
+            articleImages[i].width=788;
+            articleImages[i].heigth=(currentH*788)/currentW;
+        }
+    }else{
+        for(let i=1;i<articleImages.length;i++){
+            articleImages[i].width=widthWindow;
+            articleImages[i].heigth=(currentH*788)/currentW;
         }
     }
+}
     resize();
             $(document).ready(function() {
                 $("button[id^='like'").click(function() {

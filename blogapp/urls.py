@@ -18,7 +18,7 @@ admin.site.site_title = 'Siberatay Panel'
 
 
 urlpatterns = [
-    path('portal_f4bf9f7fcbedaba0392f108c59d8f4a38b3838efb64877380171b54475c2ade8/', admin.site.urls),
+    path('portal_f4bf9f7fcbedaba0392f108c59d8f4a38b3838efb64877380171b54475c2ade8/', admin.site.urls, name='dashborad'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('api/user/',  include('users.api.urls')),
     path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),

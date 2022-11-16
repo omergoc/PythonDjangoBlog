@@ -234,13 +234,10 @@ def index(request,writers_slug):
 def profile(request):
     if not request.user.username:
         return redirect("index")
-    try:
-        team = Rank.objects.get(id = request.user.rank_id)
-        rank = RankSub.objects.get(id = request.user.rank_sub_id)
-    except:
-        team = "Bulunamadı"
-        rank = "Bulunamadı"
 
+    team = Rank.objects.get(id = request.user.rank_id)
+    rank = RankSub.objects.get(id = request.user.rank_sub_id)
+    MAX_SIZE = 10000
     data = {'team':team.title, 'rank':rank.title}
     
     if request.method == 'POST':  
@@ -270,7 +267,9 @@ def profile(request):
             cv = request.POST['old_cv']
 
         if 'image' in request.FILES:
-
+            if request.FILES['file'].size > MAX_SIZE:
+                messages.warning(request, "Profil Fotoğrafı Çok Büyük Maksimum Boyut 3MB ")
+                return redirect("profile")
             if str(request.FILES['image'])[-3:].lower() == 'png':
                 image = image_upload(request.FILES['image'], slug)
 
