@@ -292,7 +292,7 @@ def profile(request):
 
 
 def cv_upload(f,slug): 
-    path = 'static/upload/cv/'+slug+'.pdf'
+    path = '/static/upload/cv/'+slug+'.pdf'
     with open('static/upload/cv/'+slug+'.pdf', 'wb+') as destination:  
         for chunk in f.chunks():  
             destination.write(chunk)  
@@ -300,7 +300,7 @@ def cv_upload(f,slug):
 
 
 def image_upload(f,slug): 
-    path = 'static/upload/author/'+slug+'.png'
+    path = '/static/upload/author/'+slug+'.png'
     with open('static/upload/author/'+slug+'.png' , 'wb+') as destination:  
         for chunk in f.chunks():  
             destination.write(chunk)       
