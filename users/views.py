@@ -189,7 +189,7 @@ def rankRequest(request):
             comment, created = RankRequest.objects.get_or_create(title=title, description=description, username=request.user.username)
             
             if created:
-                messages.success(request, "Başarılılı Bir Şekilde Talebeniz Gönderilmiştir.")
+                messages.success(request, "Başarılı Bir Şekilde Talebeniz Gönderilmiştir.")
                 return redirect("rank_request")     
             else:
                 messages.success(request, "Hata Talep Gönderilemedi Bir Sorun Oluştu.")
