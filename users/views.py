@@ -180,18 +180,23 @@ def rankRequest(request):
             description = form.cleaned_data.get('description')
             
             if request.user.birthday == "" and not request.user.birthday:
-                 messages.warning(request, "Eksik Bilgileriniz Bulunmaktadır. Lütfen Profil Sayfanızda Bilgilerinizi Güncelleyiniz.")           
+                messages.warning(request, "Eksik Bilgileriniz Bulunmaktadır. Lütfen Profil Sayfanızda Bilgilerinizi Güncelleyiniz.")   
+                return redirect("rankRequest")        
             if request.user.cv == "" and not request.user.cv:
-                 messages.warning(request, "CV niz Bulunmamaktadır. Lütfen Profil Sayfanızda CV nizi Güncelleyiniz.")
+                messages.warning(request, "CV niz Bulunmamaktadır. Lütfen Profil Sayfanızda CV nizi Güncelleyiniz.")
+                return redirect("rankRequest")     
 
             comment, created = RankRequest.objects.get_or_create(title=title, description=description, username=request.user.username)
             
             if created:
                 messages.success(request, "Başarılılı Bir Şekilde Talebeniz Gönderilmiştir.")
+                return redirect("rankRequest")     
             else:
                 messages.success(request, "Hata Talep Gönderilemedi Bir Sorun Oluştu.")
+                return redirect("rankRequest")     
         else:
             messages.warning(request, "Lütfen Boş Alanları Doldurunuz.")
+            return redirect("rankRequest")     
             
     form = PasswordChange()
     context = {
