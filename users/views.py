@@ -237,7 +237,7 @@ def profile(request):
 
     team = Rank.objects.get(id = request.user.rank_id)
     rank = RankSub.objects.get(id = request.user.rank_sub_id)
-    MAX_SIZE = 10000
+    MAX_SIZE = 200000
     data = {'team':team.title, 'rank':rank.title}
     
     if request.method == 'POST':  
@@ -267,14 +267,15 @@ def profile(request):
             cv = request.POST['old_cv']
 
         if 'image' in request.FILES:
-            size = int(request.FILES['file'].size)
-            if  size > MAX_SIZE:
-                messages.warning(request, "Profil Fotoğrafı Çok Büyük Maksimum Boyut 3MB ")
+
+            size = request.FILES['image'].size
+
+            if  int(size) > MAX_SIZE:
+                messages.warning(request, "Profil Fotoğrafı Çok Büyük Maksimum Boyut 2MB ")
                 return redirect("profile")
 
             if str(request.FILES['image'])[-3:].lower() == 'png':
                 image = image_upload(request.FILES['image'], slug)
-
             else:
                 messages.warning(request, "Profil Fotoğrafı Bölümüne Sadece PNG Dosya Yükleyiniz...")
                 return redirect("profile")
