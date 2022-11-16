@@ -257,6 +257,7 @@ def profile(request):
         linkedin = request.POST['linkedin']
         github = request.POST['github']
         website = request.POST['website']
+        website = request.POST['website']
         profile_activate = 1 if request.POST.get('profile_activate', 0) == 'on' else 0
         
         if 'cv' in request.FILES:
