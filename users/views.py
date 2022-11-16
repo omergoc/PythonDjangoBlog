@@ -267,9 +267,11 @@ def profile(request):
             cv = request.POST['old_cv']
 
         if 'image' in request.FILES:
-            if request.FILES['file'].size > MAX_SIZE:
+            size = int(request.FILES['file'].size)
+            if  size > MAX_SIZE:
                 messages.warning(request, "Profil Fotoğrafı Çok Büyük Maksimum Boyut 3MB ")
                 return redirect("profile")
+
             if str(request.FILES['image'])[-3:].lower() == 'png':
                 image = image_upload(request.FILES['image'], slug)
 
