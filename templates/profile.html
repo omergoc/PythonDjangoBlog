@@ -78,7 +78,7 @@
                         <input type="file" name="image"  class="form-control" id="inputEmail4">
                         <br>
                         <input type="hidden" name="old_image" class="form-control" id="inputEmail4" value="{{ user.image.url }}">
-                        {% if user.cv or user.cv != 'None' %}
+                        {% if user.cv and user.cv != 'None' %}
                         <input type="hidden" name="old_cv" class="form-control" id="inputEmail4" value="{{ user.cv.url }}">
                         <a target="_blank" href="{{ user.cv.url }}">Cv Görüntüle</a><br>
                         {% else %}
