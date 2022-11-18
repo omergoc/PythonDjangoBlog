@@ -18,6 +18,8 @@ from .models import RankRequest, RankSub, Rank
 import random
 import re
 
+
+
 def care(request):
     return render(request, 'care.html')
 

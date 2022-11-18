@@ -1,222 +1,180 @@
-
-
-
-.topnav {
-  overflow: hidden;
-  background-image: linear-gradient(to right, #ff4d4d , #990000, #ff1a1a, #ff8080, #ff0000);
-  
-  
+.mainnav > *{
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
 }
-
-.topnav a {
+.mainnav{
+  background: #1b1b1b;
+}
+.mainnav:after{
+  content: '';
+  clear: both;
+  display: table;
+}
+.mainnav .logosiberatay{
   float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
+  color: red;
+  font-size: 27px;
+  font-weight: 600;
+  line-height: 70px;
+  padding-left: 60px;
 }
-
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.topnav a.active {
-  background-color:red;
-  color: white;
-}
-
-.topnav .icon {
-  display: none;
-}
-
-@media screen and (max-width: 800px) {
-  .topnav a:not(:first-child, a.showalways) {display: none;}
-  .topnav a.icon {
-    float: right;
-    display: block;
-  }
-  .dropdown {
-    display:none;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .topnav.responsive {position: relative;}
-  .topnav.responsive .icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .topnav.responsive a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-}
-
-
-@media screen and (max-width: 420px) {
-  .drop400{
-    display: none !important;
-  }
-}
-
-@media screen and (max-width: 375px) {
-  .drop375{
-    display: none !important;
-  }
-}
-
-@media screen and (max-width: 880px) and (min-width: 820px) {
-  .drop375{
-    display: none !important;
-  }
-}
-
-
-
-.dropdown {
-  float: left;
-  overflow: hidden;
-}
-
-.dropdown .dropbtn {
-  font-size: 16px;  
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-}
-
-.navbar a:hover, .dropdown:hover .dropbtn {
-  background-color: red;
-}
-
-.dropdown-content {
-  display: none;
-  position: fixed;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 9999;
-}
-
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.section:hover .dropdown-content {
-  display: none;
-
-}
-
-
-.sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-}
-
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: -200px;
-  font-size: 36px;
-  margin-left: 50px;
-}
-
-#main {
-  transition: margin-left .5s;
-  padding: 16px;
-}
-
-.embed-youtube {
+.mainnav ul{
+  float: right;
+  margin-right: 40px;
+  list-style: none;
   position: relative;
-  padding-bottom: 56.25%; 
-  padding-top: 30px;
-  height: 0;
-  overflow: hidden;
 }
-
-.embed-youtube iframe,
-.embed-youtube object,
-.embed-youtube embed {
-  border: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+.mainnav ul li{
+  float: left;
+  display: inline-block;
+  background: #1b1b1b;
+  margin: 0 5px;
 }
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-
-
-
-.sidenav a, .dropdown-btn {
-  padding: 6px 8px 6px 16px;
+.mainnav ul li a{
+  color: white;
+  line-height: 70px;
   text-decoration: none;
-  font-size: 20px;
-  color: #818181;
-  display: block;
-  border: none;
-  background: none;
-  width: 100%;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
+  font-size: 18px;
+  padding: 8px 15px;
 }
-.sidenav a:hover, .dropdown-btn:hover {
-  color: #f1f1f1;
+.mainnav ul li a:hover{
+  color: red;
+  border-radius: 5px;
+  box-shadow:  0 0 5px white,
+               0 0 11px red;
 }
 
-.dropdown-container, .mobilecat{
+.mainnav ul li a:hover > .profilpicture{
+  color: red;
+  border-radius: 5px;
+  box-shadow:  0 0 5px white,
+               0 0 11px red;
+}
+
+
+
+.mainnav ul ul li a:hover{
+  box-shadow: none;
+}
+.mainnav ul ul{
+  position: fixed;
+  top: 90px;
+  border-top: 3px solid red;
+  opacity: 0;
+  visibility: hidden;
+  transition: top .3s;
+}
+.mainnav ul ul ul{
+  border-top: none;
+}
+.mainnav ul li:hover > ul{
+  top: 70px;
+  opacity: 1;
+  visibility: visible;
+  z-index: 1 !important;
+}
+.mainnav ul ul li{
+  position: relative;
+  margin: 0px;
+  width: auto;
+  float: none;
+  display: list-item;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+}
+.mainnav ul ul li a{
+  line-height: 33px;
+}
+.mainnav ul ul ul li{
+  position: relative;
+  top: -60px;
+  left: 150px;
+}
+.show,.icon,input{
   display: none;
 }
-@media screen and (max-width: 800px) {
-  .mobilecat{
+.fa-plus{
+  font-size: 15px;
+  margin-left: 40px;
+}
+@media all and (max-width: 1315px) {
+  .mainnav {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    overflow: auto !important;
+    max-height: 630px;
+    scrollbar-color: red white;
+  }
+  .mainnav ul{
+    margin-right: 0px;
+    float: left;
+
+  }
+  .mainnav .logo{
+    padding-left: 30px;
+    width: 100%;
+  }
+  .show + a, ul{
+    display: none;
+  }
+  .mainnav ul li,.mainnav ul ul li{
     display: block;
+    width: 100%;
+
+  }
+  .mainnav ul li a:hover{
+    box-shadow: none;
+  }
+  .show{
+    display: block;
+    color: white;
+    font-size: 18px;
+    padding: 0 20px;
+    line-height: 70px;
+    cursor: pointer;
+  }
+  .show:hover{
+    color: red;
+  }
+
+  .icon{
+    display: block;
+    color: white;
+    position: absolute;
+    top: 0;
+    right: 40px;
+    line-height: 70px;
+    cursor: pointer;
+    font-size: 25px;
+  }
+  .mainnav ul ul{
+    top: 70px;
+    border-top: 0px;
+    float: none;
+    position: static;
+    display: none;
+    opacity: 1;
+    visibility: visible;
+  }
+  .mainnav ul ul a{
+    padding-left: 40px;
+  }
+  .mainnav ul ul ul a{
+    padding-left: 80px;
+  }
+  .mainnav ul ul ul li{
+    position: static;
+  }
+  [id^=btn]:checked + ul{
+    display: block;
+    margin-left: 0px !important;
+  }
+  .mainnav ul ul li{
+    border-bottom: 0px;
+  }
+  span.cancel:before{
+    content: '\f00d';
   }
 }

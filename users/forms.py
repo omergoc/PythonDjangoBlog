@@ -3,6 +3,7 @@ from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3
 
 
+
 class LoginForm(forms.Form):
     captcha = ReCaptchaField(widget=ReCaptchaV3)
     username = forms.CharField(widget=forms.TextInput(attrs={

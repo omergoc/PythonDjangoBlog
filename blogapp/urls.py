@@ -6,6 +6,7 @@ from django.contrib.sitemaps.views import sitemap
 from .sitemaps import ArticleSitemap
 from rest_framework_simplejwt import views as jwt_views
 
+
 sitemaps = {
     'blog':ArticleSitemap
 }

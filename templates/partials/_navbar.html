@@ -1,79 +1,80 @@
 {% load static %}
   <div id="main">
-    <div class="topnav">
-      <a href="#"><span style="cursor:pointer" onclick="openNav()">&#9776;</span></a>
-      <a  href="https://siberatay.com/" class="showalways"  style="background-color:#f2f2f2;">
-        <b style="color:#000000;" >Siber</b><b style="color:#ff0000;">atay</b>
-      </a>
 
+    <nav class="mainnav">
+      <a href="/"><div class="logosiberatay">Siber<b style="color:white !important;">Atay</b></div></a>
 
-      <a href="{% url 'news' %}">Haber</a>
-      <!-- <a href="{% url 'videos' %}">Video</a> -->
-      <a href="{% url 'articles' %}">Makale</a>
-      <div style="position: absolute; right: 15px;">
+      <label for="btn" class="icon">
+        <span class="fa fa-bars" aria-hidden="true"></span>
+      </label>
+      <input type="checkbox" id="btn">
+      <ul>
+        <li><a href="{% url 'news' %}">Haber</a></li>
+        <li><a href="{% url 'articles' %}">Makale</a></li>
+        <li>
+          <label for="btn-1" class="show">Kategoriler +</label>
+          <a href="#">Kategoriler ▼</a>
+          <input type="checkbox" id="btn-1">
+          <ul style="padding: 0 !important;">
+            {% for category in all_categories  %}
+              <li><a href="/{{ category.slug }}/">{{ category.name }}</a></li>
+            {% endfor %}
+
+          </ul>
+        </li>
+        <li>
+          <label for="btn-2" class="show">Popüler +</label>
+          <a href="#">Popüler ▼</a>
+          <input type="checkbox" id="btn-2">
+          <ul style="padding: 0 !important;">
+            <li><a href="{% url 'favorites' %}">En Çok Beğenilen</a></li>
+            <li><a href="{% url 'trend' %}">En Çok Okunan</a></li>
+          </ul>
+        </li>
+        <li><a href="{% url 'users' %}">Üyeler</a></li>
+        <li><a href="{% url 'contact' %}">İletişim</a></li>
         {% if request.user.is_authenticated %}
-          <a href="{% url 'profile' %}" class="showalways drop375" style="padding: 0 !important;"><img style="border-radius: 50%; width:50px; height:50px; right: 150px;" src="{{ user.image.url }}" alt="Avatar"></a>
-          <a class="showalways" href="{% url 'profile' %}">{{ user.first_name }} {{ user.last_name }}</a>
-          <a class="showalways drop400" href="{% url 'logout' %}">Çıkış Yap</a>
+
+          <li style="border-left: 5px solid white; height: 70px;">
+            <a href="{% url 'profile' %}" style="color:white !important; padding: 0 !important; margin-left: 10px;" class="nav-link"> 
+              <span >
+                <img src="{{ user.image.url }}" width="40" height="40" class="profilpicture" style="margin: 0; background-color: white; border-radius: 50%;">
+                {{ user.first_name }} {{ user.last_name }}
+              </span>
+            </a>
+          </li>
+
+          <li>
+            <label for="btn-3" class="show">İşlemler +</label>
+            <a href="#">İşlemler ▼</a>
+            <input type="checkbox" id="btn-3">
+            <ul style="padding: 0 !important; width: 100% !important; margin-left: -150px;">
+
+
+              {% if request.user.is_staff %}
+                <li><a href="/portal_f4bf9f7fcbedaba0392f108c59d8f4a38b3838efb64877380171b54475c2ade8" target="_blank">Yönetim Paneli</a></li>
+              {% endif %}
+              <li><a href="{% url 'rank_request' %}">Bize Katılmak İster misin ?</a></li>
+              <li><a href="/cikis-yap/">Çıkış Yap</a></li>
+
+            </ul>
+          </li>
+
+
+
           
         {% else %}
-          <a class="showalways" href="{% url 'register' %}">Kayıt Ol</a>
-          <a class="showalways drop400" href="{% url 'login' %}">Giriş Yap</a>
+          <li><a href="{% url 'register' %}">Kayıt Ol</a></li>
+          <li><a href="{% url 'login' %}">Giriş Yap</a></li>
         {% endif %}
-        <!-- <input type="text" value="Ne Aramak İstersiniz ?"> -->
-      </div>
 
-      <div class="dropdown">
-      <button class="dropbtn">Kategoriler
-        <i class="fa fa-list-alt"></i>
-      </button>
-      <div class="dropdown-content">
-        {% for category in all_categories  %}
-            <a href="/{{ category.slug }}/">{{ category.name }}</a>
+      </ul>
+    </nav>
 
-        {% endfor %}
-      </div>
-    </div> 
-    <a href="{% url 'contact' %}">İletişim</a>
-    </div>
-  
-  
-    <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <a href="{% url 'index' %}">Anasayfa</a>
-      <a href="{% url 'users' %}">Üyeler</a>
-      <hr style="border: 1px solid white;">
-      <a href="{% url 'favorites' %}">En Çok Beğenilenler</a>
-      <a href="{% url 'trend' %}">En Çok Okunanlar</a>
-      <hr style="border: 1px solid white;">
-      <a href="{% url 'news' %}">Haberler</a>
-      <!-- <a href="{% url 'videos' %}">Videolar</a> -->
-      <a href="{% url 'articles' %}">Makaleler</a>
-      <hr style="border: 1px solid white;" class="mobilecat">
-      <button class="dropdown-btn mobilecat">Kategoriler
-        <i class="fa fa-caret-down"></i>
-      </button>
-      <div class="dropdown-container">
-        {% for category in all_categories  %}
-            <a href="/{{ category.slug }}/">{{ category.name }}</a>
-        {% endfor %}
-      </div>
-      <hr style="border: 1px solid white;">
-      <a href="{% url 'contact' %}">İletişim</a>
 
-      <hr style="border: 1px solid white;">
-      {% if request.user.is_staff %}
-          <a href="/portal_f4bf9f7fcbedaba0392f108c59d8f4a38b3838efb64877380171b54475c2ade8">Yönetim Paneli</a>
-      {% endif %}
-      {% if request.user.is_authenticated %}
-      <a href="{% url 'profile' %}">{{ user.first_name }} {{ user.last_name }}</a>
-      <a href="{% url 'rank_request' %}">Bize Katılmak İster misin ?</a>
-      <a href="{% url 'logout' %}">Çıkış Yap</a>
-    {% else %}
-      <a href="{% url 'register' %}">Kayıt Ol</a>
-      <a href="{% url 'login' %}">Giriş Yap</a>
-    {% endif %}
-    </div>
+
+
+
     <script>
       var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
