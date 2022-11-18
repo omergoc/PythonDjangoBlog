@@ -44,10 +44,11 @@
                         <br>
                         <label for="inputEmail4">Tekrar Şifre*</label>
                         {{ form.confirm }}<br>
+                        {{ form.kvkk }}
                         <a href="{{ settings.kvkk.url }}"><label>Kişisel Verileri Koruma Kurumu PDF*</label></a>
-                        {{ form.kvkk }}<br>
-                        <a href="{{ settings.term_of_use.url }}"><label>Kullanım Koşulları PDF*</label></a>
+                        <br>
                         {{ form.term_of_use }}
+                        <a href="{{ settings.term_of_use.url }}"><label>Kullanım Koşulları PDF*</label></a>
                         <br>
                         {{ form.captcha }}
                         <br><br>
