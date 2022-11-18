@@ -97,6 +97,9 @@
   font-size: 15px;
   margin-left: 40px;
 }
+.registerUser > b{
+  background-color: blue !important;
+}
 @media all and (max-width: 1315px) {
   .mainnav {
     position: fixed;

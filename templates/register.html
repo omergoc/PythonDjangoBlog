@@ -24,7 +24,7 @@
                     <div class="col-lg-3"></div>
                     <div class="col-lg-6">
                         {% include 'partials/_messages.html' %}
-                       <form method="post"> 
+                       <form method="post" class="registerUser"> 
                         {% csrf_token %}
                         {{ form.non_field_errors }}
                         <label for="inputEmail4">Kullanıcı Adı*</label>

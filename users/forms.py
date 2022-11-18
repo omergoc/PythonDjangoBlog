@@ -95,6 +95,7 @@ class RegisterForm(forms.Form):
             "email" : email,
             "password" : password,
             "confirm" : confirm,
+            "captcha":captcha
         }
         return values
 
