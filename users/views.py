@@ -244,7 +244,7 @@ def profile(request):
 
     team = Rank.objects.get(id = request.user.rank_id)
     rank = RankSub.objects.get(id = request.user.rank_sub_id)
-    MAX_SIZE = 200000
+    MAX_SIZE = 2000000
     data = {'team':team.title, 'rank':rank.title}
     
     if request.method == 'POST':  
@@ -261,7 +261,6 @@ def profile(request):
         linkedin = request.POST['linkedin']
         github = request.POST['github']
         website = request.POST['website']
-        website = request.POST['website']
         profile_activate = 1 if request.POST.get('profile_activate', 0) == 'on' else 0
         
         if 'cv' in request.FILES:
@@ -271,7 +270,7 @@ def profile(request):
                 messages.warning(request, "CV Bölümüne Sadece PDF Dosya Yükleyiniz...")
                 return redirect("profile")
         else:
-            cv = request.POST['old_cv']
+            cv = request.user.cv    
 
         if 'image' in request.FILES:
 
@@ -287,7 +286,7 @@ def profile(request):
                 messages.warning(request, "Profil Fotoğrafı Bölümüne Sadece PNG Dosya Yükleyiniz...")
                 return redirect("profile")
         else:
-            image = request.POST['old_image']
+            image = request.user.image
 
         try:
             Account.objects.filter(username=request.user.username).update(profile_activate=profile_activate, email=email, first_name=first_name, last_name=last_name, birthday=birthday,description=description, facebook=facebook, instagram=instagram, twitter=twitter, linkedin=linkedin, github=github, website=website,cv=cv,image=image)
