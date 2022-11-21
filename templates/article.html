@@ -2,7 +2,7 @@
 {% load static %}
 {% block seo %}
     <meta name="description" content="{{ article.description }}">
-    <meta name="author" content="{{ article.author }}">
+    <meta name="author" content="{{ article.name }}">
     <meta property="og:title" content="{{ article.title }}" />
     <meta property="og:url" content="https://siberatay.com/{{ article.category_slug }}/{{ article.slug }}/" />
     <meta property="og:image" content="https://siberatay.com/{{ article.image }}" />
@@ -12,6 +12,7 @@
     <meta property="twitter:url" content="https://siberatay.com/{{ article.category_slug }}/{{ article.slug }}/" />
     <meta property="twitter:image" content="https://siberatay.com/{{ article.image }}" />
     <meta name="twitter:description" content="{{ article.description }}">
+    <link rel="image_src" href="https://siberatay.com/{{ article.image }}" />
 
 {% endblock seo %}
 {% block body %}
