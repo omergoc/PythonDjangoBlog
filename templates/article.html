@@ -8,13 +8,15 @@
     <meta name="author" content="{{ article.name }}">
     <meta property="og:title" content="{{ article.title }}" />
     <meta property="og:url" content="https://siberatay.com/{{ article.category_slug }}/{{ article.slug }}/" />
-    <meta property="og:image" content="https://siberatay.com/{{ article.image }}" />
+
     <meta property="og:description" content="{{ article.description }}">
 
     <meta property="twitter:title" content="{{ article.title }}" />
     <meta property="twitter:url" content="https://siberatay.com/{{ article.category_slug }}/{{ article.slug }}/" />
-    <meta property="twitter:image" content="https://siberatay.com/{{ article.image }}" />
     <meta name="twitter:description" content="{{ article.description }}">
+    
+    <meta name="twitter:image" content="https://siberatay.com/{{ article.image }}" />
+    <meta property="og:image" content="https://siberatay.com/{{ article.image }}" />
     <link rel="image_src" href="https://siberatay.com/{{ article.image }}" />
 
 {% endblock seo %}
