@@ -8,7 +8,22 @@
     {% block seo %}
     <meta name="description" content="{{ settings.description }}">
     <meta name="author" content="{{ settings.author }}">
+
+    <meta property="og:title" content="{{ settings.title }}" />
+    <meta property="og:url" content="https://siberatay.com/" />
+    <meta property="og:image" content="https://siberatay.com/static/upload/2022/11/15/1500x500.jpg" />
+    <meta property="og:description" content="{{ settings.description }}">
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@siberatay">
+    <meta name="twitter:title" content="{{ settings.title }}">
+    <meta name="twitter:url" content="https://siberatay.com/">
+    <meta property="twitter:image" content="https://siberatay.com/static/upload/2022/11/15/1500x500.jpg" />
+    <meta name="twitter:description" content="{{ settings.description }}">
     {% endblock seo %}
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{{ settings.title }}">
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/tether.min.js' %}"></script>

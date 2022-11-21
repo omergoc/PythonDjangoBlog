@@ -6,6 +6,13 @@
     <meta property="og:title" content="{{ article.title }}" />
     <meta property="og:url" content="https://siberatay.com/{{ article.category_slug }}/{{ article.slug }}/" />
     <meta property="og:image" content="https://siberatay.com/{{ article.image }}" />
+    <meta property="og:description" content="{{ article.content }}">
+
+    <meta property="twitter:title" content="{{ article.title }}" />
+    <meta property="twitter:url" content="https://siberatay.com/{{ article.category_slug }}/{{ article.slug }}/" />
+    <meta property="twitter:image" content="https://siberatay.com/{{ article.image }}" />
+    <meta name="twitter:description" content="{{ article.content }}">
+
 {% endblock seo %}
 {% block body %}
         <section class="section single-wrapper">
