@@ -183,8 +183,9 @@ def rankRequest(request):
             
             if request.user.birthday == "" and not request.user.birthday:
                 messages.warning(request, "Eksik Bilgileriniz Bulunmaktadır. Lütfen Profil Sayfanızda Bilgilerinizi Güncelleyiniz.")   
-                return redirect("rank_request")        
-            if request.user.cv == "" and not request.user.cv:
+                return redirect("rank_request")    
+                    
+            if request.user.cv == "" and not request.user.cv or request.user.cv == "None":
                 messages.warning(request, "CV niz Bulunmamaktadır. Lütfen Profil Sayfanızda CV nizi Güncelleyiniz.")
                 return redirect("rank_request")     
 
