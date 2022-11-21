@@ -36,7 +36,7 @@ class Account(AbstractUser):
     )
     profile_activate =models.IntegerField(default=0,null=True, verbose_name="Portal Durum")
     description = models.TextField(verbose_name="Hakkında",null=True, blank=True)
-    cv = models.FileField(upload_to='static/upload/cv/%Y/%m/%d', null=True, verbose_name="CV Yükle")
+    cv = models.FileField(upload_to='static/upload/cv/%Y/%m/%d', null=True, blank=True, verbose_name="CV Yükle")
     image = models.ImageField(upload_to = "static/upload/author/%Y/%m/%d", default="static/upload/author/default.jpg",  null=True, verbose_name="Resim")
     facebook = models.CharField(max_length=500,null=True, default='/',verbose_name="facebook")
     linkedin = models.CharField(max_length=500,null=True,verbose_name="linkedin", default='/')
