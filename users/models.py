@@ -26,17 +26,18 @@ class RankSub(models.Model):
         return self.title
 
 class Account(AbstractUser):
-    birthday = models.TextField(null=True, verbose_name="Doğum Tarihi")
+    birthday = models.TextField(null=True, verbose_name="Doğum Tarihi" , blank=True)
     gender = models.CharField(
         max_length=6,
         null=True,
+        blank=True,
         verbose_name="Cinsiyet",
         choices=[('MALE','Erkek'),('FEMALE', 'Kadın')]
     )
     profile_activate =models.IntegerField(default=0,null=True, verbose_name="Portal Durum")
-    description = models.TextField(verbose_name="Hakkında",null=True)
+    description = models.TextField(verbose_name="Hakkında",null=True, blank=True)
     cv = models.FileField(upload_to='static/upload/cv/%Y/%m/%d', null=False, verbose_name="CV Yükle")
-    image = models.ImageField(upload_to = "static/upload/author/%Y/%m/%d", default="static/upload/author/default.jpg", null=True, verbose_name="Resim")
+    image = models.ImageField(upload_to = "static/upload/author/%Y/%m/%d", default="static/upload/author/default.jpg",  null=True, verbose_name="Resim")
     facebook = models.CharField(max_length=500,null=True, default='/',verbose_name="facebook")
     linkedin = models.CharField(max_length=500,null=True,verbose_name="linkedin", default='/')
     slug = models.SlugField(max_length=50,unique=True,null=True, default='/',editable=False, verbose_name="Seo Adres")

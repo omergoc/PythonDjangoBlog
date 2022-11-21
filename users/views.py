@@ -81,7 +81,7 @@ def register(request):
         form = RegisterForm(request.POST)
         if form.is_valid():       
             username = form.cleaned_data.get('username')
-            regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
+            regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]\'\"')
             if(regex.search(username) != None):
                 messages.warning(request, "Kullanıcı Adı Özel Karakter İçeremez !!!")
                 return redirect(register)   
