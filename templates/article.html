@@ -1,6 +1,9 @@
 {% extends "partials/_base.html" %}
 {% load static %}
 {% block seo %}
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{{ settings.title }}">
     <meta name="description" content="{{ article.description }}">
     <meta name="author" content="{{ article.name }}">
     <meta property="og:title" content="{{ article.title }}" />
