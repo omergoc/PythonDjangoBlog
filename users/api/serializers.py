@@ -8,7 +8,7 @@ class UserSerializer(ModelSerializer):
         model = Account
         fields =  '__all__' 
     
-
+"""
 class AccountSerializer(ModelSerializer):
     account = UserSerializer()
     class Meta:
@@ -21,6 +21,7 @@ class AccountSerializer(ModelSerializer):
         account_serializer.save()
         return super(UserSerializer, self).update(instance, validated_data)
 
+"""
 
 class ChangePasswordSerializer(Serializer):
     old_password = serializers.CharField(required=True)
