@@ -100,7 +100,12 @@
                                 {% for author in chunk %}
                                 {% if author %}
                                 <div class="col-md-3 card">
+                                    {% if author.image %}
                                     <img src="{{ author.image.url }}" alt="Avatar" style="width:100%">
+                                    {% else %}
+                                    <img src="/static/upload/author/default.jpg" alt="Avatar" style="width:100%">
+                                    {% endif %}
+
                                     <div class="container">
                                         <h4><a href="/writer/{{ author.slug }}/" title="{{ author.first_name }} {{ author.last_name }}"><b>{{ author.first_name }} {{ author.last_name }}</b></a></h4>
                                         <!--p>{{ author.description  }}</p!-->
