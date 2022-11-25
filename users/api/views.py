@@ -1,6 +1,6 @@
 from users.api.serializers import ChangePasswordSerializer
 from users.models import Account
-from rest_framework.generics import RetrieveUpdateAPIView, get_object_or_404,ListAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, get_object_or_404,ListAPIView,RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from users.api.serializers import UserSerializer
@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from  rest_framework import status
 
 
-class AccountView(APIView):
+class AccountView(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
     queryset = Account.objects.all()
