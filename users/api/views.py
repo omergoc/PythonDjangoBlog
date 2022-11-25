@@ -7,7 +7,7 @@ from users.api.serializers import UserSerializer
 from rest_framework.views import APIView
 from  rest_framework import status
 
-"""
+
 class AccountView(RetrieveUpdateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
@@ -17,10 +17,10 @@ class AccountView(RetrieveUpdateAPIView):
         queryset = self.get_queryset()
         obj = get_object_or_404(queryset, id = self.request.user.id)
         return obj
-
+    """
     def perform_update(self, serializer):
         serializer.save(user = self.request.user) 
-"""
+    """
 class UpdatePassowrd(APIView):
     permission_classes = (IsAuthenticated,)
 
