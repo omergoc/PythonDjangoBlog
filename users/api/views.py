@@ -22,6 +22,7 @@ class AccountView(RetrieveUpdateAPIView):
     def perform_update(self, serializer):
         serializer.save(user = self.request.user) 
 """
+
 class UpdatePassowrd(APIView):
     permission_classes = (IsAuthenticated,)
 
