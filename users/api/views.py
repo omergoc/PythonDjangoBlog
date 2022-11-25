@@ -8,7 +8,7 @@ from rest_framework.views import APIView
 from  rest_framework import status
 
 
-class AccountView(ListAPIView):
+class AccountView(APIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
     queryset = Account.objects.all()
