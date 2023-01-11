@@ -6,12 +6,12 @@ from users.models import Account, Rank, RankSub
 class RankSerializer(ModelSerializer):
     class Meta:
         model = Rank
-        fields = '__all__'
+        fields = ['id','title', 'description']
         
 class RankSubSerializer(ModelSerializer):
     class Meta:
         model = RankSub
-        fields = '__all__'
+        fields = ['id','title', 'description']
 
 class UserSerializer(ModelSerializer):
     rank = RankSubSerializer()
