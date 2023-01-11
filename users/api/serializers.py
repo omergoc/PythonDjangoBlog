@@ -1,12 +1,24 @@
 from rest_framework.serializers import ModelSerializer,Serializer
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
-from users.models import Account
+from users.models import Account, Rank, RankSub
+
+class RankSerializer(ModelSerializer):
+    class Meta:
+        model = Rank
+        fields = '__all__'
+        
+class RankSubSerializer(ModelSerializer):
+    class Meta:
+        model = RankSub
+        fields = '__all__'
 
 class UserSerializer(ModelSerializer):
+    rank = RankSubSerializer()
+    rank_sub = RankSubSerializer()
     class Meta:
         model = Account
-        fields =  '__all__' 
+        fields =  ['birthday', 'gender', 'profile_activate', 'description', 'image', 'rank', 'rank_sub', 'slug'] 
     
 """
 class AccountSerializer(ModelSerializer):
