@@ -18,7 +18,7 @@ class UserSerializer(ModelSerializer):
     rank_sub = RankSubSerializer()
     class Meta:
         model = Account
-        fields =  ['birthday', 'gender', 'profile_activate', 'description', 'image', 'rank', 'rank_sub', 'slug'] 
+        fields =  ['first_name', 'last_name', 'birthday', 'gender', 'profile_activate','is_staff', 'email', 'is_active', 'description', 'image', 'rank', 'rank_sub'] 
     
 """
 class AccountSerializer(ModelSerializer):
